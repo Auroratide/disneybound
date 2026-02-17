@@ -482,3 +482,50 @@ Session 4 - Card colors per outfit
 > Can you actually refactor this to make cardColor part of the outfit instead of the character? I will want to reuse that for a background for each outfit eventually on the detail pages.
 
 > commit this
+---
+
+Session 5 - Character search and tests
+
+> Implement the following plan:
+> 
+> # Plan: Character Search on Homepage
+> 
+> ## Context
+> The homepage lists all characters in a grid. The user wants to filter that list by typing a search query that matches either the character's name or the movie they're from.
+> 
+> ## Approach
+> 
+> Client-side filtering using a new `CharacterGrid` client component. The page itself stays a server component and passes the full character list as props; all interactivity lives in the client component.
+> 
+> **Why client-side (not URL search params):** Instant filtering as the user types is the expected UX for a small catalog. URL params would require a navigation/server round-trip on each keystroke.
+> 
+> ## Files to Change
+> 
+> ### 1. New `app/components/CharacterGrid.tsx` (create)
+> - `"use client"` directive
+> - Props: `characters: Character[]`
+> - State: `query: string` (controlled input)
+> - Filter logic: `characters.filter(c => [c.name, c.movie].some(s => s.toLowerCase().includes(query.toLowerCase())))`
+> - Renders: a search `<input>` above the character grid
+> - Empty state: a short message when no characters match
+> 
+> ### 2. `app/page.tsx` (edit)
+> - Remove the `<ul>` grid and inline card markup
+> - Import and render `<CharacterGrid characters={characters} />`
+> 
+> ## Verification
+> - `pnpm dev` → homepage shows search input
+> - Typing "ariel" shows only Ariel; typing "tangled" shows only Rapunzel
+> - Clearing the input restores all characters
+> - Typing something with no match shows the empty state
+> - `pnpm lint` passes
+
+> I want to add a test fo the CharacterGrid component to verify that the filter works correctly. How do you want to test this component (don't add code yet, let's plan)?
+
+> Lets do Vitest and React Testing Library. I've already installed all the needed dependencies, so go ahead and write the test.
+
+> The tests are failing. I went ahead and focused just the first test since they're all failing for the same reason. Here's the error, please tell me why this is happening and propose a fix. Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object. Check the render method of `CharacterGrid`
+
+> yes let's do that
+
+> commit this
