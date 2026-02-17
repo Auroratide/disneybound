@@ -8,6 +8,7 @@ export type Outfit = {
   name: string;
   imageSrc: string;
   imageAlt: string;
+  cardColor: string;
   colors: OutfitColor[];
 };
 
@@ -28,6 +29,7 @@ const characters: Character[] = [
         name: "Mermaid",
         imageSrc: "/characters/ariel/mermaid.webp",
         imageAlt: "Ariel as a Mermaid",
+        cardColor: "#B8E8D8",
         colors: [
           { name: "Red", hex: "#C41230", usage: "Hair — a bold red top, headband, or accent" },
           { name: "Lavender", hex: "#9B59B6", usage: "Seashell top — a purple or lavender top" },
@@ -38,6 +40,7 @@ const characters: Character[] = [
         name: "Princess Dress",
         imageSrc: "/characters/ariel/princess-dress.webp",
         imageAlt: "Ariel in her Princess Dress",
+        cardColor: "#F5C6D8",
         colors: [
           { name: "Red", hex: "#C41230", usage: "Hair — a bold red top, headband, or accent" },
           { name: "Pink", hex: "#F0A1BF", usage: "Dress — a sparkly or shimmery pink dress or skirt" },
@@ -55,6 +58,7 @@ const characters: Character[] = [
         name: "Tower Dress",
         imageSrc: "/characters/rapunzel/tower-dress.webp",
         imageAlt: "Rapunzel in her Tower Dress",
+        cardColor: "#DDD0F5",
         colors: [
           { name: "Gold", hex: "#FFD700", usage: "Hair — long golden accessories, a blonde wig, or yellow accents" },
           { name: "Lavender", hex: "#9B7ED8", usage: "Dress — a purple or lavender dress, skirt, or top" },

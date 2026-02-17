@@ -468,3 +468,17 @@ architecture:
 Session 3 - Homepage character listing
 
 > Let's make the homepage list all of the characters we currently have. We should show the character's name, their picture, and movie they are from.
+
+---
+
+Session 4 - Card colors per outfit
+
+> One of the things I want to improve is the way the images are showing. Since right now I have images of different dimensions, on the list page the character's images can get cut off in order to cover the card. How do you recommend that I fix this or make this better?
+
+> They are character illustrations, and I think object-cover with object-top looks fine right now. I just added object-top. But I also liek the idea of giving them background colors. Can you help with that? Right now my images have transparent backgrounds.
+
+> yes, let's add card color and go ahead and choose colors, I can make them different if I need to
+
+> Can you actually refactor this to make cardColor part of the outfit instead of the character? I will want to reuse that for a background for each outfit eventually on the detail pages.
+
+> commit this

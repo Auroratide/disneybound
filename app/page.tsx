@@ -14,12 +14,12 @@ export default function Home() {
         {characters.map((character) => (
           <li key={character.slug}>
             <Link href={`/characters/${character.slug}`} className="group block rounded-xl overflow-hidden border border-foreground/10 hover:border-foreground/30 transition-colors">
-              <div className="relative aspect-square bg-foreground/5">
+              <div className="relative aspect-square" style={{ backgroundColor: character.outfits[0].cardColor }}>
                 <Image
                   src={character.outfits[0].imageSrc}
                   alt={character.outfits[0].imageAlt}
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </div>
               <div className="p-3">
