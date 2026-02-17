@@ -412,3 +412,41 @@
   colors array. The Ariel page now uses two <Outfit> instances instead of
   duplicated markup. The rendered output should be identical to what you had
   before.
+
+❯ /compact we just created a mostly hardcoded page for Ariel and a component for
+ outfits 
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿  Read app/characters/ariel/page.tsx (43 lines)
+  ⎿  Read app/components/Outfit.tsx (42 lines)
+  ⎿  Read README.md (10 lines)
+  ⎿  Read app/globals.css (27 lines)
+  ⎿  Read app/layout.tsx (35 lines)
+
+❯ I want to add a second character. Let's add Rapunzel from Tangled. It's   
+  ok to hardcode her page for now, after this we're going to start doing    
+  some refactoring.                                                         
+
+⏺ Write(app/characters/rapunzel/page.tsx)
+  ⎿  Wrote 31 lines to app/characters/rapunzel/page.tsx
+       1 import type { Metadata } from "next";
+       2 import Outfit from "@/app/components/Outfit";
+       3 import type { OutfitColor } from "@/app/components/Outfit";
+       4 
+       5 export const metadata: Metadata = {
+       6   title: "Rapunzel - Disney Bounding",
+       7   description: "Disney Bounding color guide for Rapunzel from Ta
+         ngled",
+       8 };
+       9 
+      10 const towerDressColors: OutfitColor[] = [
+     … +21 lines (ctrl+o to expand)
+
+⏺ Created app/characters/rapunzel/page.tsx with her iconic tower dress outfit.
+  She has one outfit for now with three colors: gold (hair), lavender (dress),
+  and pink (lacing accents).
+
+  When you're ready, drop an image at
+  public/characters/rapunzel/tower-dress.webp and it'll show up on the page. You
+   can visit it at /characters/rapunzel.
+
+✻ Cogitated for 36s
