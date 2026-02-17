@@ -450,3 +450,15 @@
    can visit it at /characters/rapunzel.
 
 ✻ Cogitated for 36s
+
+---
+
+Session 2 - /commit
+
+Refactored hardcoded character pages (Ariel, Rapunzel) into a data-driven
+architecture:
+- Created app/data/characters.ts with Character, Outfit, OutfitColor types
+  and static data for Ariel and Rapunzel
+- Created app/characters/[slug]/page.tsx dynamic route using generateStaticParams
+- Deleted app/characters/ariel/page.tsx and app/characters/rapunzel/page.tsx
+- Updated app/components/Outfit.tsx to import OutfitColor from shared data file
