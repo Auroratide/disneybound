@@ -462,3 +462,9 @@ architecture:
 - Created app/characters/[slug]/page.tsx dynamic route using generateStaticParams
 - Deleted app/characters/ariel/page.tsx and app/characters/rapunzel/page.tsx
 - Updated app/components/Outfit.tsx to import OutfitColor from shared data file
+
+---
+
+Session 3 - Homepage character listing
+
+> Let's make the homepage list all of the characters we currently have. We should show the character's name, their picture, and movie they are from.
