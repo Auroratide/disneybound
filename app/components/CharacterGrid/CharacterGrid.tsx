@@ -18,19 +18,30 @@ export function CharacterGrid({ characters }: Props) {
     )
   );
 
+  const statusMessage =
+    filtered.length === 0
+      ? "No characters match your search."
+      : `${filtered.length} character${filtered.length === 1 ? "" : "s"} found.`;
+
   return (
     <div>
+      <label htmlFor="character-search" className="block mb-2">
+        Search by name or movie
+      </label>
       <input
+        id="character-search"
         type="search"
         placeholder="Search by name or movie…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full mb-8 px-4 py-2 rounded-lg border border-foreground/20 bg-transparent focus:outline-none focus:border-foreground/50"
+        className="w-full mb-4 px-4 py-2 rounded-lg border border-foreground/20 bg-transparent focus:outline-none focus:border-foreground/50"
       />
 
-      {filtered.length === 0 ? (
-        <p className="text-foreground/60">No characters match your search.</p>
-      ) : (
+      <p role="status" aria-live="polite" aria-atomic="true" className="mb-8 text-sm text-foreground/60">
+        {statusMessage}
+      </p>
+
+      {filtered.length === 0 ? null : (
         <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3">
           {filtered.map((character) => (
             <li key={character.slug}>

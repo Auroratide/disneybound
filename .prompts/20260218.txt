@@ -1,0 +1,11 @@
+User: Last time we added support for search/filter of disney characters. I want you to look at the code for it and tell me what you think about its accessibility and wcag compliance.
+
+User: Let's focus on the label and live region. Modify the tests first.
+
+User: Use getByLabel, that will force the implementation to have an accessible label.
+
+User: Do not use sr-only. Wcag wants labels to be in general visible. Plus, it's actually useful for sighted people to see how many characters were found.
+
+User: yes
+
+User: yes
