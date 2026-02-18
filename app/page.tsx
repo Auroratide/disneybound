@@ -1,5 +1,5 @@
 import { getAllCharacters } from "@/app/data/characters";
-import CharacterGrid from "@/app/components/CharacterGrid";
+import { CharacterGrid } from "@/app/components/CharacterGrid";
 
 export default function Home() {
   const characters = getAllCharacters();

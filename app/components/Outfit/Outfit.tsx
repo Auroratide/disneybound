@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { OutfitColor } from "@/app/data/characters";
 
-export default function Outfit({ name, imageSrc, imageAlt, colors }: {
+export function Outfit({ name, imageSrc, imageAlt, colors }: {
   name: string;
   imageSrc: string;
   imageAlt: string;

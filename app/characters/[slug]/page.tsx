@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Outfit from "@/app/components/Outfit";
+import { Outfit } from "@/app/components/Outfit";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 
 type Params = { params: Promise<{ slug: string }> };

@@ -9,7 +9,7 @@ type Props = {
   characters: Character[];
 };
 
-export default function CharacterGrid({ characters }: Props) {
+export function CharacterGrid({ characters }: Props) {
   const [query, setQuery] = useState("");
 
   const filtered = characters.filter((c) =>

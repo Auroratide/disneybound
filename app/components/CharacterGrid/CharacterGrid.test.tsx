@@ -1,8 +1,8 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import { CharacterGrid } from "./CharacterGrid";
 
 afterEach(cleanup);
-import CharacterGrid from "./CharacterGrid";
 
 const characters = [
   {
