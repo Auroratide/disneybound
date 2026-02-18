@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Outfit } from "@/app/components/Outfit";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 
@@ -27,6 +28,9 @@ export default async function CharacterPage({ params }: Params) {
 
   return (
     <main className="max-w-2xl mx-auto px-6 py-12">
+      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 inline-block">
+        ← All characters
+      </Link>
       <p className="text-sm text-foreground/60 mb-2">{character.movie}</p>
       <h1 className="text-4xl font-bold mb-6">{character.name}</h1>
 

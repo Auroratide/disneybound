@@ -67,3 +67,7 @@ User: For the image, try using three radial-gradients on one div instead of styl
 User: I made some of my own adjustments since the syntax you used was wrong for the gradient. It's not perfect but we can adjust as we make this better. Now I want to address mobile. The colors and image do not fit side-by-side on mobile. Lets make it vertically laid out when on a mobile-sized screen, but horizontal like it is now on a desktop-sized screen.
 
 User: /commit
+
+User: Right now there's no way to go back to the home page once you're on a character's page. Add a way to do this.
+
+User: /commit
