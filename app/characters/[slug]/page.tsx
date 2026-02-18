@@ -36,6 +36,7 @@ export default async function CharacterPage({ params }: Params) {
           name={outfit.name}
           imageSrc={outfit.imageSrc}
           imageAlt={outfit.imageAlt}
+          cardColor={outfit.cardColor}
           colors={outfit.colors}
         />
       ))}

@@ -59,3 +59,11 @@ User: I just ran the install command myself since it seems you ran into an error
 User: I'm getting this error in the app: "CssSyntaxError: tailwindcss: /Users/auroratide/Projects/disneybounding/app/globals.css:1:1: Can't resolve 'tw-animate-css'"
 
 User: /commit
+
+User: Let's make the Outfit cards look better. Right now they look sloppy because the image just sort of appears over the colors. Can you organize the card so that it looks better? Additionally, I want to utilize the outfit background somehow. My theory is it'll look cool if instead of a straight background color, we can make it like three overlapping circles, vaguely mickey head shaped, with the image on top of it.
+
+User: For the image, try using three radial-gradients on one div instead of styled divs. This will allow us not to need to crop the image.
+
+User: I made some of my own adjustments since the syntax you used was wrong for the gradient. It's not perfect but we can adjust as we make this better. Now I want to address mobile. The colors and image do not fit side-by-side on mobile. Lets make it vertically laid out when on a mobile-sized screen, but horizontal like it is now on a desktop-sized screen.
+
+User: /commit
