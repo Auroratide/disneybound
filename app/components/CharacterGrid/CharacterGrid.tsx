@@ -4,6 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Character } from "@/app/data/characters";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   characters: Character[];
@@ -28,16 +31,16 @@ export function CharacterGrid({ characters }: Props) {
       <label htmlFor="character-search" className="block mb-2">
         Search by name or movie
       </label>
-      <input
+      <Input
         id="character-search"
         type="search"
         placeholder="Search by name or movie…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full mb-4 px-4 py-2 rounded-lg border border-foreground/20 bg-transparent focus:outline-none focus:border-foreground/50"
+        className="mb-4"
       />
 
-      <p role="status" aria-live="polite" aria-atomic="true" className="mb-8 text-sm text-foreground/60">
+      <p role="status" aria-live="polite" aria-atomic="true" className="mb-8 text-sm text-muted-foreground">
         {statusMessage}
       </p>
 
@@ -45,26 +48,25 @@ export function CharacterGrid({ characters }: Props) {
         <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3">
           {filtered.map((character) => (
             <li key={character.slug}>
-              <Link
-                href={`/characters/${character.slug}`}
-                className="group block rounded-xl overflow-hidden border border-foreground/10 hover:border-foreground/30 transition-colors"
-              >
-                <div
-                  className="relative aspect-square"
-                  style={{ backgroundColor: character.outfits[0].cardColor }}
-                >
-                  <Image
-                    src={character.outfits[0].imageSrc}
-                    alt={character.outfits[0].imageAlt}
-                    fill
-                    className="object-cover object-top"
-                  />
-                </div>
-                <div className="p-3">
-                  <p className="font-semibold">{character.name}</p>
-                  <p className="text-sm text-foreground/60">{character.movie}</p>
-                </div>
-              </Link>
+              <Card className="overflow-hidden p-0 gap-0 hover:border-foreground/30 transition-colors">
+                <Link href={`/characters/${character.slug}`} className="block">
+                  <div
+                    className="relative aspect-square"
+                    style={{ backgroundColor: character.outfits[0].cardColor }}
+                  >
+                    <Image
+                      src={character.outfits[0].imageSrc}
+                      alt={character.outfits[0].imageAlt}
+                      fill
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <CardContent className="p-3">
+                    <p className="font-semibold">{character.name}</p>
+                    <Badge variant="secondary" className="mt-1">{character.movie}</Badge>
+                  </CardContent>
+                </Link>
+              </Card>
             </li>
           ))}
         </ul>
