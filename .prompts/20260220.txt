@@ -1,0 +1,21 @@
+User: I want users to be able to upload images of their outfits to the website for a given character/outfit. The idea is to showcase what they've done as inspiration for others. I want to use Pocketbase for this. Please draft a plan for what we must do to implement this, offering step by step incremental instructions. We most definitely will not be making one giant commit.
+
+User: Save this plan to a file first.
+
+User: Let's start with step 1. I want to use docker compose to start up pocketbase. And when we set up what's in it, nothing must be done manually. We will use scripts to automate the setup and migrations to alter the database.
+
+User: Tell me a bit more first what your plan is regarding the migrations. How/where will they run?
+
+User: go ahead
+
+User: Let's rearrange the files a little.
+
+User: wait
+
+User: I moved everything myself. You'll see it all inside the pocketbase folder. How do I verify this is all correct? I see that I can go to localhost:8090. Is there a dashboard?
+
+User: It looks like pocketbase wants the superuser to be set up with this command: `pocketbase superuser create EMAIL PASS`. Instead of trying to do it via a migration, can we find a way to use their command?
+
+User: Let's talk about .env.local real quick. Does PB_SUPERUSER_EMAIL and PASSWORD need to be in there? Is this file loaded into next js, and if so does next js need those variables? If so why? And if not, I'd rather those variables not be defined there and find a different way to inject them into the docker instance.
+
+User: yes

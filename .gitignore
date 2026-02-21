@@ -32,6 +32,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# pocketbase local data (if run outside Docker)
+/pb_data/
+/pb_public/
 
 # vercel
 .vercel

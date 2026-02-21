@@ -1,0 +1,24 @@
+services:
+  pocketbase:
+    build:
+      context: .
+      dockerfile: pocketbase/Dockerfile
+    ports:
+      - "${PB_PORT:-8090}:8090"
+    volumes:
+      - pocketbase_data:/pb/pb_data
+      - ./pocketbase/migrations:/pb/pb_migrations:ro
+    env_file:
+      - path: ./pocketbase/.env.local
+        required: false
+    environment:
+      PB_ORIGINS: ${PB_ORIGINS:-http://localhost:3000}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8090/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pocketbase_data:
