@@ -3,3 +3,11 @@ Last time we set up Pocketbase in docker so that we can start allowing people to
 ---
 
 /commit
+
+---
+
+Continue with step 3
+
+---
+
+/commit
