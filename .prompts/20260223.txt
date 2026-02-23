@@ -51,3 +51,15 @@ How about this: let's create a setup test file which vitest runs (one for API, o
 ---
 
 /commit
+
+---
+
+Let's proceed with Step 6 of the COMMUNITY_UPLOADS_PLAN.md. However, what I want you to do is first create a test for the form component first, then pause and let me review it. Do not write the form implementation until I've reviewed the test.
+
+---
+
+go ahead with the implementation
+
+---
+
+/commit
