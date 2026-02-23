@@ -11,3 +11,19 @@ Continue with step 3
 ---
 
 /commit
+
+---
+
+continue with step 4
+
+---
+
+How should we go about writing tests for the newly added fetching of community outfits?
+
+---
+
+Write the component test first.
+
+---
+
+/commit
