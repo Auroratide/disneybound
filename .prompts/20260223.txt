@@ -27,3 +27,27 @@ Write the component test first.
 ---
 
 /commit
+
+---
+
+Continue with step 5
+
+---
+
+Generally speaking, every API route should be accompanied with testing. What do we need to do to write a test for our new api route?
+
+---
+
+I actually don't want you to mock pocketbase. Let's rely on the pocketbase that is running locally for testing against. But yes, go ahead with implementing node-based tests and these test scenarios.
+
+---
+
+We shouldn't be putting the superadmin credentials into the .env file, because I don't want nextjs to be loading them. Is there another way to load the superadmin credentials into tests?
+
+---
+
+How about this: let's create a setup test file which vitest runs (one for API, one for components) and simply hardcode the two env variables in there. It's simple, and since it's local pocketbase the credentials aren't sensitive. For the component setup, we can execute the afterEach(cleanup) thing so we avoid needing it in every test file.
+
+---
+
+/commit

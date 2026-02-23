@@ -1,9 +1,7 @@
-import { describe, it, expect, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import { CommunityOutfitGrid } from "./CommunityOutfitGrid";
 import type { CommunityOutfit } from "@/app/data/community-outfits";
-
-afterEach(cleanup);
 
 const outfit = (overrides: Partial<CommunityOutfit> = {}): CommunityOutfit => ({
   id: "1",
