@@ -63,3 +63,11 @@ go ahead with the implementation
 ---
 
 /commit
+
+---
+
+continue with step 7
+
+---
+
+/commit

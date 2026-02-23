@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Outfit } from "@/app/components/Outfit";
 import { CommunityOutfitGrid } from "@/app/components/CommunityOutfitGrid/CommunityOutfitGrid";
+import { UploadOutfitForm } from "@/app/components/UploadOutfitForm/UploadOutfitForm";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-outfits";
 
@@ -59,6 +60,14 @@ export default async function CharacterPage({ params }: Params) {
             colors={outfit.colors}
           />
           <CommunityOutfitGrid outfits={communityOutfitsByOutfit[i]} />
+          <details className="mb-10">
+            <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Share your bounding outfit
+            </summary>
+            <div className="mt-4">
+              <UploadOutfitForm characterSlug={slug} outfitName={outfit.name} />
+            </div>
+          </details>
         </div>
       ))}
     </main>
