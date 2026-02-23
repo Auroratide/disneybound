@@ -71,3 +71,35 @@ continue with step 7
 ---
 
 /commit
+
+---
+
+Let's debug an issue I am having when trying to use the new feature. When I go, I see the disclosure and can upload a picture. That works great, I see it in pocketbase. However, I do not see the images appear on the site, even after manually approving it in the database. First, look at the code to see if there's anything obviously wrong there. And if not, then tell me what we need to do to debug this further.
+
+---
+
+This is the error that I get: "failed: ClientResponseError 400: Something went wrong while processing your request."
+
+---
+
+Let's instead write a unit test for the community-outfits.ts file. Again, we are not mocking Pocketbase. I have a feeling if we write a unit test for this file we'll get to the bottom of the error.
+
+---
+
+I messed with it myself, and the problem is this: `sort: "-created",`. Can you tell me why?
+
+---
+
+So I don't think the `created` field even exists on the records. Can you find documentation saying they exist on all collection types?
+
+---
+
+Option B
+
+---
+
+run the tests
+
+---
+
+/commit

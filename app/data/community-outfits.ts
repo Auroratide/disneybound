@@ -26,7 +26,7 @@ export async function getCommunityOutfits(
 
   const records = await pb.collection("community_outfits").getFullList<CommunityOutfitRecord>({
     filter: pb.filter(
-      "character_slug = {:characterSlug} && outfit_name = {:outfitName} && status = 'approved'",
+      "character_slug = {:characterSlug} && outfit_name = {:outfitName}",
       { characterSlug, outfitName }
     ),
     sort: "-created",

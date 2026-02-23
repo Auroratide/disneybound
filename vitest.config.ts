@@ -35,7 +35,7 @@ export default defineConfig({
         plugins: [tsconfigPaths()],
         test: {
           name: 'node',
-          include: ['app/api/**/*.test.ts', 'lib/**/*.test.ts'],
+          include: ['app/api/**/*.test.ts', 'app/data/**/*.test.ts', 'lib/**/*.test.ts'],
           environment: 'node',
           setupFiles: ['./vitest.setup.node.ts'],
         },
