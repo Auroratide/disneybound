@@ -1,0 +1,17 @@
+Let's fix a bug. I can see the list of approved community outfits now, but the images are broken. Please find why.
+
+---
+
+Here, let me give you what the DOM has: [img element with srcset pointing to /_next/image URLs for http://127.0.0.1:8090/api/files/pbc_3576859721/f4i38tjs9z1s8b6/poooper_n1xs1gzusp.png]
+
+---
+
+When I try to go to the _next/image url, I get: '"url" parameter is not allowed'
+
+---
+
+Is there any risk in production with allowing this? It does say "dangerously" in the name.
+
+---
+
+/commit
