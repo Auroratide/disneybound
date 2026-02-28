@@ -59,3 +59,23 @@ Continue with Step 4
 ---
 
 /commit
+
+---
+
+what email do I use to test this with mailpit?
+
+---
+
+I don't see an email appearing in mailpit. I see that the code has `await pb.collection("users").requestOTP(email)`. What happens if requesting an otp for an email that is not in the user collection? Does nothing happen?
+
+---
+
+add that migration now
+
+---
+
+I tried running this and I still do not see the OTP appear in the mailbox. It does appear if I create an account in pocketbase then use that email. So I suppose the migration did not do what you think it should do. What else should we explore to make this possible?
+
+---
+
+Option A

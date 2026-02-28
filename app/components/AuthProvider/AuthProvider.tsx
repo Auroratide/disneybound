@@ -26,9 +26,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   async function requestOtp(email: string) {
-    const pb = getPocketbase();
-    const result = await pb.collection("users").requestOTP(email);
-    return { otpId: result.otpId };
+    const res = await fetch("/api/auth/request-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) throw new Error("Failed to request OTP");
+    const data = await res.json();
+    return { otpId: data.otpId as string };
   }
 
   async function confirmOtp(otpId: string, code: string) {
