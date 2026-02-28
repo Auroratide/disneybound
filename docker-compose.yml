@@ -19,6 +19,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    depends_on:
+      - mailpit
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025"   # Web UI — browse captured emails at localhost:8025
+      - "1025:1025"   # SMTP — PocketBase sends OTP emails here
 
 volumes:
   pocketbase_data:

@@ -15,3 +15,31 @@ Is there any risk in production with allowing this? It does say "dangerously" in
 ---
 
 /commit
+
+---
+
+Continue with Step 1
+
+---
+
+I see that community-outfits.test.ts is failing. Probably has to do with records needing a user now.
+
+---
+
+I cleaned it up myself. Let's commit.
+
+---
+
+I have a question about Step 2. I see it says `pocketbase/migrations/005_configure_smtp.js` — Configure PocketBase SMTP settings to point at Mailpit. If you're making a migration to point to Mailpit, how is this going to work in production once production exists?
+
+---
+
+Can you show me what the migration would look like?
+
+---
+
+Ok I understand now. Let's continue with Step 2.
+
+---
+
+/commit
