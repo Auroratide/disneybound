@@ -19,6 +19,11 @@ export function getPocketbase(): PocketBase {
   // Client: singleton
   if (!clientInstance) {
     clientInstance = new PocketBase(url);
+    // Mirror auth state into a cookie on every change so server components
+    // can read the token without accessing localStorage directly.
+    clientInstance.authStore.onChange(() => {
+      document.cookie = clientInstance!.authStore.exportToCookie({ sameSite: "Lax" });
+    });
   }
   return clientInstance;
 }
