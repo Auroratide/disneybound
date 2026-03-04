@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
 
 interface UploadOutfitFormProps {
   characterSlug: string;
@@ -121,13 +122,13 @@ export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitForm
         <p className="text-sm text-destructive">{error}</p>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isLoading}
-        className="self-start rounded bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+        className="self-start"
       >
         {isLoading ? "Sharing..." : "Share outfit"}
-      </button>
+      </Button>
     </form>
   );
 }

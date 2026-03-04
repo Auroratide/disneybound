@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
+import { Button } from "@/components/ui/button";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -76,14 +77,9 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       <div className="w-full max-w-sm rounded-lg border border-border bg-background p-6 text-foreground shadow-lg">
         <div className="flex items-center justify-between mb-4">
           <h2 id="login-modal-title" className="text-lg font-semibold">Log in</h2>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
+          <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Close">
             ✕
-          </button>
+          </Button>
         </div>
 
       {step === "email" ? (
@@ -105,13 +101,9 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
           {error && <p className="text-sm text-destructive">{error}</p>}
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="rounded bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
-          >
+          <Button type="submit" disabled={isLoading}>
             {isLoading ? "Sending..." : "Send code"}
-          </button>
+          </Button>
         </form>
       ) : (
         <form onSubmit={handleConfirmOtp} className="flex flex-col gap-4">
@@ -139,20 +131,16 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
           {error && <p className="text-sm text-destructive">{error}</p>}
 
           <div className="flex items-center gap-3">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="rounded bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
-            >
+            <Button type="submit" disabled={isLoading}>
               {isLoading ? "Verifying..." : "Verify"}
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="ghost"
               onClick={() => { setStep("email"); setError(null); setCode(""); }}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Back
-            </button>
+            </Button>
           </div>
         </form>
       )}

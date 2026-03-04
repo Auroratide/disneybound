@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
 import { LoginModal } from "@/app/components/LoginModal/LoginModal";
+import { Button } from "@/components/ui/button";
 
 export function SiteHeader() {
   const { user, logout } = useAuth();
@@ -24,20 +25,14 @@ export function SiteHeader() {
             >
               {user.name || user.email}
             </Link>
-            <button
-              onClick={logout}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Button variant="ghost" size="sm" onClick={logout}>
               Log out
-            </button>
+            </Button>
           </>
         ) : (
-          <button
-            onClick={() => setIsLoginOpen(true)}
-            className="font-medium hover:text-muted-foreground transition-colors"
-          >
+          <Button variant="ghost" size="sm" onClick={() => setIsLoginOpen(true)}>
             Log in
-          </button>
+          </Button>
         )}
       </nav>
 

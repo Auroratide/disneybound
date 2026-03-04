@@ -9,3 +9,9 @@ User: Great, that's better. There's another issue now, when I click next to the 
 User: Hmm I dunno about checking coordinates explicitly. What if instead you wrapped all of the contents of the dialog in a div, then applied styles to that div?
 
 User: Add an X button to the modal.
+
+User: I want to refactor the button. You backed two styled buttons into the modal, but now I'm concerned that we're going to end up with different styled buttons throughout the site if we keep hardcoding them. Let's make a button component that can be reused. Note that we're using Shadcn in the project.
+
+User: Is there anywhere else in the code we should use the new button component?
+
+User: yes
