@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ErrorMessage } from "@/components/ui/error-message";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -88,18 +90,17 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
             <label htmlFor="login-email" className="text-sm font-medium">
               Email
             </label>
-            <input
+            <Input
               id="login-email"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
               autoFocus
-              className="rounded border border-border bg-background px-3 py-1.5 text-sm"
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          <ErrorMessage message={error} />
 
           <Button type="submit" disabled={isLoading}>
             {isLoading ? "Sending..." : "Send code"}
@@ -115,7 +116,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
             <label htmlFor="login-code" className="text-sm font-medium">
               Code
             </label>
-            <input
+            <Input
               id="login-code"
               type="text"
               inputMode="numeric"
@@ -124,11 +125,11 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               onChange={e => setCode(e.target.value)}
               required
               autoFocus
-              className="rounded border border-border bg-background px-3 py-1.5 text-sm tracking-widest"
+              className="tracking-widest"
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          <ErrorMessage message={error} />
 
           <div className="flex items-center gap-3">
             <Button type="submit" disabled={isLoading}>

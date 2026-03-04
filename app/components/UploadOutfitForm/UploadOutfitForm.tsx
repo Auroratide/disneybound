@@ -2,6 +2,8 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ErrorMessage } from "@/components/ui/error-message";
 
 interface UploadOutfitFormProps {
   characterSlug: string;
@@ -87,12 +89,12 @@ export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitForm
         <label htmlFor="outfit-photo" className="text-sm font-medium">
           Outfit photo
         </label>
-        <input
+        <Input
           id="outfit-photo"
           type="file"
           accept="image/jpeg,image/png,image/webp"
           onChange={handleFileChange}
-          className="text-sm file:mr-3 file:rounded file:border-0 file:bg-muted file:px-3 file:py-1 file:text-sm file:font-medium"
+          className="file:mr-3 file:rounded file:bg-muted file:px-3 file:py-1"
         />
       </div>
 
@@ -109,18 +111,15 @@ export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitForm
         <label htmlFor="submitter-name" className="text-sm font-medium">
           Your name or handle (optional)
         </label>
-        <input
+        <Input
           id="submitter-name"
           type="text"
           value={name}
           onChange={e => setName(e.target.value)}
-          className="rounded border border-border bg-background px-3 py-1.5 text-sm"
         />
       </div>
 
-      {error && (
-        <p className="text-sm text-destructive">{error}</p>
-      )}
+      <ErrorMessage message={error} />
 
       <Button
         type="submit"

@@ -15,3 +15,9 @@ User: I want to refactor the button. You backed two styled buttons into the moda
 User: Is there anywhere else in the code we should use the new button component?
 
 User: yes
+
+User: Let's take a quick step back, looking at what we have are there any more examples of where we should be extracting components?
+
+User: Yes, let's do both of these. Note that for input, we already have an input component added by shadcn.
+
+User: yes
