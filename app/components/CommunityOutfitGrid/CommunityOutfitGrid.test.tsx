@@ -9,6 +9,7 @@ const outfit = (overrides: Partial<CommunityOutfit> = {}): CommunityOutfit => ({
   outfitName: "Mermaid",
   imageUrl: "http://127.0.0.1:8090/api/files/abc/1/photo.jpg",
   submitterName: null,
+  userId: null,
   ...overrides,
 });
 
@@ -49,5 +50,20 @@ describe("CommunityOutfitGrid", () => {
   it("uses a generic alt text when submitter name is null", () => {
     render(<CommunityOutfitGrid outfits={[outfit({ submitterName: null })]} />);
     expect(screen.getByAltText("Community outfit")).toBeDefined();
+  });
+
+  it("does not show a delete button when currentUserId is null", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ id: "1", userId: "user-1" })]} currentUserId={null} />);
+    expect(screen.queryByRole("button", { name: /delete outfit/i })).toBeNull();
+  });
+
+  it("shows a delete button for outfits owned by the current user", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ id: "1", userId: "user-1" })]} currentUserId="user-1" />);
+    expect(screen.getByRole("button", { name: /delete outfit/i })).toBeDefined();
+  });
+
+  it("does not show a delete button for outfits owned by a different user", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ id: "1", userId: "user-2" })]} currentUserId="user-1" />);
+    expect(screen.queryByRole("button", { name: /delete outfit/i })).toBeNull();
   });
 });

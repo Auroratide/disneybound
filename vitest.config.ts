@@ -14,6 +14,7 @@ export default defineConfig({
           alias: {
             'next/image': path.resolve('./app/__mocks__/next-image.tsx'),
             'next/link': path.resolve('./app/__mocks__/next-link.tsx'),
+            'next/navigation': path.resolve('./app/__mocks__/next-navigation.ts'),
           },
         },
         test: {

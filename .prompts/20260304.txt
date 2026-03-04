@@ -27,3 +27,5 @@ User: Refer to ACCOUNTS_PLAN.md in the .plans folder. We're going to start with 
 User: Write the test first
 
 User: yes
+
+User: Lets proceed with Step 6.

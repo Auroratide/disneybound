@@ -6,6 +6,7 @@ import { CommunityOutfitGrid } from "@/app/components/CommunityOutfitGrid/Commun
 import { UploadOutfitForm } from "@/app/components/UploadOutfitForm/UploadOutfitForm";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-outfits";
+import { getServerAuth } from "@/lib/auth";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -38,9 +39,10 @@ export default async function CharacterPage({ params }: Params) {
   const character = getCharacterBySlug(slug);
   if (!character) notFound();
 
-  const communityOutfitsByOutfit = await Promise.all(
-    character.outfits.map((outfit) => fetchCommunityOutfits(slug, outfit.name))
-  );
+  const [{ user }, communityOutfitsByOutfit] = await Promise.all([
+    getServerAuth(),
+    Promise.all(character.outfits.map((outfit) => fetchCommunityOutfits(slug, outfit.name))),
+  ]);
 
   return (
     <main className="max-w-2xl mx-auto px-6 py-12">
@@ -59,7 +61,7 @@ export default async function CharacterPage({ params }: Params) {
             cardColor={outfit.cardColor}
             colors={outfit.colors}
           />
-          <CommunityOutfitGrid outfits={communityOutfitsByOutfit[i]} />
+          <CommunityOutfitGrid outfits={communityOutfitsByOutfit[i]} currentUserId={user?.id ?? null} />
           <details className="mb-10">
             <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Share your bounding outfit

@@ -6,6 +6,7 @@ export type CommunityOutfit = {
   outfitName: string;
   imageUrl: string;
   submitterName: string | null;
+  userId: string | null;
 };
 
 type CommunityOutfitRecord = {
@@ -14,6 +15,7 @@ type CommunityOutfitRecord = {
   outfit_name: string;
   image: string;
   submitter_name: string;
+  user: string;
   collectionId: string;
   collectionName: string;
 };
@@ -38,5 +40,6 @@ export async function getCommunityOutfits(
     outfitName: record.outfit_name,
     imageUrl: pb.files.getURL(record, record.image),
     submitterName: record.submitter_name || null,
+    userId: record.user || null,
   }));
 }

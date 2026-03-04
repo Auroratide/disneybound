@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterEach } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, afterEach } from "vitest";
 import PocketBase from "pocketbase";
 import { getCommunityOutfits } from "./community-outfits";
 
@@ -6,12 +6,25 @@ import { getCommunityOutfits } from "./community-outfits";
 const adminPb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
 
 const createdIds: string[] = [];
+let testUserId: string;
 
 beforeAll(async () => {
   await adminPb.collection("_superusers").authWithPassword(
     process.env.PB_SUPERUSER_EMAIL!,
     process.env.PB_SUPERUSER_PASSWORD!
   );
+
+  const user = await adminPb.collection("users").create({
+    email: "outfitdata-test@example.com",
+    emailVisibility: true,
+    password: "test-password-unused",
+    passwordConfirm: "test-password-unused",
+  });
+  testUserId = user.id;
+});
+
+afterAll(async () => {
+  if (testUserId) await adminPb.collection("users").delete(testUserId).catch(() => {});
 });
 
 afterEach(async () => {
@@ -37,6 +50,7 @@ async function createRecord(fields: {
   outfit_name: string;
   status: "pending" | "approved" | "rejected";
   submitter_name?: string;
+  user?: string;
 }): Promise<string> {
   const formData = new FormData();
   formData.append("character_slug", fields.character_slug);
@@ -45,6 +59,9 @@ async function createRecord(fields: {
   formData.append("status", fields.status);
   if (fields.submitter_name) {
     formData.append("submitter_name", fields.submitter_name);
+  }
+  if (fields.user) {
+    formData.append("user", fields.user);
   }
   const record = await adminPb.collection("community_outfits").create(formData);
   createdIds.push(record.id);
@@ -110,5 +127,19 @@ describe("getCommunityOutfits", () => {
 
     const results = await getCommunityOutfits("ariel", "Mermaid");
     expect(results[0].imageUrl).toMatch(/^http.*\/api\/files\//);
+  });
+
+  it("sets userId to the owner's id when a user is set", async () => {
+    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved", user: testUserId });
+
+    const results = await getCommunityOutfits("ariel", "Mermaid");
+    expect(results[0].userId).toBe(testUserId);
+  });
+
+  it("sets userId to null for orphaned records with no user", async () => {
+    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
+
+    const results = await getCommunityOutfits("ariel", "Mermaid");
+    expect(results[0].userId).toBeNull();
   });
 });

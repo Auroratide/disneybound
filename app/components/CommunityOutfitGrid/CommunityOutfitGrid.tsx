@@ -1,7 +1,13 @@
 import Image from "next/image";
 import type { CommunityOutfit } from "@/app/data/community-outfits";
+import { DeleteOutfitButton } from "@/app/components/DeleteOutfitButton/DeleteOutfitButton";
 
-export function CommunityOutfitGrid({ outfits }: { outfits: CommunityOutfit[] }) {
+interface CommunityOutfitGridProps {
+  outfits: CommunityOutfit[];
+  currentUserId?: string | null;
+}
+
+export function CommunityOutfitGrid({ outfits, currentUserId = null }: CommunityOutfitGridProps) {
   if (outfits.length === 0) return null;
 
   return (
@@ -23,6 +29,9 @@ export function CommunityOutfitGrid({ outfits }: { outfits: CommunityOutfit[] })
               <p className="absolute bottom-0 inset-x-0 px-2 py-1 text-xs text-white bg-black/50 truncate">
                 {outfit.submitterName}
               </p>
+            )}
+            {currentUserId && outfit.userId === currentUserId && (
+              <DeleteOutfitButton id={outfit.id} />
             )}
           </li>
         ))}
