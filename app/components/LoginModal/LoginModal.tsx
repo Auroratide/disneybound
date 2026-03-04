@@ -74,7 +74,17 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       className="fixed inset-0 m-auto flex h-full w-full max-w-none items-center justify-center bg-transparent p-4 backdrop:bg-black/50"
     >
       <div className="w-full max-w-sm rounded-lg border border-border bg-background p-6 text-foreground shadow-lg">
-      <h2 id="login-modal-title" className="text-lg font-semibold mb-4">Log in</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 id="login-modal-title" className="text-lg font-semibold">Log in</h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ✕
+          </button>
+        </div>
 
       {step === "email" ? (
         <form onSubmit={handleRequestOtp} className="flex flex-col gap-4">

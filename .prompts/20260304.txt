@@ -7,3 +7,5 @@ User: I just gave you access to chrome devtools mcp. The dialog is no longer app
 User: Great, that's better. There's another issue now, when I click next to the Send code button instead of on it, but still in the modal box, the dialog closes. It should only close if I click the backdrop or an explicit X button. This issue doesn't seem to happen if I click on text in the modal, just like some of the open space in the modal.
 
 User: Hmm I dunno about checking coordinates explicitly. What if instead you wrapped all of the contents of the dialog in a div, then applied styles to that div?
+
+User: Add an X button to the modal.
