@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
 
 interface LoginModalProps {
@@ -12,6 +12,7 @@ type Step = "email" | "otp";
 
 export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const { requestOtp, confirmOtp } = useAuth();
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
@@ -20,7 +21,20 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) dialogRef.current?.showModal();
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  function handleCancel(e: React.SyntheticEvent) {
+    e.preventDefault();
+    onClose();
+  }
+
+  function handleBackdropClick(e: React.MouseEvent<HTMLDialogElement>) {
+    if (e.target === e.currentTarget) onClose();
+  }
 
   async function handleRequestOtp(e: React.FormEvent) {
     e.preventDefault();
@@ -52,86 +66,87 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   }
 
   return (
-    <div role="dialog" aria-modal="true" aria-label="Log in" className="fixed inset-0 z-50 flex items-center justify-center">
-      <div
-        data-testid="modal-backdrop"
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
-      />
-      <div className="relative z-10 w-full max-w-sm mx-4 rounded-lg border border-border bg-background p-6">
-        <h2 className="text-lg font-semibold mb-4">Log in</h2>
+    <dialog
+      ref={dialogRef}
+      onCancel={handleCancel}
+      onClick={handleBackdropClick}
+      aria-labelledby="login-modal-title"
+      className="fixed inset-0 m-auto flex h-full w-full max-w-none items-center justify-center bg-transparent p-4 backdrop:bg-black/50"
+    >
+      <div className="w-full max-w-sm rounded-lg border border-border bg-background p-6 text-foreground shadow-lg">
+      <h2 id="login-modal-title" className="text-lg font-semibold mb-4">Log in</h2>
 
-        {step === "email" ? (
-          <form onSubmit={handleRequestOtp} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="login-email" className="text-sm font-medium">
-                Email
-              </label>
-              <input
-                id="login-email"
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-                autoFocus
-                className="rounded border border-border bg-background px-3 py-1.5 text-sm"
-              />
-            </div>
+      {step === "email" ? (
+        <form onSubmit={handleRequestOtp} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="login-email" className="text-sm font-medium">
+              Email
+            </label>
+            <input
+              id="login-email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              autoFocus
+              className="rounded border border-border bg-background px-3 py-1.5 text-sm"
+            />
+          </div>
 
-            {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="text-sm text-destructive">{error}</p>}
 
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="rounded bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+          >
+            {isLoading ? "Sending..." : "Send code"}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleConfirmOtp} className="flex flex-col gap-4">
+          <p className="text-sm text-muted-foreground">
+            We sent a 6-digit code to <strong>{email}</strong>.
+          </p>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="login-code" className="text-sm font-medium">
+              Code
+            </label>
+            <input
+              id="login-code"
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              value={code}
+              onChange={e => setCode(e.target.value)}
+              required
+              autoFocus
+              className="rounded border border-border bg-background px-3 py-1.5 text-sm tracking-widest"
+            />
+          </div>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
+
+          <div className="flex items-center gap-3">
             <button
               type="submit"
               disabled={isLoading}
               className="rounded bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
             >
-              {isLoading ? "Sending..." : "Send code"}
+              {isLoading ? "Verifying..." : "Verify"}
             </button>
-          </form>
-        ) : (
-          <form onSubmit={handleConfirmOtp} className="flex flex-col gap-4">
-            <p className="text-sm text-muted-foreground">
-              We sent a 6-digit code to <strong>{email}</strong>.
-            </p>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="login-code" className="text-sm font-medium">
-                Code
-              </label>
-              <input
-                id="login-code"
-                type="text"
-                inputMode="numeric"
-                maxLength={6}
-                value={code}
-                onChange={e => setCode(e.target.value)}
-                required
-                autoFocus
-                className="rounded border border-border bg-background px-3 py-1.5 text-sm tracking-widest"
-              />
-            </div>
-
-            {error && <p className="text-sm text-destructive">{error}</p>}
-
-            <div className="flex items-center gap-3">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="rounded bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
-              >
-                {isLoading ? "Verifying..." : "Verify"}
-              </button>
-              <button
-                type="button"
-                onClick={() => { setStep("email"); setError(null); setCode(""); }}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Back
-              </button>
-            </div>
-          </form>
-        )}
+            <button
+              type="button"
+              onClick={() => { setStep("email"); setError(null); setCode(""); }}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      )}
       </div>
-    </div>
+    </dialog>
   );
 }

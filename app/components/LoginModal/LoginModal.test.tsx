@@ -115,7 +115,7 @@ describe("LoginModal", () => {
 
   it("closes when the backdrop is clicked", () => {
     render(<LoginModal isOpen={true} onClose={onClose} />);
-    fireEvent.click(screen.getByTestId("modal-backdrop"));
+    fireEvent.click(screen.getByRole("dialog"));
     expect(onClose).toHaveBeenCalled();
   });
 });
