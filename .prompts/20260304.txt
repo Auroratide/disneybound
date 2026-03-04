@@ -21,3 +21,9 @@ User: Let's take a quick step back, looking at what we have are there any more e
 User: Yes, let's do both of these. Note that for input, we already have an input component added by shadcn.
 
 User: yes
+
+User: Refer to ACCOUNTS_PLAN.md in the .plans folder. We're going to start with Step 5 now that we have the login modal in place.
+
+User: Write the test first
+
+User: yes
