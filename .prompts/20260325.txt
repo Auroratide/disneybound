@@ -1,0 +1,13 @@
+Last time we were following the plan in .plans/ACCOUNTS_PLAN.md to add accounts to the app, so that users can upload images. We completed Step 6, which added delete options. However, I am having an issue. When I log in via the login button and then try to upload a photo, I am getting a 401 error back from the server. Help me figure out what is wrong. If it helps, you may use agent-browser to debug the issue.
+
+---
+
+Ok I see. The token is on localstorage though. Setting the cookie on the client directly seems like a bad idea, unless you can explain to me why it is fine. Otherwise, I suggest one of two other approaches. Either 1) we need to send the token via the Authorization header from the client, or 2) the server needs to set the cookie so it can remain HttpOnly and be more immune to security attacks.
+
+---
+
+lets start with option 2
+
+---
+
+Heads up I had to change the cookie setting code to use `pb.authStore.exportToCookie({ sameSite: "lax" })` in order for pocketbase to read the cookie correctly. Let's go ahead and commit this.

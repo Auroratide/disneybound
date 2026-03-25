@@ -37,12 +37,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function confirmOtp(otpId: string, code: string) {
+    const res = await fetch("/api/auth/confirm-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ otpId, code }),
+    });
+    if (!res.ok) throw new Error("Invalid or expired code");
+    const { token, record } = await res.json();
+    // Sync token into the client-side PocketBase store so the UI reflects the login.
     const pb = getPocketbase();
-    await pb.collection("users").authWithOTP(otpId, code);
+    pb.authStore.save(token, record);
     // authStore.onChange fires automatically, updating user state.
   }
 
   function logout() {
+    // Clear the server-side HttpOnly cookie, then clear local state.
+    fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
     const pb = getPocketbase();
     pb.authStore.clear();
     // authStore.onChange fires automatically, clearing user state.
