@@ -27,3 +27,27 @@ Yes let's continue with step 8. For verification, make sure you write a componen
 ---
 
 commit
+
+---
+
+Ok, I want to start doing some polish of the existing site before moving onto anything new. First, I want to start off with an overall aesthetic overhaul. The website right now is pretty boring. Are you able to generate images or ideas for ways to make the site more unique yet usable? I want to be able to look at options and decide what I like best or create my own ideas based off yours.
+
+---
+
+Ok, based on this I have created an image and put it into .plans/website-design.png. It most closely follows Option C, the diagonal stripe texture looks very unique, and I can think of things to do with that in the future. Let's start just by fixing all of the global things (colors and fonts) and then we'll tackle individual pages and elements afterward. Please look at the image, and create a small plan for how we're gonna make it a reality.
+
+---
+
+yes
+
+---
+
+Two things: make the diagonal lines thicker, and I think the font isn't getting applied.
+
+---
+
+Ok, let's use the primary color for the main fonts, and for the background stripe (though the stripe should have opacity).
+
+---
+
+commit
