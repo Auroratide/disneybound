@@ -75,3 +75,11 @@ Ok, if I want to experiment with making the border darker, how can I do that? I 
 ---
 
 commit
+
+---
+
+One quick thing, I want to globally increase the font size of the whole site. Normally I do a pattern where I do something like `font-size: clamp(1rem, 2vw, 1.2rem);` on the body, then use `em` everywhere so things scale accordingly. This makes the font nice and large on desktop, and still large but not overly so on mobile. Can we apply that pattern, assuming this will work with tailwind?
+
+---
+
+commit

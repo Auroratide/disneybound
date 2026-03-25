@@ -136,6 +136,9 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+  }
   body {
     @apply bg-background text-foreground;
     background-image: repeating-linear-gradient(
