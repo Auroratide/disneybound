@@ -6,7 +6,6 @@ import Link from "next/link";
 import type { Character } from "@/app/data/characters";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 type Props = {
   characters: Character[];
@@ -28,7 +27,7 @@ export function CharacterGrid({ characters }: Props) {
 
   return (
     <div>
-      <label htmlFor="character-search" className="block mb-2">
+      <label htmlFor="character-search" className="block mb-2 text-sm font-medium">
         Search by name or movie
       </label>
       <Input
@@ -37,7 +36,7 @@ export function CharacterGrid({ characters }: Props) {
         placeholder="Search by name or movie…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="mb-4"
+        className="mb-4 bg-card"
       />
 
       <p role="status" aria-live="polite" aria-atomic="true" className="mb-8 text-sm text-muted-foreground">
@@ -45,28 +44,34 @@ export function CharacterGrid({ characters }: Props) {
       </p>
 
       {filtered.length === 0 ? null : (
-        <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 overflow-visible pb-4">
           {filtered.map((character) => (
             <li key={character.slug}>
-              <Card className="overflow-hidden p-0 gap-0 hover:border-foreground/30 transition-colors">
-                <Link href={`/characters/${character.slug}`} className="block">
+              <Link href={`/characters/${character.slug}`} className="block group">
+                <Card
+                  className="overflow-visible p-0 gap-0 border-6 group-hover:shadow-lg group-hover:-translate-y-2 group-hover:scale-[1.03] group-focus-within:-translate-y-2 group-focus-within:scale-[1.03] transition-[translate,scale,box-shadow] duration-150"
+                  style={{ borderColor: `color-mix(in oklch, ${character.outfits[0].cardColor} 80%, black)`, backgroundColor: character.outfits[0].cardColor }}
+                >
+                  {/* Colored top band — image peeks above the card via negative margin */}
                   <div
-                    className="relative aspect-square"
+                    className="relative h-44 rounded-t-xl overflow-visible"
                     style={{ backgroundColor: character.outfits[0].cardColor }}
                   >
-                    <Image
-                      src={character.outfits[0].imageSrc}
-                      alt={character.outfits[0].imageAlt}
-                      fill
-                      className="object-cover object-top"
-                    />
+                    <div className="absolute -top-10 inset-x-0 bottom-0">
+                      <Image
+                        src={character.outfits[0].imageSrc}
+                        alt={character.outfits[0].imageAlt}
+                        fill
+                        className="object-cover object-top"
+                      />
+                    </div>
                   </div>
-                  <CardContent className="p-3">
-                    <p className="font-semibold">{character.name}</p>
-                    <Badge variant="secondary" className="mt-1">{character.movie}</Badge>
+                  <CardContent className="p-4 bg-card rounded-b-xl text-center">
+                    <h3 className="text-lg font-semibold leading-tight">{character.name}</h3>
+                    <p className="text-sm text-muted-foreground mt-0.5">{character.movie}</p>
                   </CardContent>
-                </Link>
-              </Card>
+                </Card>
+              </Link>
             </li>
           ))}
         </ul>

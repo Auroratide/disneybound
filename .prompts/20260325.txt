@@ -51,3 +51,27 @@ Ok, let's use the primary color for the main fonts, and for the background strip
 ---
 
 commit
+
+---
+
+Ok, let's focus on the home page and character cards. Refer to the website-design.png image. In particular, I like that the character can actually peek over the top edge of the card, that the character's name is in the primary color and font, and that there's a sort of border.
+
+---
+
+Ok looking good so far. Couple of adjustments: Let's only use the top 66% of the character portrait, make the border thicker, and let's center the text.
+
+---
+
+Great! Now let's make it so whenever we hover or focus one of the cards, it animates by scaling up and moving up slightly.
+
+---
+
+I don't think the transition is happening, because the code is transitioning on transform, yet the translate and scale css properties are what are being manipulated. Need to either transition those properties or use transform.
+
+---
+
+Ok, if I want to experiment with making the border darker, how can I do that? I know in CSS I could use color-mix but I don't know how to play with it in tailwind.
+
+---
+
+commit
