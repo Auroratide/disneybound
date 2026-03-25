@@ -19,3 +19,11 @@ ok great! Lets continue with Step 7 on the ACCOUNTS_PLAN.
 ---
 
 commit
+
+---
+
+Yes let's continue with step 8. For verification, make sure you write a component test for the account form.
+
+---
+
+commit
