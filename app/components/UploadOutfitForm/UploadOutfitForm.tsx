@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ui/error-message";
+import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
+import { LoginModal } from "@/app/components/LoginModal/LoginModal";
 
 interface UploadOutfitFormProps {
   characterSlug: string;
@@ -11,12 +13,13 @@ interface UploadOutfitFormProps {
 }
 
 export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitFormProps) {
+  const { user } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const prevPreviewUrl = useRef<string | null>(null);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -53,9 +56,6 @@ export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitForm
     formData.append("character_slug", characterSlug);
     formData.append("outfit_name", outfitName);
     formData.append("image", file);
-    if (name.trim()) {
-      formData.append("submitter_name", name.trim());
-    }
 
     try {
       const res = await fetch("/api/community-outfits", {
@@ -73,6 +73,18 @@ export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitForm
     } finally {
       setIsLoading(false);
     }
+  }
+
+  if (!user) {
+    return (
+      <div className="flex flex-col gap-3">
+        <p className="text-sm text-muted-foreground">Log in to share your outfit.</p>
+        <Button variant="outline" size="sm" className="self-start" onClick={() => setIsLoginOpen(true)}>
+          Log in
+        </Button>
+        <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      </div>
+    );
   }
 
   if (isSuccess) {
@@ -106,18 +118,6 @@ export function UploadOutfitForm({ characterSlug, outfitName }: UploadOutfitForm
           className="w-32 h-32 object-cover rounded-lg"
         />
       )}
-
-      <div className="flex flex-col gap-1">
-        <label htmlFor="submitter-name" className="text-sm font-medium">
-          Your name or handle (optional)
-        </label>
-        <Input
-          id="submitter-name"
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
-      </div>
 
       <ErrorMessage message={error} />
 

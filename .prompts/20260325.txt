@@ -11,3 +11,11 @@ lets start with option 2
 ---
 
 Heads up I had to change the cookie setting code to use `pb.authStore.exportToCookie({ sameSite: "lax" })` in order for pocketbase to read the cookie correctly. Let's go ahead and commit this.
+
+---
+
+ok great! Lets continue with Step 7 on the ACCOUNTS_PLAN.
+
+---
+
+commit

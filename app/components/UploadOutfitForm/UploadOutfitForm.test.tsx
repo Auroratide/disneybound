@@ -1,6 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import type { RecordModel } from "pocketbase";
 import { UploadOutfitForm } from "./UploadOutfitForm";
+
+vi.mock("@/app/components/AuthProvider/AuthProvider", () => ({
+  useAuth: vi.fn(),
+}));
+
+import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
+
+const mockUser = { id: "user1", email: "test@example.com" } as RecordModel;
 
 const defaultProps = {
   characterSlug: "ariel",
@@ -22,6 +31,12 @@ describe("UploadOutfitForm", () => {
       new Response(JSON.stringify({ id: "abc123" }), { status: 201 })
     );
     vi.stubGlobal("fetch", mockFetch);
+    vi.mocked(useAuth).mockReturnValue({
+      user: mockUser,
+      requestOtp: vi.fn(),
+      confirmOtp: vi.fn(),
+      logout: vi.fn(),
+    });
   });
 
   afterEach(() => {
@@ -31,11 +46,6 @@ describe("UploadOutfitForm", () => {
   it("renders a file input for the outfit photo", () => {
     render(<UploadOutfitForm {...defaultProps} />);
     expect(screen.getByLabelText(/photo/i)).toBeDefined();
-  });
-
-  it("renders an optional name or handle input", () => {
-    render(<UploadOutfitForm {...defaultProps} />);
-    expect(screen.getByLabelText(/name or handle/i)).toBeDefined();
   });
 
   it("renders a submit button", () => {
@@ -66,14 +76,11 @@ describe("UploadOutfitForm", () => {
     });
   });
 
-  it("sends the image, character_slug, outfit_name, and submitter_name to the API", async () => {
+  it("sends the image, character_slug, and outfit_name to the API", async () => {
     render(<UploadOutfitForm {...defaultProps} />);
 
     fireEvent.change(screen.getByLabelText(/photo/i), {
       target: { files: [makeImageFile()] },
-    });
-    fireEvent.change(screen.getByLabelText(/name or handle/i), {
-      target: { value: "DisneyFan" },
     });
     fireEvent.click(screen.getByRole("button", { name: /share/i }));
 
@@ -86,21 +93,7 @@ describe("UploadOutfitForm", () => {
     const body = options.body as FormData;
     expect(body.get("character_slug")).toBe("ariel");
     expect(body.get("outfit_name")).toBe("Mermaid");
-    expect(body.get("submitter_name")).toBe("DisneyFan");
     expect(body.get("image")).toBeInstanceOf(File);
-  });
-
-  it("omits submitter_name from the request when the name field is empty", async () => {
-    render(<UploadOutfitForm {...defaultProps} />);
-
-    fireEvent.change(screen.getByLabelText(/photo/i), {
-      target: { files: [makeImageFile()] },
-    });
-    fireEvent.click(screen.getByRole("button", { name: /share/i }));
-
-    await waitFor(() => expect(mockFetch).toHaveBeenCalledOnce());
-
-    const body = mockFetch.mock.calls[0][1].body as FormData;
     expect(body.get("submitter_name")).toBeNull();
   });
 
@@ -155,5 +148,27 @@ describe("UploadOutfitForm", () => {
 
     // Resolve so the pending promise doesn't keep the test alive.
     resolveUpload(new Response(JSON.stringify({ id: "1" }), { status: 201 }));
+  });
+
+  describe("when unauthenticated", () => {
+    beforeEach(() => {
+      vi.mocked(useAuth).mockReturnValue({
+        user: null,
+        requestOtp: vi.fn(),
+        confirmOtp: vi.fn(),
+        logout: vi.fn(),
+      });
+    });
+
+    it("shows a log in prompt instead of the upload form", () => {
+      render(<UploadOutfitForm {...defaultProps} />);
+      expect(screen.getByText(/log in to share your outfit/i)).toBeDefined();
+      expect(screen.queryByRole("button", { name: /share/i })).toBeNull();
+    });
+
+    it("has a log in button", () => {
+      render(<UploadOutfitForm {...defaultProps} />);
+      expect(screen.getByRole("button", { name: /log in/i })).toBeDefined();
+    });
   });
 });
