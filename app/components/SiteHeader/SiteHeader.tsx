@@ -11,26 +11,36 @@ export function SiteHeader() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
-    <header className="border-b border-border px-6 py-3 flex items-center justify-between">
-      <Link href="/" className="text-sm font-semibold hover:text-muted-foreground transition-colors">
+    <header className="bg-primary px-6 py-4 flex items-center justify-between">
+      <Link href="/" className="font-display text-2xl font-bold text-primary-foreground hover:opacity-80 transition-opacity">
         Disney Bounding
       </Link>
 
-      <nav className="flex items-center gap-4 text-sm">
+      <nav className="flex items-center gap-3">
         {user ? (
           <>
             <Link
               href="/account"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
             >
               {user.name || user.email}
             </Link>
-            <Button variant="ghost" size="sm" onClick={logout}>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={logout}
+              className="rounded-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
+            >
               Log out
             </Button>
           </>
         ) : (
-          <Button variant="ghost" size="sm" onClick={() => setIsLoginOpen(true)}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => setIsLoginOpen(true)}
+            className="rounded-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
+          >
             Log in
           </Button>
         )}
