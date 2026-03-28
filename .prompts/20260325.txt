@@ -135,3 +135,15 @@ hmm, there's not enough breathing room, and the hero banner is not yet compact e
 ---
 
 commit
+
+---
+
+Ok let's do a couple more tweaks to the home page banner. 1) the text when typed into the search bar is white and shouldn't be. 2) I think instead of a box shadow, the search input will look better with a maroon border.
+
+---
+
+One more thing I noticed. Whenever I type something like "asdjla" into the search bar so that there are no results, the background stripes shift, because I think the pattern is dependent on the height of the body in some way. I do not want the background to shift. Can you make it stable even if the body's height changes?
+
+---
+
+commit

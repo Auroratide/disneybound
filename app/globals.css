@@ -141,6 +141,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-attachment: fixed;
     background-image: repeating-linear-gradient(
       -45deg,
       transparent 0px,
