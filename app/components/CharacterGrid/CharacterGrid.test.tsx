@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { CharacterGrid } from "./CharacterGrid";
 
 const characters = [
@@ -34,74 +34,21 @@ const characters = [
 ];
 
 describe("CharacterGrid", () => {
-  it("announces result count to screen readers on initial render", () => {
-    render(<CharacterGrid characters={characters} />);
-    expect(screen.getByRole("status").textContent).toBe("2 characters found.");
-  });
-
-  it("announces updated result count after filtering", () => {
-    render(<CharacterGrid characters={characters} />);
-    fireEvent.change(screen.getByLabelText(/search by name or movie/i), {
-      target: { value: "ariel" },
-    });
-    expect(screen.getByRole("status").textContent).toBe("1 character found.");
-  });
-
-  it("announces no results to screen readers", () => {
-    render(<CharacterGrid characters={characters} />);
-    fireEvent.change(screen.getByLabelText(/search by name or movie/i), {
-      target: { value: "zzz" },
-    });
-    expect(screen.getByRole("status").textContent).toBe("No characters match your search.");
-  });
-
-  it("shows all characters on initial render", () => {
+  it("renders all provided characters", () => {
     render(<CharacterGrid characters={characters} />);
     expect(screen.getByText("Ariel")).toBeDefined();
     expect(screen.getByText("Rapunzel")).toBeDefined();
   });
 
-  it("filters by character name", () => {
-    render(<CharacterGrid characters={characters} />);
-    fireEvent.change(screen.getByLabelText(/search by name or movie/i), {
-      target: { value: "ariel" },
-    });
-    expect(screen.getByText("Ariel")).toBeDefined();
-    expect(screen.queryByText("Rapunzel")).toBeNull();
+  it("renders nothing when characters list is empty", () => {
+    const { container } = render(<CharacterGrid characters={[]} />);
+    expect(container.firstChild).toBeNull();
   });
 
-  it("filters by movie name", () => {
+  it("links each character to their detail page", () => {
     render(<CharacterGrid characters={characters} />);
-    fireEvent.change(screen.getByLabelText(/search by name or movie/i), {
-      target: { value: "tangled" },
-    });
-    expect(screen.queryByText("Ariel")).toBeNull();
-    expect(screen.getByText("Rapunzel")).toBeDefined();
-  });
-
-  it("is case-insensitive", () => {
-    render(<CharacterGrid characters={characters} />);
-    fireEvent.change(screen.getByLabelText(/search by name or movie/i), {
-      target: { value: "ARIEL" },
-    });
-    expect(screen.getByText("Ariel")).toBeDefined();
-    expect(screen.queryByText("Rapunzel")).toBeNull();
-  });
-
-  it("shows empty state when no characters match", () => {
-    render(<CharacterGrid characters={characters} />);
-    fireEvent.change(screen.getByLabelText(/search by name or movie/i), {
-      target: { value: "zzz" },
-    });
-    expect(screen.getByText("No characters match your search.")).toBeDefined();
-  });
-
-  it("restores all characters when the query is cleared", () => {
-    render(<CharacterGrid characters={characters} />);
-    const input = screen.getByLabelText(/search by name or movie/i);
-    fireEvent.change(input, { target: { value: "ariel" } });
-    fireEvent.change(input, { target: { value: "" } });
-    expect(screen.getByText("Ariel")).toBeDefined();
-    expect(screen.getByText("Rapunzel")).toBeDefined();
+    const links = screen.getAllByRole("link");
+    expect(links.some((l) => l.getAttribute("href") === "/characters/ariel")).toBe(true);
+    expect(links.some((l) => l.getAttribute("href") === "/characters/rapunzel")).toBe(true);
   });
 });

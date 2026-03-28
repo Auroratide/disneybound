@@ -99,3 +99,39 @@ Ok, let's just go with option A for now, the SVG would need to be significantly 
 ---
 
 commit
+
+---
+
+Ok, now take a look at the section on the front page that is the heading (Disney Bounding) and including the search bar. Give me ideas for designs on how this can look more integrated with each other and cohesive into the design.
+
+---
+
+Let's do option B. I've attached a design in .plans/hero-banner.png to reference. One thing to keep in mind: in the code keep the label on the search bar, as a visible label is important for WCAG accessibility.
+
+---
+
+First piece of feedback: We need a darker version of the maroon color for the top bar so it stands out from the hero banner.
+
+---
+
+Great, second feedback: the label is now really far from the search bar itself. Make the label just over the search bar (additionally, change the placeholder to e.g. Ariel so it differs from the label).
+
+---
+
+The placeholder is great. Now please compare what you have with the design in the .plans folder. The search bar is now in the wrong place (needs to be straddling the hero border). Please position the label in the hero with cream text, the search bar on the border, and the N characters found just below the search bar.
+
+---
+
+That looks better, but we can improve it even more by changing the structure of the code in HomeView. Instead of separating the label, search input, and results text into three completely separate divs like they are now, let's put one single <search> element in the hero banner area that contains all three (the results text should be in an <output> element). You should be able to translate the entire search element down in order for it to overlap the hero border.
+
+---
+
+Nice that's much better! Two more adjustments: 1) move the character grid down a little so it does not overlap the results text, and 2) make the hero banner less tall.
+
+---
+
+hmm, there's not enough breathing room, and the hero banner is not yet compact enough. Let me experiment with it, where in the code should I edit?
+
+---
+
+commit

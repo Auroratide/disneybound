@@ -11,7 +11,7 @@ export function SiteHeader() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
-    <header className="bg-primary px-6 py-4 flex items-center justify-between">
+    <header className="px-6 py-4 flex items-center justify-between" style={{ backgroundColor: "color-mix(in oklch, var(--primary) 70%, black)" }}>
       <Link href="/" className="font-display text-2xl font-bold text-primary-foreground hover:opacity-80 transition-opacity">
         Disney Bounding
       </Link>
