@@ -5,6 +5,9 @@ import { getCommunityOutfits } from "./community-outfits";
 // Admin client — needed to create records with arbitrary status and to delete after each test.
 const adminPb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
 
+const TEST_SLUG = "_test_integration";
+const TEST_OUTFIT = "Mermaid";
+
 const createdIds: string[] = [];
 let testUserId: string;
 
@@ -49,7 +52,6 @@ async function createRecord(fields: {
   character_slug: string;
   outfit_name: string;
   status: "pending" | "approved" | "rejected";
-  submitter_name?: string;
   user?: string;
 }): Promise<string> {
   const formData = new FormData();
@@ -57,9 +59,6 @@ async function createRecord(fields: {
   formData.append("outfit_name", fields.outfit_name);
   formData.append("image", makeImage());
   formData.append("status", fields.status);
-  if (fields.submitter_name) {
-    formData.append("submitter_name", fields.submitter_name);
-  }
   if (fields.user) {
     formData.append("user", fields.user);
   }
@@ -70,76 +69,63 @@ async function createRecord(fields: {
 
 describe("getCommunityOutfits", () => {
   it("returns an empty array when no approved records exist", async () => {
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results).toEqual([]);
   });
 
   it("returns only approved records, not pending or rejected", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "pending" });
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "rejected" });
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "pending" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "rejected" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved" });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results).toHaveLength(1);
   });
 
   it("filters by character_slug", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
-    await createRecord({ character_slug: "rapunzel", outfit_name: "Mermaid", status: "approved" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved" });
+    await createRecord({ character_slug: "_test_other", outfit_name: TEST_OUTFIT, status: "approved" });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results).toHaveLength(1);
-    expect(results[0].characterSlug).toBe("ariel");
+    expect(results[0].characterSlug).toBe(TEST_SLUG);
   });
 
   it("filters by outfit_name", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
-    await createRecord({ character_slug: "ariel", outfit_name: "Princess Dress", status: "approved" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: "_test_other_outfit", status: "approved" });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results).toHaveLength(1);
-    expect(results[0].outfitName).toBe("Mermaid");
+    expect(results[0].outfitName).toBe(TEST_OUTFIT);
   });
 
   it("maps snake_case record fields to camelCase", async () => {
-    await createRecord({
-      character_slug: "ariel",
-      outfit_name: "Mermaid",
-      status: "approved",
-      submitter_name: "DisneyStar",
-    });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved" });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
-    expect(results[0].characterSlug).toBe("ariel");
-    expect(results[0].outfitName).toBe("Mermaid");
-    expect(results[0].submitterName).toBe("DisneyStar");
-  });
-
-  it("sets submitterName to null when submitter_name is empty", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
-
-    const results = await getCommunityOutfits("ariel", "Mermaid");
-    expect(results[0].submitterName).toBeNull();
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
+    expect(results[0].characterSlug).toBe(TEST_SLUG);
+    expect(results[0].outfitName).toBe(TEST_OUTFIT);
   });
 
   it("returns a valid PocketBase file URL for imageUrl", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved" });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results[0].imageUrl).toMatch(/^http.*\/api\/files\//);
   });
 
   it("sets userId to the owner's id when a user is set", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved", user: testUserId });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved", user: testUserId });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results[0].userId).toBe(testUserId);
   });
 
   it("sets userId to null for orphaned records with no user", async () => {
-    await createRecord({ character_slug: "ariel", outfit_name: "Mermaid", status: "approved" });
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved" });
 
-    const results = await getCommunityOutfits("ariel", "Mermaid");
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results[0].userId).toBeNull();
   });
 });

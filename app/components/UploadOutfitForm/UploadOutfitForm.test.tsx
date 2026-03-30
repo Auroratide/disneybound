@@ -94,7 +94,6 @@ describe("UploadOutfitForm", () => {
     expect(body.get("character_slug")).toBe("ariel");
     expect(body.get("outfit_name")).toBe("Mermaid");
     expect(body.get("image")).toBeInstanceOf(File);
-    expect(body.get("submitter_name")).toBeNull();
   });
 
   it("shows the success message after a successful upload", async () => {

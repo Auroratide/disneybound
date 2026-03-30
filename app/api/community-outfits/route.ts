@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
   const characterSlug = formData.get("character_slug");
   const outfitName = formData.get("outfit_name");
   const image = formData.get("image");
-  const submitterName = formData.get("submitter_name");
 
   if (!characterSlug || typeof characterSlug !== "string" || !characterSlug.trim()) {
     return NextResponse.json({ error: "character_slug is required" }, { status: 400 });
@@ -50,10 +49,6 @@ export async function POST(request: NextRequest) {
   pbFormData.append("image", image);
   pbFormData.append("status", "pending");
   pbFormData.append("user", pb.authStore.record!.id);
-
-  if (submitterName && typeof submitterName === "string" && submitterName.trim()) {
-    pbFormData.append("submitter_name", submitterName.trim());
-  }
 
   try {
     const record = await pb.collection("community_outfits").create(pbFormData);

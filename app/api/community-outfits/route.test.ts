@@ -137,7 +137,6 @@ describe("POST /api/community-outfits", () => {
         character_slug: "ariel",
         outfit_name: "Mermaid",
         image: makeImage(),
-        submitter_name: "TestUser",
       },
       { cookie: userCookie }
     ));
@@ -150,26 +149,7 @@ describe("POST /api/community-outfits", () => {
     const record = await adminPb.collection("community_outfits").getOne(body.id);
     expect(record.character_slug).toBe("ariel");
     expect(record.outfit_name).toBe("Mermaid");
-    expect(record.submitter_name).toBe("TestUser");
     expect(record.status).toBe("pending");
     expect(record.user).toBe(testUserId);
-  });
-
-  it("omits submitter_name when not provided", async () => {
-    const res = await POST(makeRequest(
-      {
-        character_slug: "ariel",
-        outfit_name: "Mermaid",
-        image: makeImage(),
-      },
-      { cookie: userCookie }
-    ));
-    const body = await res.json();
-    expect(res.status).toBe(201);
-
-    createdIds.push(body.id);
-
-    const record = await adminPb.collection("community_outfits").getOne(body.id);
-    expect(record.submitter_name).toBe("");
   });
 });

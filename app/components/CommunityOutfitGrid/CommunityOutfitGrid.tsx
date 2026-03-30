@@ -24,7 +24,7 @@ export function CommunityOutfitGrid({ outfits, currentUserId = null }: Community
               <div className="relative aspect-square overflow-hidden bg-muted">
                 <Image
                   src={outfit.imageUrl}
-                  alt={outfit.submitterName ? `Outfit by ${outfit.submitterName}` : "Community outfit"}
+                  alt={outfit.userName ? `Outfit by ${outfit.userName}` : "Community outfit"}
                   fill
                   className="object-cover"
                   sizes="(min-width: 640px) 33vw, 50vw"
@@ -38,19 +38,19 @@ export function CommunityOutfitGrid({ outfits, currentUserId = null }: Community
                   {outfit.avatarUrl ? (
                     <Image
                       src={outfit.avatarUrl}
-                      alt={outfit.submitterName ?? ""}
+                      alt={outfit.userName ?? ""}
                       width={28}
                       height={28}
                       className="object-cover w-full h-full"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-xs font-medium text-muted-foreground">
-                      {outfit.submitterName?.[0]?.toUpperCase() ?? "?"}
+                      {outfit.userName?.[0]?.toUpperCase() ?? "?"}
                     </div>
                   )}
                 </div>
                 <p className="text-xs font-medium text-foreground truncate">
-                  {outfit.submitterName ?? "Anonymous"}
+                  {outfit.userName ?? "Anonymous"}
                 </p>
               </div>
             </div>

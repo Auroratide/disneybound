@@ -8,7 +8,8 @@ const outfit = (overrides: Partial<CommunityOutfit> = {}): CommunityOutfit => ({
   characterSlug: "ariel",
   outfitName: "Mermaid",
   imageUrl: "http://127.0.0.1:8090/api/files/abc/1/photo.jpg",
-  submitterName: null,
+  userName: null,
+  avatarUrl: null,
   userId: null,
   ...overrides,
 });
@@ -32,23 +33,23 @@ describe("CommunityOutfitGrid", () => {
     expect(screen.getAllByRole("img")).toHaveLength(3);
   });
 
-  it("shows the submitter name when provided", () => {
-    render(<CommunityOutfitGrid outfits={[outfit({ submitterName: "MickeyFan" })]} />);
+  it("shows the user name when provided", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ userName: "MickeyFan" })]} />);
     expect(screen.getByText("MickeyFan")).toBeDefined();
   });
 
-  it("does not show a submitter name when it is null", () => {
-    render(<CommunityOutfitGrid outfits={[outfit({ submitterName: null })]} />);
-    expect(screen.queryByText("MickeyFan")).toBeNull();
+  it("shows Anonymous when userName is null", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ userName: null })]} />);
+    expect(screen.getByText("Anonymous")).toBeDefined();
   });
 
-  it("uses the submitter name in the image alt text when provided", () => {
-    render(<CommunityOutfitGrid outfits={[outfit({ submitterName: "DisneyStar" })]} />);
+  it("uses the user name in the image alt text when provided", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ userName: "DisneyStar" })]} />);
     expect(screen.getByAltText("Outfit by DisneyStar")).toBeDefined();
   });
 
-  it("uses a generic alt text when submitter name is null", () => {
-    render(<CommunityOutfitGrid outfits={[outfit({ submitterName: null })]} />);
+  it("uses a generic alt text when userName is null", () => {
+    render(<CommunityOutfitGrid outfits={[outfit({ userName: null })]} />);
     expect(screen.getByAltText("Community outfit")).toBeDefined();
   });
 
