@@ -31,3 +31,13 @@ commit
 Rename the /account page to /profile
 
 commit
+
+I notice the profile page and the character pages have a polaroid-like photo display for outfits. I want to make that a common component between them, for consistency. Please make this component and use it in both places.
+
+Good so far. I want a slightly different abstraction for the showUser boolean. For that caption area, on the character pages I want it to be the user and avatar, but on the profile page I want it to show the name of the character being disney bounded. Change the component to allow for that abstraction and then apply it.
+
+Great. For accessibility, let's also change the outfit card to use figure and figcaption.
+
+Two more things. 1) Make the caption a little larger (for accessibility font size must be a minimum of 16px, and right now it's at 14.4px). 2) On the profile page, make the caption link to the character's page.
+
+commit
