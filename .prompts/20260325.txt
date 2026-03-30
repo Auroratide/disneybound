@@ -187,3 +187,15 @@ Right now I see that the home page is wider than the individual character pages.
 ---
 
 commit
+
+---
+
+Take a look at the character card on the character pages now. Now that we've made the page longer, it looks a bit wonky. I think if we overall increase the size of the things in the card (the text, the color swatches, and the character art), it will fit nicer. Can you do that?
+
+---
+
+Now let's improve the title of the character page. 1) Move the All Characters back button to be closer to the top bar. 2) Make the title (character's name) much larger than it is, and centered to the page, and 3) make the subtitle (the movie title) under the character name instead of above it.
+
+---
+
+commit

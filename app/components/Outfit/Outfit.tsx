@@ -13,16 +13,16 @@ export function Outfit({ name, imageSrc, imageAlt, cardColor, colors }: {
     <div className="flex items-center mb-12">
       {/* Card: only the left section */}
       <Card className="flex-1 py-0 gap-0">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-6 pb-2 border-b-2 border-primary">{name}</h2>
-          <ul className="flex flex-wrap gap-4">
+        <div className="p-8">
+          <h2 className="text-2xl font-semibold mb-8 pb-3 border-b-2 border-primary">{name}</h2>
+          <ul className="flex flex-wrap gap-6">
             {colors.map((color) => (
               <li key={color.name} className="flex flex-col items-center gap-2">
                 <span
-                  className="block w-20 h-20 rounded-lg border border-foreground/10 shadow-sm"
+                  className="block w-28 h-28 rounded-xl border border-foreground/10 shadow-sm"
                   style={{ backgroundColor: color.hex }}
                 />
-                <p className="text-sm font-medium text-center">{color.name}</p>
+                <p className="font-medium text-center">{color.name}</p>
               </li>
             ))}
           </ul>
@@ -30,7 +30,7 @@ export function Outfit({ name, imageSrc, imageAlt, cardColor, colors }: {
       </Card>
 
       {/* Mickey silhouette + character, flowing off the right edge of the card */}
-      <div className="shrink-0 relative w-80 h-72 -ml-24 z-10 rotate-15">
+      <div className="shrink-0 relative w-96 h-80 -ml-32 z-10 rotate-15">
         <svg
           viewBox="0 0 99.692093 82.088516"
           className="absolute inset-0 w-full h-full scale-90"
@@ -47,7 +47,7 @@ export function Outfit({ name, imageSrc, imageAlt, cardColor, colors }: {
           src={imageSrc}
           alt={imageAlt}
           fill
-          className="object-contain -rotate-15 drop-shadow-lg scale-110"
+          className="object-contain -rotate-15 drop-shadow-lg scale-120"
         />
       </div>
     </div>

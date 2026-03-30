@@ -47,12 +47,18 @@ export default async function CharacterPage({ params }: Params) {
 
   return (
     <main>
-      <PageContainer className="py-12">
-      <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 inline-block">
-        ← All characters
-      </Link>
-      <p className="text-sm text-foreground/60 mb-2">{character.movie}</p>
-      <h1 className="text-4xl font-bold mb-6">{character.name}</h1>
+      <PageContainer className="pt-4">
+        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-block">
+          ← All characters
+        </Link>
+      </PageContainer>
+
+      <div className="text-center pb-20">
+        <h1 className="text-7xl font-bold">{character.name}</h1>
+        <p className="text-lg text-foreground/60 mt-2">{character.movie}</p>
+      </div>
+
+      <PageContainer className="pb-12">
 
       {character.outfits.map((outfit, i) => (
         <div key={outfit.name}>
