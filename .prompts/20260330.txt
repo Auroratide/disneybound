@@ -15,3 +15,9 @@ I deleted the user myself.
 Ran the migration for you
 
 commit
+
+Next, let's make it so when the user clicks on a community outfit, it full screens it. I want this done a certain way, using the img-zoom web component described here: https://components.auroratide.com/img-zoom
+
+Looks like you added the img-zoom tag right, but there's a bit of a strange behaviour happening during the transition. I think it's because the img tag has this style on it: "position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;". But where is this style coming from and how can I modify it?
+
+commit

@@ -8,6 +8,7 @@ import { PageContainer } from "@/app/components/PageContainer/PageContainer";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-outfits";
 import { getServerAuth } from "@/lib/auth";
+import { ImgZoomRegistrar } from "@/app/components/ImgZoomRegistrar/ImgZoomRegistrar";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -47,6 +48,7 @@ export default async function CharacterPage({ params }: Params) {
 
   return (
     <main>
+      <ImgZoomRegistrar />
       <PageContainer className="pt-4">
         <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-block">
           ← All characters

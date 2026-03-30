@@ -22,13 +22,16 @@ export function CommunityOutfitGrid({ outfits, currentUserId = null }: Community
             <div className="bg-white shadow-md p-2 pb-0">
               {/* Photo */}
               <div className="relative aspect-square overflow-hidden bg-muted">
-                <Image
-                  src={outfit.imageUrl}
-                  alt={outfit.userName ? `Outfit by ${outfit.userName}` : "Community outfit"}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 640px) 33vw, 50vw"
-                />
+                <img-zoom className="absolute inset-0">
+                  <Image
+                    src={outfit.imageUrl}
+                    alt={outfit.userName ? `Outfit by ${outfit.userName}` : "Community outfit"}
+                    width={400}
+                    height={400}
+                    className="object-cover w-full h-full"
+                    sizes="(min-width: 640px) 33vw, 50vw"
+                  />
+                </img-zoom>
                 <div className="absolute inset-0 [box-shadow:inset_0_0_6px_rgba(0,0,0,0.18)] pointer-events-none" />
               </div>
 
