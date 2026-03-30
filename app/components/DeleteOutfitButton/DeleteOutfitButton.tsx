@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 export function DeleteOutfitButton({ id }: { id: string }) {
   const router = useRouter();
@@ -29,15 +28,14 @@ export function DeleteOutfitButton({ id }: { id: string }) {
 
   return (
     <div className="absolute top-1 right-1 flex flex-col items-end gap-1">
-      <Button
-        variant="destructive"
-        size="icon-sm"
+      <button
         onClick={handleDelete}
         disabled={isDeleting}
         aria-label="Delete outfit"
+        className="w-6 h-6 rounded-full bg-white border border-foreground/20 shadow flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-50 cursor-pointer"
       >
-        <Trash2 />
-      </Button>
+        <X className="w-3.5 h-3.5 text-foreground" />
+      </button>
       {error && (
         <p className="text-xs text-destructive bg-background/90 px-1 py-0.5 rounded">
           Could not delete

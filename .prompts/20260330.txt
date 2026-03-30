@@ -21,3 +21,9 @@ Next, let's make it so when the user clicks on a community outfit, it full scree
 Looks like you added the img-zoom tag right, but there's a bit of a strange behaviour happening during the transition. I think it's because the img tag has this style on it: "position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;". But where is this style coming from and how can I modify it?
 
 commit
+
+Taking a look at the account page, there are some adjustments I want to make. Make the sidebar white background. Align the email to the left. Make the sidebar a bit wider.
+
+I want to pivot on the design of the account page. I've updated the design in .plans/accounts-page.png, so that the profile info is now a banner above the outfits. The design is pretty crude so don't follow it EXACTLY, just use it as a guide for layout.
+
+commit
