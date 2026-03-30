@@ -27,3 +27,7 @@ Taking a look at the account page, there are some adjustments I want to make. Ma
 I want to pivot on the design of the account page. I've updated the design in .plans/accounts-page.png, so that the profile info is now a banner above the outfits. The design is pretty crude so don't follow it EXACTLY, just use it as a guide for layout.
 
 commit
+
+Rename the /account page to /profile
+
+commit

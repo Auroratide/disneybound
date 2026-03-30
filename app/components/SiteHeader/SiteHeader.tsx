@@ -20,7 +20,7 @@ export function SiteHeader() {
         {user ? (
           <>
             <Link
-              href="/account"
+              href="/profile"
               className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
             >
               {user.name || user.email}
