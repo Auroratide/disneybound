@@ -6,6 +6,7 @@ export type CommunityOutfit = {
   outfitName: string;
   imageUrl: string;
   submitterName: string | null;
+  avatarUrl: string | null;
   userId: string | null;
 };
 
@@ -18,6 +19,15 @@ type CommunityOutfitRecord = {
   user: string;
   collectionId: string;
   collectionName: string;
+  expand?: {
+    user?: {
+      id: string;
+      name: string;
+      avatar: string;
+      collectionId: string;
+      collectionName: string;
+    };
+  };
 };
 
 export async function getCommunityOutfits(
@@ -32,14 +42,24 @@ export async function getCommunityOutfits(
       { characterSlug, outfitName }
     ),
     sort: "-created",
+    expand: "user",
   });
 
-  return records.map((record) => ({
-    id: record.id,
-    characterSlug: record.character_slug,
-    outfitName: record.outfit_name,
-    imageUrl: pb.files.getURL(record, record.image),
-    submitterName: record.submitter_name || null,
-    userId: record.user || null,
-  }));
+  return records.map((record) => {
+    const expandedUser = record.expand?.user;
+    const avatarUrl =
+      expandedUser?.avatar
+        ? pb.files.getURL(expandedUser, expandedUser.avatar)
+        : null;
+
+    return {
+      id: record.id,
+      characterSlug: record.character_slug,
+      outfitName: record.outfit_name,
+      imageUrl: pb.files.getURL(record, record.image),
+      submitterName: expandedUser?.name || null,
+      avatarUrl,
+      userId: record.user || null,
+    };
+  });
 }

@@ -219,3 +219,19 @@ Great! Now make it so on mobile, the title and color swatches are centered, and 
 ---
 
 commit
+
+---
+
+Now let's take a look at the Community Outfits. Look at the .plans/character-page.png for the design inspiration for this section. I want to focus on just the submitted photos right now. 1) Make the images look sort of like photos. 2) Put the submitter's name and avatar in the little space under the actual picture for each submitted photo. Start with that, we'll make other improvements later.
+
+---
+
+Good, some improvements: 1) A subtle inset shadow on the image so it pops a little from the polaroid border. 2) Don't use submitterName (we need to deprecate that eventually), each image should have an actual user attached to it which we can use. 3) Remove the border radius, polaroids don't have rounded corners usually.
+
+---
+
+The inset shadow isn't showing. I know why but I want you to tell me why and then fix it.
+
+---
+
+commit
