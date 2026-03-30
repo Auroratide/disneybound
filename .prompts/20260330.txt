@@ -1,3 +1,17 @@
 that makes sense. Please use these values in the test
 
 commit
+
+Looking at the community outfits, the usernames and avatars are still saying anonymous. Why is that, can you fix it, and can you write a test somewhere that proves you fixed it? (start with the test, aka test driven development)
+
+Are there any security considerations I need to make with regard to these rules? For example, we must avoid at all costs people arbitrarily querying pocketbase for a list of users and getting their email addresses.
+
+Great this is working! I want to be double sure that we are not leaking anything. In data, I want you to create a test file called "security.test.ts" which we are going to use to do some basic penetration testing, pretending to be a (non-admin) user using the pocketbase sdk to probe our system for weakness. Start with a test that ensures we cannot list users, and a test that ensures we cannot get user's emails (unless we _are_ that user).
+
+I think the tests are failing. Can you run them and diagnose?
+
+I deleted the user myself.
+
+Ran the migration for you
+
+commit

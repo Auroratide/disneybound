@@ -22,6 +22,7 @@ beforeAll(async () => {
     emailVisibility: true,
     password: "test-password-unused",
     passwordConfirm: "test-password-unused",
+    name: "Test Outfit User",
   });
   testUserId = user.id;
 });
@@ -113,6 +114,13 @@ describe("getCommunityOutfits", () => {
 
     const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
     expect(results[0].imageUrl).toMatch(/^http.*\/api\/files\//);
+  });
+
+  it("returns the user's name when the user has a name set", async () => {
+    await createRecord({ character_slug: TEST_SLUG, outfit_name: TEST_OUTFIT, status: "approved", user: testUserId });
+
+    const results = await getCommunityOutfits(TEST_SLUG, TEST_OUTFIT);
+    expect(results[0].userName).toBe("Test Outfit User");
   });
 
   it("sets userId to the owner's id when a user is set", async () => {
