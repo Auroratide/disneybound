@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import type { RecordModel } from "pocketbase";
 import { getPocketbase } from "@/lib/pocketbase";
 
@@ -8,13 +9,14 @@ interface AuthContextValue {
   user: RecordModel | null;
   requestOtp: (email: string) => Promise<{ otpId: string }>;
   confirmOtp: (otpId: string, code: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<RecordModel | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const pb = getPocketbase();
@@ -48,14 +50,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const pb = getPocketbase();
     pb.authStore.save(token, record);
     // authStore.onChange fires automatically, updating user state.
+    // Refresh server components so they re-render with the new auth (e.g. delete buttons appear).
+    router.refresh();
   }
 
-  function logout() {
-    // Clear the server-side HttpOnly cookie, then clear local state.
-    fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
+  async function logout() {
+    // Await cookie clearance before refreshing so the server sees the cleared cookie.
+    await fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
     const pb = getPocketbase();
     pb.authStore.clear();
     // authStore.onChange fires automatically, clearing user state.
+    // Refresh server components so they re-render without auth (e.g. profile page redirects).
+    router.refresh();
   }
 
   return (
