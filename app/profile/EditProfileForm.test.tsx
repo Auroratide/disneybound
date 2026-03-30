@@ -20,90 +20,161 @@ const mockUser: RecordModel = {
   updated: "",
 };
 
-describe("EditProfileForm", () => {
-  let mockUpdate: ReturnType<typeof vi.fn>;
-  let mockSave: ReturnType<typeof vi.fn>;
+function makePbMock(overrides: Record<string, unknown> = {}) {
+  const mockUpdate = vi.fn().mockResolvedValue({ ...mockUser, name: "Updated Name" });
+  const mockSave = vi.fn();
+  const mock = {
+    collection: () => ({ update: mockUpdate }),
+    authStore: { token: "test-token", save: mockSave, record: null },
+    files: { getURL: vi.fn().mockReturnValue("https://example.com/avatar.jpg") },
+    ...overrides,
+  };
+  vi.mocked(getPocketbase).mockReturnValue(mock as ReturnType<typeof getPocketbase>);
+  return { mockUpdate, mockSave, mock };
+}
 
-  beforeEach(() => {
-    mockUpdate = vi.fn().mockResolvedValue({ ...mockUser, name: "Updated Name" });
-    mockSave = vi.fn();
-    vi.mocked(getPocketbase).mockReturnValue({
-      collection: () => ({ update: mockUpdate }),
-      authStore: { token: "test-token", save: mockSave },
-    } as ReturnType<typeof getPocketbase>);
-  });
+describe("EditProfileForm — view mode", () => {
+  beforeEach(() => makePbMock());
+  afterEach(() => vi.clearAllMocks());
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it("pre-fills the display name with the user's current name", () => {
+  it("shows the display name as text", () => {
     render(<EditProfileForm user={mockUser} />);
-    const nameInput = screen.getByLabelText(/display name/i) as HTMLInputElement;
-    expect(nameInput.value).toBe("Disney Fan");
+    expect(screen.getByText("Disney Fan")).toBeDefined();
   });
 
-  it("renders a profile picture input", () => {
+  it("does not show an input for the display name by default", () => {
     render(<EditProfileForm user={mockUser} />);
-    expect(screen.getByLabelText(/profile picture/i)).toBeDefined();
+    expect(screen.queryByRole("textbox", { name: /display name/i })).toBeNull();
   });
 
-  it("renders a save button", () => {
+  it("shows the email as text", () => {
     render(<EditProfileForm user={mockUser} />);
-    expect(screen.getByRole("button", { name: /save/i })).toBeDefined();
+    expect(screen.getByText("test@example.com")).toBeDefined();
   });
 
-  it("calls update with the user id and form data on submit", async () => {
-    render(<EditProfileForm user={mockUser} />);
+  it("shows 'Not set' when display name is empty", () => {
+    render(<EditProfileForm user={{ ...mockUser, name: "" }} />);
+    expect(screen.getByText(/not set/i)).toBeDefined();
+  });
 
-    fireEvent.change(screen.getByLabelText(/display name/i), {
+  it("renders a profile picture upload button", () => {
+    render(<EditProfileForm user={mockUser} />);
+    expect(screen.getByLabelText(/upload profile picture/i)).toBeDefined();
+  });
+});
+
+describe("EditProfileForm — editing name", () => {
+  beforeEach(() => makePbMock());
+  afterEach(() => vi.clearAllMocks());
+
+  it("shows input when the edit button is clicked", () => {
+    render(<EditProfileForm user={mockUser} />);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
+    expect(screen.getByRole("textbox", { name: /display name/i })).toBeDefined();
+  });
+
+  it("pre-fills the input with the current name", () => {
+    render(<EditProfileForm user={mockUser} />);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
+    const input = screen.getByRole("textbox", { name: /display name/i }) as HTMLInputElement;
+    expect(input.value).toBe("Disney Fan");
+  });
+
+  it("reverts to view mode and discards changes when cancel is clicked", () => {
+    render(<EditProfileForm user={mockUser} />);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
+    fireEvent.change(screen.getByRole("textbox", { name: /display name/i }), {
+      target: { value: "Something Else" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /cancel editing/i }));
+
+    expect(screen.queryByRole("textbox", { name: /display name/i })).toBeNull();
+    expect(screen.getByText("Disney Fan")).toBeDefined();
+  });
+
+  it("saves the name and returns to view mode on submit", async () => {
+    const { mockUpdate, mockSave } = makePbMock();
+    render(<EditProfileForm user={mockUser} />);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
+    fireEvent.change(screen.getByRole("textbox", { name: /display name/i }), {
       target: { value: "New Name" },
     });
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     await waitFor(() => expect(mockUpdate).toHaveBeenCalledOnce());
     expect(mockUpdate).toHaveBeenCalledWith("user1", expect.any(FormData));
-  });
-
-  it("refreshes the auth store after a successful save", async () => {
-    render(<EditProfileForm user={mockUser} />);
-    fireEvent.click(screen.getByRole("button", { name: /save/i }));
-
-    await waitFor(() => expect(mockSave).toHaveBeenCalledOnce());
-    expect(mockSave).toHaveBeenCalledWith("test-token", expect.objectContaining({ name: "Updated Name" }));
+    expect(mockSave).toHaveBeenCalledWith("test-token", expect.any(Object));
+    expect(screen.queryByRole("textbox", { name: /display name/i })).toBeNull();
   });
 
   it("shows a success message after saving", async () => {
     render(<EditProfileForm user={mockUser} />);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/profile updated/i)).toBeDefined();
+      expect(screen.getByText(/name updated/i)).toBeDefined();
     });
   });
 
-  it("shows an error message when the save fails", async () => {
+  it("shows an error and stays in edit mode when save fails", async () => {
+    const { mockUpdate } = makePbMock();
     mockUpdate.mockRejectedValue(new Error("Server error"));
     render(<EditProfileForm user={mockUser} />);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/failed to update profile/i)).toBeDefined();
+      expect(screen.getByText(/failed to update name/i)).toBeDefined();
     });
+    expect(screen.getByRole("textbox", { name: /display name/i })).toBeDefined();
   });
 
   it("disables the save button while saving", async () => {
     let resolveUpdate!: (val: RecordModel) => void;
-    mockUpdate.mockImplementation(() => new Promise<RecordModel>(res => { resolveUpdate = res; }));
+    const { mockUpdate } = makePbMock();
+    mockUpdate.mockImplementation(
+      () => new Promise<RecordModel>(res => { resolveUpdate = res; })
+    );
 
     render(<EditProfileForm user={mockUser} />);
-    const button = screen.getByRole("button", { name: /save/i });
-    fireEvent.click(button);
+    fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
+    fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     await waitFor(() => {
-      expect(button.hasAttribute("disabled")).toBe(true);
+      expect(screen.getByRole("button", { name: /saving/i }).hasAttribute("disabled")).toBe(true);
     });
 
     resolveUpdate({ ...mockUser });
+  });
+});
+
+describe("EditProfileForm — avatar upload", () => {
+  afterEach(() => vi.clearAllMocks());
+
+  it("auto-saves the avatar immediately when a file is picked", async () => {
+    const { mockUpdate } = makePbMock();
+    render(<EditProfileForm user={mockUser} />);
+
+    const file = new File(["img"], "avatar.png", { type: "image/png" });
+    const input = document.querySelector("input[type=file]") as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledOnce());
+    expect(mockUpdate).toHaveBeenCalledWith("user1", expect.any(FormData));
+  });
+
+  it("shows an error if the avatar upload fails", async () => {
+    const { mockUpdate } = makePbMock();
+    mockUpdate.mockRejectedValue(new Error("Upload failed"));
+    render(<EditProfileForm user={mockUser} />);
+
+    const file = new File(["img"], "avatar.png", { type: "image/png" });
+    const input = document.querySelector("input[type=file]") as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => {
+      expect(screen.getByText(/failed to upload photo/i)).toBeDefined();
+    });
   });
 });

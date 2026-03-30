@@ -41,3 +41,11 @@ Great. For accessibility, let's also change the outfit card to use figure and fi
 Two more things. 1) Make the caption a little larger (for accessibility font size must be a minimum of 16px, and right now it's at 14.4px). 2) On the profile page, make the caption link to the character's page.
 
 commit
+
+The profile card should show the user's existing profile picture and display name if they exist. Please do so.
+
+for the display name, let's actually make it more like the email field rather than duplicated as a subheader and an input field. Then, add an edit button that turns the display name into an editable field, and when it saves it turns back to normal. Go ahead and choose a place for the edit button, can adjust later after I see it. Make sure this is tested.
+
+Great, some feedback. 1) Move the edit button to be in line with the Display Name label, so it's always consistently placed. 2) Make the hitbox of the button bigger. 3) The input that's created must be labeled for accessibility. One way to do this might be to transform the Display name paragraph into a label associated with the input field that's rendered.
+
+commit
