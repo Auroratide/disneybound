@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Character } from "@/app/data/characters";
 import { Input } from "@/components/ui/input";
+import { PageContainer } from "@/app/components/PageContainer/PageContainer";
 
 type Props = {
   characters: Character[];
@@ -28,7 +29,7 @@ export function HomeView({ characters }: Props) {
     <>
       {/* Hero band */}
       <div className="bg-primary text-primary-foreground overflow-visible">
-        <div className="max-w-4xl mx-auto px-6 pt-6">
+        <PageContainer className="pt-6">
           <h1 className="text-5xl font-bold mb-2 text-primary-foreground">Disney Bounding</h1>
           <p className="text-primary-foreground/70 text-lg mb-0">
             Find color palettes to guide your Disney bounding outfits.
@@ -52,11 +53,12 @@ export function HomeView({ characters }: Props) {
               {statusMessage}
             </output>
           </search>
-        </div>
+        </PageContainer>
       </div>
 
       {/* Content area */}
-      <main className="max-w-4xl mx-auto px-6 pt-30 pb-12">
+      <main className="pt-30 pb-12">
+        <PageContainer>
         {filtered.length > 0 && (
           <ul className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 overflow-visible pb-4">
             {filtered.map((character) => (
@@ -92,6 +94,7 @@ export function HomeView({ characters }: Props) {
             ))}
           </ul>
         )}
+        </PageContainer>
       </main>
     </>
   );

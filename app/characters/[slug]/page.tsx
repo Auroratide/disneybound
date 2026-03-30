@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Outfit } from "@/app/components/Outfit";
 import { CommunityOutfitGrid } from "@/app/components/CommunityOutfitGrid/CommunityOutfitGrid";
 import { UploadOutfitForm } from "@/app/components/UploadOutfitForm/UploadOutfitForm";
+import { PageContainer } from "@/app/components/PageContainer/PageContainer";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-outfits";
 import { getServerAuth } from "@/lib/auth";
@@ -45,7 +46,8 @@ export default async function CharacterPage({ params }: Params) {
   ]);
 
   return (
-    <main className="max-w-2xl mx-auto px-6 py-12">
+    <main>
+      <PageContainer className="py-12">
       <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 inline-block">
         ← All characters
       </Link>
@@ -72,6 +74,7 @@ export default async function CharacterPage({ params }: Params) {
           </details>
         </div>
       ))}
+      </PageContainer>
     </main>
   );
 }

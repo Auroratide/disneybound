@@ -179,3 +179,11 @@ great, now how do I also make the character image larger? Right now I see it is 
 ---
 
 commit
+
+---
+
+Right now I see that the home page is wider than the individual character pages. Why is that, and can you make it so the character pages are just as wide as the home page? Make sure that when you do so, you create an abstraction so all pages are consistently sized.
+
+---
+
+commit
