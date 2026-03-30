@@ -199,3 +199,23 @@ Now let's improve the title of the character page. 1) Move the All Characters ba
 ---
 
 commit
+
+---
+
+I want to focus on the mobile design of the character card now. Make it so that on mobile screens, the character and mickey background render above the card rather than the side, so that the card color swatches can use the horizontal space. The character/background should overlap slightly the top of the card.
+
+---
+
+I reverted the changes, because the desktop view got severely messed up. Can you try again, and this time, take a screenshot of the desktop view before and after your changes to make sure that it continues to match as much as possible?
+
+---
+
+Much better! On the mobile view, can you make the character art and background larger, maybe by about 50% or so?
+
+---
+
+Great! Now make it so on mobile, the title and color swatches are centered, and the swatches don't wrap but instead shrink to fit the container. But on desktop keep things left-aligned like they already are.
+
+---
+
+commit
