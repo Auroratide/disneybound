@@ -49,3 +49,17 @@ for the display name, let's actually make it more like the email field rather th
 Great, some feedback. 1) Move the edit button to be in line with the Display Name label, so it's always consistently placed. 2) Make the hitbox of the button bigger. 3) The input that's created must be labeled for accessibility. One way to do this might be to transform the Display name paragraph into a label associated with the input field that's rendered.
 
 commit
+
+Let's fix an error I'm seeing Next report on the frontend. It claims: HTMLElement is not defined
+app/components/ImgZoomRegistrar/ImgZoomRegistrar.tsx (4:1) @ module evaluation
+
+
+  2 | // Registers the <img-zoom> custom element on the client.
+  3 | // Render this once anywhere in the tree before <img-zoom> is used.
+> 4 | import "@auroratide/img-zoom/lib/define.js";
+    | ^
+  5 |
+  6 | export function ImgZoomRegistrar() {
+  7 |   return null;
+
+commit
