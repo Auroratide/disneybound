@@ -147,3 +147,35 @@ One more thing I noticed. Whenever I type something like "asdjla" into the searc
 ---
 
 commit
+
+---
+
+Next I want to examine the design of the individual character pages. Take a look at, for example, Ariel's page. Right now it does not feel cohesive with the sort of scrapbook design of the website. Please give me a few different ideas for how to better design this page holistically to account for the character's palette, community uploads, and different character outfits. Also, refer to the .plans/website-design.png file for design inspiration.
+
+---
+
+Ok I want a simpler version of Option C I think. I've added a reference design to .plans/character-page.png. Let's start with just the palette box for now. Implement something that looks like it, but ignore the scribbles and paperclip aesthetic, let's start simple for now.
+
+---
+
+I created a more specific design for the outfit card and put it in .plans/character-card.png. Can you arrange the card to look more like that reference image?
+
+---
+
+Looks good so far, but now I want the character image and its background shape thing to flow off of the card just like in the design. I have also given you a reference SVG for the mickey head (.plans/mickey.svg) to use instead of the background gradient code that is used.
+
+---
+
+The shape and character need to be larger, the mickey background needs to be rotated and have a border color that is darker than the background color, and the overlap of the background on the card needs to be more. Try to match the reference image in .plans/character-card.png as much as possible.
+
+---
+
+Closer! How do I unrotate the actual image so the mickey head is rotated but the character art is not?
+
+---
+
+great, now how do I also make the character image larger? Right now I see it is "full", but I want it to be larger than that so it overflows the container a bit. And also give it a drop shadow.
+
+---
+
+commit
