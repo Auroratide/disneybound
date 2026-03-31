@@ -73,3 +73,11 @@ claude@disneybounding.com
 169297
 
 commit
+
+I like the Fredoka font for headings, but I don't like the current generic sans-serif font the rest of the site uses. What fonts might go well with the Fredoka font?
+
+Let's use Nunito
+
+When i inspect in the browser I still see that the body's font is "ui-sans-serif, system-ui" and not nunito.
+
+commit

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Fredoka } from "next/font/google";
+import { Nunito, Geist_Mono, Fredoka } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/app/components/AuthProvider/AuthProvider";
 import { SiteHeader } from "@/app/components/SiteHeader/SiteHeader";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
 });
 
@@ -31,10 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${fredoka.variable} antialiased`}
-      >
+    <html lang="en" className={`${nunito.variable} ${geistMono.variable} ${fredoka.variable}`}>
+      <body className="antialiased">
         <AuthProvider>
           <SiteHeader />
           {children}
