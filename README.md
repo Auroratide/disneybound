@@ -20,7 +20,7 @@ So this website is a direct experiment:
 
 ### What I've learned
 
-I'll write more in detail on my website at some point, for you just get my raw thoughts.
+I'll write more in detail on my website at some point, for now you just get my raw thoughts.
 
 Claude Code is very powerful. After using it, I'm convinced a 0-code workflow is possible, even today. I'm not even using the strongest model (Sonnet instead of Opus), and I've written almost no code.
 
@@ -43,3 +43,13 @@ That said, Claude is equally impressive. It can do things that are beyond what I
 I love the act of coding. **Writing code is fun to me**. Admittedly, coding isn't art. But sometimes, it _feels_ like art, in the sense that it's a craft I use to express my creativity. So will I continue to code manually? For personal expressions like my [website-story hybrid](https://ematea.city), yeah. That doesn't change.
 
 Though, if I'm being completely honest... the paradigm shift for me is that **"coding" is no longer a marketable skill**. So what is? At least for now, systems-level thinking, requirements extraction, and attention to quality are what are important. To be honest, these were always the things companies were really (supposed to be) hiring for anyways. It's just now, knowing how to _code_ is not necessary (granted, knowing how to _read_ code might still be useful).
+
+### Future Experiments
+
+I'm still pretty human-in-the-loop when it comes to AI coding. There are lots of people who have figured out how to make AI basically autonomous though, so I've got more journey ahead of me.
+
+So my next thoughts are:
+
+* For the things AI messes up, how can I leverage skills to teach it not to mess up in the future? And, can I evaluate how effective a skill is?
+* How far can I get going truly hands-off on coding, where I'm not allowed to write _nor read_ a single line of code?
+* Should I give spec-driven development a try, i.e. generate the entire codebase from just a very detailed list of requirements?
