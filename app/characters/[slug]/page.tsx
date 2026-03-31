@@ -62,7 +62,7 @@ export default async function CharacterPage({ params }: Params) {
       <PageContainer className="pb-12">
 
       {character.outfits.map((outfit, i) => (
-        <div key={outfit.name}>
+        <div key={outfit.name} className="mb-32">
           <Outfit
             name={outfit.name}
             imageSrc={outfit.imageSrc}
