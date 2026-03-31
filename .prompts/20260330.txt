@@ -81,3 +81,15 @@ Let's use Nunito
 When i inspect in the browser I still see that the body's font is "ui-sans-serif, system-ui" and not nunito.
 
 commit
+
+Let's focus on the community outfits section... I want to move the share bounding outfit button to above the existing outfits... I also think the current button and subsequent form is very ugly. Can you give me ideas?
+
+I think we should combine options A and C. Use a button to open the form, BUT do not use a dialog. Instead, just expand the form on the page. The form should be a preview of a polaroid photo which is also the upload field... If the person is not logged in, then it gives them a button with which to log in. And if there are no community outfits uploaded, then the form starts off expanded.
+
+Pretty good first pass! Some tweaks: 1) maroon background on button 2) Bigger font 3) Center form, bigger polaroid 4) cursor + hover effect
+
+Right above the form, give me a slot to write some instruction/explanation text...
+
+Write tests for the community outfits section component
+
+commit

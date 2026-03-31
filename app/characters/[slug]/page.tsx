@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Outfit } from "@/app/components/Outfit";
-import { CommunityOutfitGrid } from "@/app/components/CommunityOutfitGrid/CommunityOutfitGrid";
-import { UploadOutfitForm } from "@/app/components/UploadOutfitForm/UploadOutfitForm";
+import { CommunityOutfitsSection } from "@/app/components/CommunityOutfitsSection/CommunityOutfitsSection";
 import { PageContainer } from "@/app/components/PageContainer/PageContainer";
 import { getAllCharacters, getCharacterBySlug } from "@/app/data/characters";
 import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-outfits";
@@ -71,15 +70,16 @@ export default async function CharacterPage({ params }: Params) {
             cardColor={outfit.cardColor}
             colors={outfit.colors}
           />
-          <CommunityOutfitGrid outfits={communityOutfitsByOutfit[i]} currentUserId={user?.id ?? null} />
-          <details className="mb-10">
-            <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Share your bounding outfit
-            </summary>
-            <div className="mt-4">
-              <UploadOutfitForm characterSlug={slug} outfitName={outfit.name} />
-            </div>
-          </details>
+          <CommunityOutfitsSection
+            outfits={communityOutfitsByOutfit[i]}
+            currentUserId={user?.id ?? null}
+            characterSlug={slug}
+            outfitName={outfit.name}
+            instructions={communityOutfitsByOutfit[i].length > 0
+              ? `Want to provide inspiration? Share your outfit of ${character.name}!`
+              : `Be the first to share an outfit of ${character.name}!`
+            }
+          />
         </div>
       ))}
       </PageContainer>
