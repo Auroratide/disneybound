@@ -40,9 +40,9 @@ That said, Claude is equally impressive. It can do things that are beyond what I
 
 ### What this means for me
 
-I love the act of coding. **Writing code is fun to me**. Admittedly, coding isn't art. But sometimes, it _feels_ like art, in the sense that it's a craft I use to express my creativity. So will I continue to code manually? For personal expressions like my [website-story hybrid](https://ematea.city), yeah. That doesn't change.
+I love the act of coding. **Writing code is fun to me**. Admittedly, coding isn't art. But sometimes, it _feels_ like art, in the sense that it's a craft I use to express my creativity. So will I continue to code manually? For personal expressions like my [website-story hybrid](https://ematea.city), yeah. That doesn't change as much.
 
-Though, if I'm being completely honest... the paradigm shift for me is that **"coding" is no longer a marketable skill**. So what is? At least for now, systems-level thinking, requirements extraction, and attention to quality are what are important. To be honest, these were always the things companies were really (supposed to be) hiring for anyways. It's just now, knowing how to _code_ is not necessary (granted, knowing how to _read_ code might still be useful).
+Though, if I'm being completely honest... the paradigm shift for me is that **"coding" is no longer a marketable skill**. So what is? At least for now, systems-level thinking, requirements extraction, and attention to quality are what are important. To be honest, these were always the things companies were really (supposed to be) hiring for anyways. It's just now, knowing how to _code_ is not necessary whereas it use to be (granted, knowing how to _read_ code might still be useful).
 
 ### Future Experiments
 
