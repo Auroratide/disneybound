@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@auroratide/img-zoom':
-        specifier: ^0.1.8
-        version: 0.1.8
+        specifier: ^0.1.9
+        version: 0.1.9
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -98,8 +98,8 @@ packages:
     resolution: {integrity: sha512-9q/yCljni37pkMr4sPrI3G4jqdIk074+iukc5aFJl7kmDCCsiJrbZ6zKxnES1Gwg+i9RcDZwvktl23puGslmvA==}
     hasBin: true
 
-  '@auroratide/img-zoom@0.1.8':
-    resolution: {integrity: sha512-ToOOv888TgYAolVgfhg61LnLcFLTGLamigi6Y2kRJF+2HRkdzwgce6n2hNuiUnK5g2gPRXVszBBxp+I79eh7Cg==}
+  '@auroratide/img-zoom@0.1.9':
+    resolution: {integrity: sha512-hjZlWs9sQ4ieFuTnGY56CjoOApKCDcAkHtQaboFh7kta37CFBB5YzwQMqjZrT3ZBP9hWnGZukQhRAXYSpuPc3A==}
 
   '@babel/code-frame@7.29.0':
     resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
@@ -4368,7 +4368,7 @@ snapshots:
       package-manager-detector: 1.6.0
       tinyexec: 1.0.2
 
-  '@auroratide/img-zoom@0.1.8': {}
+  '@auroratide/img-zoom@0.1.9': {}
 
   '@babel/code-frame@7.29.0':
     dependencies:
