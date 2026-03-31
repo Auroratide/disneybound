@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
+import * as Icon from "@/app/components/Icon/Icon";
 
 export function DeleteOutfitButton({ id }: { id: string }) {
   const router = useRouter();
@@ -34,7 +34,7 @@ export function DeleteOutfitButton({ id }: { id: string }) {
         aria-label="Delete outfit"
         className="w-6 h-6 rounded-full bg-white border border-foreground/20 shadow flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-50 cursor-pointer"
       >
-        <X className="w-3.5 h-3.5 text-foreground" />
+        <Icon.X className="w-3.5 h-3.5 text-foreground" />
       </button>
       {error && (
         <p className="text-xs text-destructive bg-background/90 px-1 py-0.5 rounded">

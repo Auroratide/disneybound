@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Camera } from "lucide-react";
+import * as Icon from "@/app/components/Icon/Icon";
 import type { CommunityOutfit } from "@/app/data/community-outfits";
 import { OutfitCard } from "@/app/components/OutfitCard/OutfitCard";
 import { useAuth } from "@/app/components/AuthProvider/AuthProvider";
@@ -101,7 +101,7 @@ export function CommunityOutfitsSection({
             aria-controls={uploadFormId}
             className="flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-full bg-primary text-primary-foreground hover:opacity-80 transition-opacity"
           >
-            <Camera className="w-4 h-4" />
+            <Icon.Camera className="w-4 h-4" />
             {isExpanded ? "Hide" : "Share yours"}
           </button>
         )}
@@ -146,7 +146,7 @@ export function CommunityOutfitsSection({
                       />
                     ) : (
                       <div className="flex flex-col items-center gap-2 text-muted-foreground px-4 text-center">
-                        <Camera className="w-10 h-10" />
+                        <Icon.Camera className="w-10 h-10" />
                         <span className="text-sm leading-tight">Tap to add your photo</span>
                       </div>
                     )}

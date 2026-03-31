@@ -1,3 +1,7 @@
 Help me make the search bar on the front page a little larger. I tried adding text-lg to the Input classname but it didn't make a difference.
 
 commit
+
+I notice you've been inline SVGs for icons throughout the site. I want to make a library of icons that you can invoke like <Icon.NameOfIcon /> in code so that they are reusable. Can you find the instances of inline svg icons in the code and refactor them all into a react icon library?
+
+commit

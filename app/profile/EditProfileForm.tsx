@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Upload, User, Pencil, X } from "lucide-react";
+import * as Icon from "@/app/components/Icon/Icon";
 import type { RecordModel } from "pocketbase";
 import { getPocketbase } from "@/lib/pocketbase";
 import { Button } from "@/components/ui/button";
@@ -110,7 +110,7 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
             {previewUrl ? (
               <Image src={previewUrl} alt="Your avatar" fill sizes="96px" className="object-cover" />
             ) : (
-              <User className="w-12 h-12 text-muted-foreground" />
+              <Icon.User className="w-12 h-12 text-muted-foreground" />
             )}
           </div>
           <label
@@ -118,7 +118,7 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
             className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
             aria-label="Upload profile picture"
           >
-            <Upload className="w-4 h-4 text-primary-foreground" />
+            <Icon.Upload className="w-4 h-4 text-primary-foreground" />
           </label>
           <input
             id="profile-avatar"
@@ -147,7 +147,7 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
                 aria-label="Edit display name"
                 className="p-1 text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Pencil className="w-3.5 h-3.5" />
+                <Icon.Pencil className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
@@ -164,7 +164,7 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
                 {isSavingName ? "Saving…" : "Save"}
               </Button>
               <Button type="button" size="sm" variant="ghost" onClick={handleCancelName} aria-label="Cancel editing">
-                <X className="w-4 h-4" />
+                <Icon.X className="w-4 h-4" />
               </Button>
             </form>
           ) : (
