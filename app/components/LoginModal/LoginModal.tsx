@@ -11,14 +11,16 @@ interface LoginModalProps {
   onClose: () => void;
 }
 
-type Step = "email" | "otp";
+type Step = "email" | "username" | "otp";
 
 export function LoginModal({ isOpen, onClose }: LoginModalProps) {
-  const { requestOtp, confirmOtp } = useAuth();
+  const { checkEmail, register, confirmOtp } = useAuth();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [existingUsername, setExistingUsername] = useState<string | null>(null);
   const [otpId, setOtpId] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -39,16 +41,45 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
     if (e.target === e.currentTarget) onClose();
   }
 
-  async function handleRequestOtp(e: React.FormEvent) {
+  function handleBack() {
+    setStep("email");
+    setOtpId("");
+    setCode("");
+    setUsername("");
+    setExistingUsername(null);
+    setError(null);
+  }
+
+  async function handleCheckEmail(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
     try {
-      const result = await requestOtp(email);
+      const result = await checkEmail(email);
+      if (result.status === "existing") {
+        setOtpId(result.otpId);
+        setExistingUsername(result.username);
+        setStep("otp");
+      } else {
+        setStep("username");
+      }
+    } catch {
+      setError("Could not send a code. Please check your email and try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleRegister(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+    try {
+      const result = await register(email, username);
       setOtpId(result.otpId);
       setStep("otp");
     } catch {
-      setError("Could not send a code. Please check your email and try again.");
+      setError("Could not create your account. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -84,67 +115,101 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
           </Button>
         </div>
 
-      {step === "email" ? (
-        <form onSubmit={handleRequestOtp} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="login-email" className="text-sm font-medium">
-              Email
-            </label>
-            <Input
-              id="login-email"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              autoFocus
-            />
-          </div>
+        {step === "email" && (
+          <form onSubmit={handleCheckEmail} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="login-email" className="text-sm font-medium">
+                Email
+              </label>
+              <Input
+                id="login-email"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                autoFocus
+              />
+            </div>
 
-          <ErrorMessage message={error} />
+            <ErrorMessage message={error} />
 
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Sending..." : "Send code"}
-          </Button>
-        </form>
-      ) : (
-        <form onSubmit={handleConfirmOtp} className="flex flex-col gap-4">
-          <p className="text-sm text-muted-foreground">
-            We sent a 6-digit code to <strong>{email}</strong>.
-          </p>
-
-          <div className="flex flex-col gap-1">
-            <label htmlFor="login-code" className="text-sm font-medium">
-              Code
-            </label>
-            <Input
-              id="login-code"
-              type="text"
-              inputMode="numeric"
-              maxLength={6}
-              value={code}
-              onChange={e => setCode(e.target.value)}
-              required
-              autoFocus
-              className="tracking-widest"
-            />
-          </div>
-
-          <ErrorMessage message={error} />
-
-          <div className="flex items-center gap-3">
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Verifying..." : "Verify"}
+              {isLoading ? "Sending..." : "Send code"}
             </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => { setStep("email"); setError(null); setCode(""); }}
-            >
-              Back
-            </Button>
-          </div>
-        </form>
-      )}
+          </form>
+        )}
+
+        {step === "username" && (
+          <form onSubmit={handleRegister} className="flex flex-col gap-4">
+            <p className="text-sm text-muted-foreground">
+              Welcome! Choose a display name to create your account.
+            </p>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="login-username" className="text-sm font-medium">
+                Display name
+              </label>
+              <Input
+                id="login-username"
+                type="text"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                required
+                autoFocus
+              />
+            </div>
+
+            <ErrorMessage message={error} />
+
+            <div className="flex items-center gap-3">
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Creating account..." : "Create account"}
+              </Button>
+              <Button type="button" variant="ghost" onClick={handleBack}>
+                Back
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {step === "otp" && (
+          <form onSubmit={handleConfirmOtp} className="flex flex-col gap-4">
+            <p className="text-sm text-muted-foreground">
+              {existingUsername
+                ? <>Welcome back, <strong>{existingUsername}</strong>! We sent a 6-digit code to <strong>{email}</strong>.</>
+                : <>We sent a 6-digit code to <strong>{email}</strong>.</>
+              }
+            </p>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="login-code" className="text-sm font-medium">
+                Code
+              </label>
+              <Input
+                id="login-code"
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                value={code}
+                onChange={e => setCode(e.target.value)}
+                required
+                autoFocus
+                className="tracking-widest"
+              />
+            </div>
+
+            <ErrorMessage message={error} />
+
+            <div className="flex items-center gap-3">
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Verifying..." : "Verify"}
+              </Button>
+              <Button type="button" variant="ghost" onClick={handleBack}>
+                Back
+              </Button>
+            </div>
+          </form>
+        )}
       </div>
     </dialog>
   );
