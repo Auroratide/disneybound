@@ -19,3 +19,7 @@ commit
 Lets continue with step 2
 
 commit
+
+Do step 3
+
+commit

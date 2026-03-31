@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import PocketBase from "pocketbase";
 import { getPocketbase } from "@/lib/pocketbase";
 
 export async function POST(request: NextRequest) {
@@ -20,12 +21,22 @@ export async function POST(request: NextRequest) {
   }
 
   const token = pb.authStore.token;
-  const record = pb.authStore.record;
+  let record = pb.authStore.record;
+
+  // First-time login: flip verified to true so the account is no longer treated as new.
+  if (record && record.verified === false) {
+    const adminPb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
+    await adminPb.collection("_superusers").authWithPassword(
+      process.env.PB_SUPERUSER_EMAIL!,
+      process.env.PB_SUPERUSER_PASSWORD!
+    );
+    record = await adminPb.collection("users").update(record.id, { verified: true });
+  }
 
   const response = NextResponse.json({ token, record });
 
-  const cookie = pb.authStore.exportToCookie({ sameSite: "lax" })
-  response.headers.append("Set-Cookie", cookie)
+  const cookie = pb.authStore.exportToCookie({ sameSite: "lax" });
+  response.headers.append("Set-Cookie", cookie);
 
   return response;
 }
