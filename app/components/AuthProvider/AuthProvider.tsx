@@ -5,9 +5,16 @@ import { useRouter } from "next/navigation";
 import type { RecordModel } from "pocketbase";
 import { getPocketbase } from "@/lib/pocketbase";
 
+type CheckEmailResult =
+  | { status: "existing"; otpId: string; username: string }
+  | { status: "new" };
+
 interface AuthContextValue {
   user: RecordModel | null;
+  /** @deprecated Use checkEmail instead */
   requestOtp: (email: string) => Promise<{ otpId: string }>;
+  checkEmail: (email: string) => Promise<CheckEmailResult>;
+  register: (email: string, username: string) => Promise<{ otpId: string }>;
   confirmOtp: (otpId: string, code: string) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -38,6 +45,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { otpId: data.otpId as string };
   }
 
+  async function checkEmail(email: string): Promise<CheckEmailResult> {
+    const res = await fetch("/api/auth/check-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) throw new Error("Failed to check email");
+    return res.json();
+  }
+
+  async function register(email: string, username: string): Promise<{ otpId: string }> {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, username }),
+    });
+    if (!res.ok) throw new Error("Failed to register");
+    return res.json();
+  }
+
   async function confirmOtp(otpId: string, code: string) {
     const res = await fetch("/api/auth/confirm-otp", {
       method: "POST",
@@ -65,7 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, requestOtp, confirmOtp, logout }}>
+    <AuthContext.Provider value={{ user, requestOtp, checkEmail, register, confirmOtp, logout }}>
       {children}
     </AuthContext.Provider>
   );

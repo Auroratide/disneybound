@@ -23,3 +23,7 @@ commit
 Do step 3
 
 commit
+
+Do step 4
+
+commit
