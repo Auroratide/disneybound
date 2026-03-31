@@ -5,3 +5,13 @@ commit
 I notice you've been inline SVGs for icons throughout the site. I want to make a library of icons that you can invoke like <Icon.NameOfIcon /> in code so that they are reusable. Can you find the instances of inline svg icons in the code and refactor them all into a react icon library?
 
 commit
+
+Let's now look at the login flow. I'm reconsidering the flow where it implicitly creates an account upon new email addresses. I now have two issues with this: If a user misprints their email address, it'll create an account and the user won't know this and will get confused why they didn't receive an OTP, and 2) new accounts don't have usernames by default, which looks pretty jank if they decide to upload an outfit. Here's the new flow I'm considering: 1) Enter your email. 2) If it's an email we know about, send an OTP and request the code on the frontned like we currently do (we can also say Hello {username} so they know it's them). 3) If it's not, then instead of creating an account and sending an OTP, ask for the user to enter a username. 4) Once they do, then we create an account with that username/email, and request an OTP. Before developing a plan to implement this, what are some (if any) security concerns we have with this? Perhaps it becomes possible for people to fish for emails that have been submitted before, how much of a problem is that?
+
+Ok, I think the enumeration risk is acceptable. Additionally, I see our database already has a "verified" boolean in it, so to address the other risk you brought up we should actually use it. Keep in mind: in order to request an OTP, the account in pocketbase MUST exist, which is why this account creation flow exists. To help with the dangling account problem, we can treat an account as "new" (ie. request a username) if the verified boolean is false, then flip it to true the first time someone submits a valid OTP. Go ahead and create a plan (store it in .plans/ACCOUNT_FLOW.md) that we can walk through step by step, and I'll provide feedback if I think it needs changes. The plan should address the bifurcation of existing users vs new users, as well as changes to let the verified boolean be useful.
+
+Two pieces of feedback for the plan. 1) Make removing the request-otp endpoint last. 2) Don't put the tests all in the last step; make testing part of each step for which they are relevant.
+
+Ok, let's start with step 1.
+
+commit
