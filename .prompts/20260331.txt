@@ -45,3 +45,13 @@ commit
 Ok, now let's do some interface tweaks on the login modal. 1) Make it a little wider and taller. 2) On the email form, add some helper text "An account allows you to upload your personal outfits of Disney characters" so people know why they would want to do this. 3) Make the input background white.
 
 commit
+
+Time for a footer. Give me options for how a footer could fit the theme of the website.
+
+I think I actually like option E the best. Add a cream footer with the following: "Made by Auroratide for their Mom" (Auroratide links to https://auroratide.com), an About link, a Github link (i'll fill it in), and a Legal link.
+
+the background is currently transparent, make it cream color so it doesn't have the stripe background
+
+Also, create skeleton pages for About and Legal. Legal is going to contain a privacy policy. About is gonna summarize what Disney Bounding is and what the site is for.
+
+commit

@@ -3,6 +3,7 @@ import { Nunito, Geist_Mono, Fredoka } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/app/components/AuthProvider/AuthProvider";
 import { SiteHeader } from "@/app/components/SiteHeader/SiteHeader";
+import { SiteFooter } from "@/app/components/SiteFooter/SiteFooter";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <AuthProvider>
           <SiteHeader />
           {children}
+          <SiteFooter />
         </AuthProvider>
       </body>
     </html>
