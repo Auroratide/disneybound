@@ -41,3 +41,7 @@ Great! Let's fix a bug I found in the meantime. If you log in, then log out, the
 Close, but one nuance needed: If they click Back from the OTP or username form, then it takes them back to the email form with the email in it. That's good. However, if they have submitted an OTP, then logout, then try to log back in, the email should NOT be prepopulated in this case.
 
 commit
+
+Ok, now let's do some interface tweaks on the login modal. 1) Make it a little wider and taller. 2) On the email form, add some helper text "An account allows you to upload your personal outfits of Disney characters" so people know why they would want to do this. 3) Make the input background white.
+
+commit

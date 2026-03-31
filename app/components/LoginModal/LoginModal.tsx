@@ -115,7 +115,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       aria-labelledby="login-modal-title"
       className="fixed inset-0 m-auto flex h-full w-full max-w-none items-center justify-center bg-transparent p-4 backdrop:bg-black/50"
     >
-      <div className="w-full max-w-sm rounded-lg border border-border bg-background p-6 text-foreground shadow-lg">
+      <div className="w-full max-w-md rounded-lg border border-border bg-background p-8 text-foreground shadow-lg">
         <div className="flex items-center justify-between mb-4">
           <h2 id="login-modal-title" className="text-lg font-semibold">Log in</h2>
           <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Close">
@@ -125,6 +125,9 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         {step === "email" && (
           <form onSubmit={handleCheckEmail} className="flex flex-col gap-4">
+            <p className="text-sm text-muted-foreground">
+              An account allows you to upload your personal outfits of Disney characters.
+            </p>
             <div className="flex flex-col gap-1">
               <label htmlFor="login-email" className="text-sm font-medium">
                 Email
@@ -136,6 +139,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 onChange={e => setEmail(e.target.value)}
                 required
                 autoFocus
+                className="bg-white"
               />
             </div>
 
@@ -164,6 +168,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 onChange={e => setUsername(e.target.value)}
                 required
                 autoFocus
+                className="bg-white"
               />
             </div>
 
@@ -191,7 +196,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="login-code" className="text-sm font-medium">
-                Code
+                Code from Email
               </label>
               <Input
                 id="login-code"
@@ -202,7 +207,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 onChange={e => setCode(e.target.value)}
                 required
                 autoFocus
-                className="tracking-widest"
+                className="tracking-widest bg-white"
               />
             </div>
 
