@@ -47,7 +47,7 @@ export function HomeView({ characters }: Props) {
               placeholder="e.g. Ariel"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="bg-card text-foreground border-3 border-primary"
+              className="bg-card text-foreground border-4 border-primary h-10 text-lg md:text-lg"
             />
             <output htmlFor="character-search" className="block mt-3 text-sm text-muted-foreground">
               {statusMessage}

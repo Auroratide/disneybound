@@ -1,0 +1,3 @@
+Help me make the search bar on the front page a little larger. I tried adding text-lg to the Input classname but it didn't make a difference.
+
+commit
