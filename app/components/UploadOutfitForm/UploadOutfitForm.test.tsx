@@ -33,7 +33,7 @@ describe("UploadOutfitForm", () => {
     vi.stubGlobal("fetch", mockFetch);
     vi.mocked(useAuth).mockReturnValue({
       user: mockUser,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });
@@ -153,7 +153,7 @@ describe("UploadOutfitForm", () => {
     beforeEach(() => {
       vi.mocked(useAuth).mockReturnValue({
         user: null,
-        requestOtp: vi.fn(),
+  
         confirmOtp: vi.fn(),
         logout: vi.fn(),
       });

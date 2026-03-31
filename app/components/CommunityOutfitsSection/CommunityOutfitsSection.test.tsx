@@ -40,7 +40,7 @@ describe("CommunityOutfitsSection — outfit grid", () => {
   beforeEach(() => {
     vi.mocked(useAuth).mockReturnValue({
       user: mockUser,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });
@@ -101,7 +101,7 @@ describe("CommunityOutfitsSection — expand/collapse toggle", () => {
   beforeEach(() => {
     vi.mocked(useAuth).mockReturnValue({
       user: mockUser,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });
@@ -163,7 +163,7 @@ describe("CommunityOutfitsSection — unauthenticated", () => {
   beforeEach(() => {
     vi.mocked(useAuth).mockReturnValue({
       user: null,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });
@@ -193,7 +193,7 @@ describe("CommunityOutfitsSection — instructions prop", () => {
   it("shows instructions when logged in and expanded", () => {
     vi.mocked(useAuth).mockReturnValue({
       user: mockUser,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });
@@ -210,7 +210,7 @@ describe("CommunityOutfitsSection — instructions prop", () => {
   it("does not show instructions when not logged in", () => {
     vi.mocked(useAuth).mockReturnValue({
       user: null,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });
@@ -235,7 +235,7 @@ describe("CommunityOutfitsSection — upload form", () => {
     vi.stubGlobal("fetch", mockFetch);
     vi.mocked(useAuth).mockReturnValue({
       user: mockUser,
-      requestOtp: vi.fn(),
+
       confirmOtp: vi.fn(),
       logout: vi.fn(),
     });

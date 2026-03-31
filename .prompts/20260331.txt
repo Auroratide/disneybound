@@ -31,3 +31,7 @@ commit
 Do step 5
 
 commit
+
+Do step 6
+
+commit

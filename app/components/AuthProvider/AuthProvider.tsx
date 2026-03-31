@@ -11,8 +11,6 @@ type CheckEmailResult =
 
 interface AuthContextValue {
   user: RecordModel | null;
-  /** @deprecated Use checkEmail instead */
-  requestOtp: (email: string) => Promise<{ otpId: string }>;
   checkEmail: (email: string) => Promise<CheckEmailResult>;
   register: (email: string, username: string) => Promise<{ otpId: string }>;
   confirmOtp: (otpId: string, code: string) => Promise<void>;
@@ -33,17 +31,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(pb.authStore.record);
     }, true);
   }, []);
-
-  async function requestOtp(email: string) {
-    const res = await fetch("/api/auth/request-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    if (!res.ok) throw new Error("Failed to request OTP");
-    const data = await res.json();
-    return { otpId: data.otpId as string };
-  }
 
   async function checkEmail(email: string): Promise<CheckEmailResult> {
     const res = await fetch("/api/auth/check-email", {
@@ -92,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, requestOtp, checkEmail, register, confirmOtp, logout }}>
+    <AuthContext.Provider value={{ user, checkEmail, register, confirmOtp, logout }}>
       {children}
     </AuthContext.Provider>
   );
