@@ -91,6 +91,14 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
     setIsLoading(true);
     try {
       await confirmOtp(otpId, code);
+      // Full reset so the next login starts fresh with no prepopulated email.
+      setStep("email");
+      setEmail("");
+      setOtpId("");
+      setCode("");
+      setUsername("");
+      setExistingUsername(null);
+      setError(null);
       onClose();
     } catch {
       setError("Invalid or expired code. Please try again.");

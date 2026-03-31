@@ -35,3 +35,9 @@ commit
 Do step 6
 
 commit
+
+Great! Let's fix a bug I found in the meantime. If you log in, then log out, then log in again all without refreshing, then the login modal keeps you on the OTP confirmation form rather than restarting you at the email address. If the user successfully submits their OTP, then the form should be reset the next time they try to log in. Note: it's actually ok if it doesn't reset if they close on the OTP screen without submitting first, as they might accidentally close the dialog and will still want to submit their OTP code. However, in such a case make sure there's always a way back to the email submission form.
+
+Close, but one nuance needed: If they click Back from the OTP or username form, then it takes them back to the email form with the email in it. That's good. However, if they have submitted an OTP, then logout, then try to log back in, the email should NOT be prepopulated in this case.
+
+commit

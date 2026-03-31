@@ -92,6 +92,28 @@ describe("LoginModal", () => {
         expect(onClose).toHaveBeenCalled();
       });
     });
+
+    it("resets to the email step after a successful login so re-opening starts fresh", async () => {
+      const { rerender } = render(<LoginModal isOpen={true} onClose={onClose} />);
+
+      fireEvent.change(screen.getByLabelText(/email/i), {
+        target: { value: "user@example.com" },
+      });
+      fireEvent.click(screen.getByRole("button", { name: /send code/i }));
+      await waitFor(() => expect(screen.getByLabelText(/code/i)).toBeDefined());
+
+      fireEvent.change(screen.getByLabelText(/code/i), { target: { value: "123456" } });
+      fireEvent.click(screen.getByRole("button", { name: /verify/i }));
+      await waitFor(() => expect(onClose).toHaveBeenCalled());
+
+      // Simulate close then re-open
+      rerender(<LoginModal isOpen={false} onClose={onClose} />);
+      rerender(<LoginModal isOpen={true} onClose={onClose} />);
+
+      expect(screen.getByLabelText(/email/i)).toBeDefined();
+      expect((screen.getByLabelText(/email/i) as HTMLInputElement).value).toBe("");
+      expect(screen.queryByLabelText(/code/i)).toBeNull();
+    });
   });
 
   describe("new user flow", () => {
