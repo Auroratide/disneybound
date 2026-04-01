@@ -1,0 +1,9 @@
+mobile view now looks better but I think the desktop view is wrong. You say it has 4 columns but I think there are actually 5.
+
+---
+
+That looks good. Different tweak on a different page, the character details page I had added a margin between each outfit, but I don't know in tailwind how to make it so the last item does not have the margin (so there isn't too much space between the last outfit and the footer). Can you help with that?
+
+---
+
+/commit

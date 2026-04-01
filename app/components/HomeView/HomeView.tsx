@@ -60,7 +60,7 @@ export function HomeView({ characters }: Props) {
       <main className="pt-30 pb-12">
         <PageContainer>
         {filtered.length > 0 && (
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 overflow-visible pb-4">
+          <ul className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-6 gap-y-16 overflow-visible pb-4">
             {filtered.map((character) => (
               <li key={character.slug}>
                 <Link href={`/characters/${character.slug}`} className="block group">
