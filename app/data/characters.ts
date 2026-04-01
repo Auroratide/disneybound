@@ -67,6 +67,42 @@ const characters: Character[] = [
       },
     ],
   },
+  {
+    slug: "flynn-rider",
+    name: "Flynn Rider",
+    movie: "Tangled",
+    outfits: [
+      {
+        name: "Kingdom Outfit",
+        imageSrc: "/characters/flynn-rider/kingdom-outfit.webp",
+        imageAlt: "Flynn Rider in his Kingdom Outfit",
+        cardColor: "#C4A882",
+        colors: [
+          { name: "Brown", hex: "#8B6347", usage: "Vest — a brown or leather-look vest or jacket" },
+          { name: "Cream", hex: "#F5EDDC", usage: "Shirt — a loose cream or off-white billowy top" },
+          { name: "Teal", hex: "#4A7C8E", usage: "Pants — dark teal or slate blue trousers" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "joy",
+    name: "Joy",
+    movie: "Inside Out",
+    outfits: [
+      {
+        name: "Joy's Outfit",
+        imageSrc: "/characters/joy/joys-outfit.webp",
+        imageAlt: "Joy from Inside Out",
+        cardColor: "#FFE566",
+        colors: [
+          { name: "Yellow", hex: "#FFD700", usage: "Dress — a bright yellow dress, skirt, or jumpsuit" },
+          { name: "Blue", hex: "#5B9BD5", usage: "Accents — a blue hair flower, cardigan, or bag" },
+          { name: "White", hex: "#F0F0F0", usage: "Sparkle details — white jewelry, star accessories, or a shimmery belt" },
+        ],
+      },
+    ],
+  },
 ];
 
 export function getAllCharacters(): Character[] {
