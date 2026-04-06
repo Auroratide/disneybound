@@ -72,6 +72,32 @@ const characters: Character[] = [
     ],
   },
   {
+    slug: "judy-hopps",
+    name: "Judy Hopps",
+    movie: "Zootopia",
+    imageSrc: "/characters/judy-hopps/judy-hopps.webp",
+    imageAlt: "Judy Hopps in her ZPD police uniform",
+    cardColor: "#A8C4E0",
+    colors: [
+      { name: "Dark Navy", oklch: { l: 0.403, c: 0.089, h: 259.4 }, usage: "Vest — a dark navy jacket, vest, or structured top" },
+      { name: "Blue", oklch: { l: 0.571, c: 0.11, h: 258.6 }, usage: "Uniform — a medium blue long-sleeve top or trousers" },
+      { name: "Gray", oklch: { l: 0.705, c: 0.019, h: 264.4 }, usage: "Fur — a gray cardigan, turtleneck, or neutral layer" },
+    ],
+  },
+  {
+    slug: "tinker-bell",
+    name: "Tinker Bell",
+    movie: "Peter Pan",
+    imageSrc: "/characters/tinker-bell/tinker-bell.webp",
+    imageAlt: "Tinker Bell",
+    cardColor: "#C8E6A0",
+    colors: [
+      { name: "Green", oklch: { l: 0.671, c: 0.179, h: 136.8 }, usage: "Dress — a bright leaf-green dress, skirt, or top" },
+      { name: "Gold", oklch: { l: 0.821, c: 0.147, h: 91 }, usage: "Hair — golden blonde accessories, a yellow headband, or fairy dust accents" },
+      { name: "White", oklch: { l: 0.955, c: 0.0, h: 89.9 }, usage: "Wings — white or iridescent accents, sheer fabric, or sparkly jewelry" },
+    ],
+  },
+  {
     slug: "joy",
     name: "Joy",
     movie: "Inside Out",
