@@ -21,7 +21,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!character) return {};
 
   return {
-    title: `${character.name} - Disney Bounding`,
+    title: character.outfitName
+      ? `${character.name} (${character.outfitName}) - Disney Bounding`
+      : `${character.name} - Disney Bounding`,
     description: `Disney Bounding color guide for ${character.name} from ${character.movie}`,
   };
 }
@@ -40,9 +42,9 @@ export default async function CharacterPage({ params }: Params) {
   const character = getCharacterBySlug(slug);
   if (!character) notFound();
 
-  const [{ user }, communityOutfitsByOutfit] = await Promise.all([
+  const [{ user }, communityOutfits] = await Promise.all([
     getServerAuth(),
-    Promise.all(character.outfits.map((outfit) => fetchCommunityOutfits(slug, outfit.name))),
+    fetchCommunityOutfits(slug, character.outfitName ?? character.name),
   ]);
 
   return (
@@ -57,31 +59,26 @@ export default async function CharacterPage({ params }: Params) {
       <div className="text-center pb-20">
         <h1 className="text-7xl font-bold">{character.name}</h1>
         <p className="text-lg text-foreground/60 mt-2">{character.movie}</p>
+        {character.outfitName && <p className="text-base text-foreground/50 mt-1">{character.outfitName}</p>}
       </div>
 
       <PageContainer className="pb-12">
-
-      {character.outfits.map((outfit, i) => (
-        <div key={outfit.name} className="mb-32 last:mb-0">
-          <Outfit
-            name={outfit.name}
-            imageSrc={outfit.imageSrc}
-            imageAlt={outfit.imageAlt}
-            cardColor={outfit.cardColor}
-            colors={outfit.colors}
-          />
-          <CommunityOutfitsSection
-            outfits={communityOutfitsByOutfit[i]}
-            currentUserId={user?.id ?? null}
-            characterSlug={slug}
-            outfitName={outfit.name}
-            instructions={communityOutfitsByOutfit[i].length > 0
-              ? `Want to provide inspiration? Share your outfit of ${character.name}!`
-              : `Be the first to share an outfit of ${character.name}!`
-            }
-          />
-        </div>
-      ))}
+        <Outfit
+          imageSrc={character.imageSrc}
+          imageAlt={character.imageAlt}
+          cardColor={character.cardColor}
+          colors={character.colors}
+        />
+        <CommunityOutfitsSection
+          outfits={communityOutfits}
+          currentUserId={user?.id ?? null}
+          characterSlug={slug}
+          outfitName={character.outfitName ?? character.name}
+          instructions={communityOutfits.length > 0
+            ? `Want to provide inspiration? Share your outfit of ${character.name}!`
+            : `Be the first to share an outfit of ${character.name}!`
+          }
+        />
       </PageContainer>
     </main>
   );

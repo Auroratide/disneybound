@@ -7,29 +7,19 @@ const characters = [
     slug: "ariel",
     name: "Ariel",
     movie: "The Little Mermaid",
-    outfits: [
-      {
-        name: "Classic",
-        imageSrc: "/ariel.jpg",
-        imageAlt: "Ariel",
-        cardColor: "#5bc0de",
-        colors: [],
-      },
-    ],
+    imageSrc: "/ariel.jpg",
+    imageAlt: "Ariel",
+    cardColor: "#5bc0de",
+    colors: [],
   },
   {
     slug: "rapunzel",
     name: "Rapunzel",
     movie: "Tangled",
-    outfits: [
-      {
-        name: "Classic",
-        imageSrc: "/rapunzel.jpg",
-        imageAlt: "Rapunzel",
-        cardColor: "#f0e68c",
-        colors: [],
-      },
-    ],
+    imageSrc: "/rapunzel.jpg",
+    imageAlt: "Rapunzel",
+    cardColor: "#f0e68c",
+    colors: [],
   },
 ];
 

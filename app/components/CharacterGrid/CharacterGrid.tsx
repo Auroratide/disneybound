@@ -17,18 +17,18 @@ export function CharacterGrid({ characters }: Props) {
             <div
               className="overflow-visible rounded-xl border-6 group-hover:shadow-lg group-hover:-translate-y-2 group-hover:scale-[1.03] group-focus-within:-translate-y-2 group-focus-within:scale-[1.03] transition-[translate,scale,box-shadow] duration-150"
               style={{
-                borderColor: `color-mix(in oklch, ${character.outfits[0].cardColor} 80%, black)`,
-                backgroundColor: character.outfits[0].cardColor,
+                borderColor: `color-mix(in oklch, ${character.cardColor} 80%, black)`,
+                backgroundColor: character.cardColor,
               }}
             >
               <div
                 className="relative h-44 rounded-t-xl overflow-visible"
-                style={{ backgroundColor: character.outfits[0].cardColor }}
+                style={{ backgroundColor: character.cardColor }}
               >
                 <div className="absolute -top-10 inset-x-0 bottom-0">
                   <Image
-                    src={character.outfits[0].imageSrc}
-                    alt={character.outfits[0].imageAlt}
+                    src={character.imageSrc}
+                    alt={character.imageAlt}
                     fill
                     className="object-cover object-top"
                   />
@@ -36,7 +36,7 @@ export function CharacterGrid({ characters }: Props) {
               </div>
               <div className="p-4 bg-card rounded-b-xl text-center">
                 <h3 className="text-lg font-semibold leading-tight">{character.name}</h3>
-                <p className="text-sm text-muted-foreground mt-0.5">{character.movie}</p>
+                {character.outfitName && <p className="text-sm text-muted-foreground mt-0.5">{character.outfitName}</p>}
               </div>
             </div>
           </Link>

@@ -1,11 +1,23 @@
 
 ---
 
-But now there's an awkward amount of space when the picker is not open between the search and the output. Please fix this, use agent-browser to snapshot and make sure the UI looks similar to what it was before when the picker is closed, but has the tray when the picker is open.
+After thinking about it, I want to reorganize character outfits. Instead of a one-to-many relationship of one character having many outfits, I want each character to outfit to actually be a separate "character". The reason is so from the home page, when someone searches "Ariel" they can see all of Ariel's different outfits right then and there, and if they search by color then they will get the variations of Ariel that include that color rather than just Ariel in general. Can you refactor the data models to this new paradigm?
 
 ---
 
-It didn't look good. I reverted the change. Go ahead and just make it non-floating and let me see if I can tweak it myself into the right location.
+Many characters are only going to have one outfit. I think it's acceptable for the "default" or only outfit of characters to simply not have an outfit name. So for Ariel, the "mermaid" outfit would be the default, so that outfit will not have a name, and the slug will be just "ariel". Can you change the character data accordingly?
+
+---
+
+For the home page character cards, add the movie titles back to the cards. The outfit name, if it exists, can go under the movie name, but make it smaller font. And also, all cards in a row should have the same height, meaning if a card doesn't have an outfit name and another in the same row does, it'll stretch to match.
+
+---
+
+Now moving on to the individual character pages, the character name above the color swatches is no longer necessary. And since we're removing that and it was an h2, we should make "Community Outfits" an h2 now.
+
+---
+
+On mobile, we need to add space above the color swatches since the character art leaks into the card space.
 
 ---
 

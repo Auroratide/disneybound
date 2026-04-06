@@ -23,12 +23,11 @@ export function HomeView({ characters }: Props) {
   }
 
   const filtered = characters.filter((c) => {
-    const matchesQuery = query === "" || [c.name, c.movie].some((s) =>
-      s.toLowerCase().includes(query.toLowerCase())
+    const matchesQuery = query === "" || [c.name, c.movie, c.outfitName].some((s) =>
+      s?.toLowerCase().includes(query.toLowerCase())
     );
-    const matchesColor = selectedSwatch === null || c.outfits.some((outfit) =>
-      outfit.colors.some((color) => colorMatchesSwatch(color.oklch, selectedSwatch))
-    );
+    const matchesColor = selectedSwatch === null ||
+      c.colors.some((color) => colorMatchesSwatch(color.oklch, selectedSwatch));
     return matchesQuery && matchesColor;
   });
 
@@ -116,31 +115,32 @@ export function HomeView({ characters }: Props) {
         {filtered.length > 0 && (
           <ul className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-6 gap-y-16 overflow-visible pb-4">
             {filtered.map((character) => (
-              <li key={character.slug}>
-                <Link href={`/characters/${character.slug}`} className="block group">
+              <li key={character.slug} className="h-full">
+                <Link href={`/characters/${character.slug}`} className="block group h-full">
                   <div
-                    className="overflow-visible rounded-xl border-6 group-hover:shadow-lg group-hover:-translate-y-2 group-hover:scale-[1.03] group-focus-within:-translate-y-2 group-focus-within:scale-[1.03] transition-[translate,scale,box-shadow] duration-150"
+                    className="overflow-visible rounded-xl border-6 group-hover:shadow-lg group-hover:-translate-y-2 group-hover:scale-[1.03] group-focus-within:-translate-y-2 group-focus-within:scale-[1.03] transition-[translate,scale,box-shadow] duration-150 flex flex-col h-full"
                     style={{
-                      borderColor: `color-mix(in oklch, ${character.outfits[0].cardColor} 80%, black)`,
-                      backgroundColor: character.outfits[0].cardColor,
+                      borderColor: `color-mix(in oklch, ${character.cardColor} 80%, black)`,
+                      backgroundColor: character.cardColor,
                     }}
                   >
                     <div
-                      className="relative h-44 rounded-t-xl overflow-visible"
-                      style={{ backgroundColor: character.outfits[0].cardColor }}
+                      className="relative h-44 rounded-t-xl overflow-visible shrink-0"
+                      style={{ backgroundColor: character.cardColor }}
                     >
                       <div className="absolute -top-10 inset-x-0 bottom-0">
                         <Image
-                          src={character.outfits[0].imageSrc}
-                          alt={character.outfits[0].imageAlt}
+                          src={character.imageSrc}
+                          alt={character.imageAlt}
                           fill
                           className="object-cover object-top"
                         />
                       </div>
                     </div>
-                    <div className="p-4 bg-card rounded-b-xl text-center">
+                    <div className="p-4 bg-card rounded-b-xl text-center flex-1 flex flex-col justify-center">
                       <h3 className="text-lg font-semibold leading-tight">{character.name}</h3>
                       <p className="text-sm text-muted-foreground mt-0.5">{character.movie}</p>
+                      {character.outfitName && <p className="text-xs text-muted-foreground/70 mt-0.5">{character.outfitName}</p>}
                     </div>
                   </div>
                 </Link>
