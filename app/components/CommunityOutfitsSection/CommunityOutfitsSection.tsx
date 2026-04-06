@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import * as Icon from "@/app/components/Icon/Icon";
 import type { CommunityOutfit } from "@/app/data/community-outfits";
@@ -25,6 +26,7 @@ export function CommunityOutfitsSection({
   outfitName,
   instructions,
 }: CommunityOutfitsSectionProps) {
+  const router = useRouter();
   const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(outfits.length === 0);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -67,6 +69,9 @@ export function CommunityOutfitsSection({
       const res = await fetch("/api/community-outfits", { method: "POST", body: formData });
       if (res.status === 201) {
         setIsSuccess(true);
+        setFile(null);
+        setPreviewUrl(null);
+        router.refresh();
       } else {
         setError("Something went wrong. Please try again.");
       }
@@ -124,7 +129,7 @@ export function CommunityOutfitsSection({
               <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
             </div>
           ) : isSuccess ? (
-            <p className="text-sm text-green-700">Thanks! Your outfit will appear after review.</p>
+            <p className="text-sm text-green-700">Thanks! Your outfit has been shared.</p>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
               {/* Polaroid upload card */}

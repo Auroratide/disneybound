@@ -149,7 +149,7 @@ describe("POST /api/community-outfits", () => {
     const record = await adminPb.collection("community_outfits").getOne(body.id);
     expect(record.character_slug).toBe("ariel");
     expect(record.outfit_name).toBe("Mermaid");
-    expect(record.status).toBe("pending");
+    expect(record.status).toBe("approved");
     expect(record.user).toBe(testUserId);
   });
 });

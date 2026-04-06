@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   pbFormData.append("character_slug", characterSlug.trim());
   pbFormData.append("outfit_name", outfitName.trim());
   pbFormData.append("image", image);
-  pbFormData.append("status", "pending");
+  pbFormData.append("status", "approved");
   pbFormData.append("user", pb.authStore.record!.id);
 
   try {
