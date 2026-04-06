@@ -1,32 +1,11 @@
-mobile view now looks better but I think the desktop view is wrong. You say it has 4 columns but I think there are actually 5.
 
 ---
 
-That looks good. Different tweak on a different page, the character details page I had added a margin between each outfit, but I don't know in tailwind how to make it so the last item does not have the margin (so there isn't too much space between the last outfit and the footer). Can you help with that?
+That was an excellent first pass on the UI for the colors button. I want to improve some of the strange behaviour though and make it look even better. 1) For some reason when you open the color menu, the header size changes; I don't want the header to change size, though I do like how the colors open beneath. 2) There should be two more options in the color picker: one for Clear/Reset, and one to close the picker (I know you can close it by clicking the color button again, but having an explicit close button will make it way more obvious for some people). 3) When you re-select a color you've selected, that deselects the color, which is great. However, it also closes the color picker, and I think the color picker should remain open.
 
 ---
 
-/commit
-
----
-
-Ok good, but the UI needs to be fixed now. After uploading it still says the photo needs to be approved. It should show the image immediately.
-
----
-
-I want to add a new way to filter characters. Instead of by name or film, I want people to be able to choose a color and to see all the characters that have as part of their palette that color. I've got an idea for how this could look, but I want to see what your thoughts are first on how to accomplish this feature. For example, right now one of the colors on Rapunzel is "Gold", and on Joy it is "Yellow". I imagine that if a user wants a "yellow" character because they happen to own a yellow dress that it should match both Rapunzel and Joy. In what ways would you accomplish this?
-
----
-
-Great, Option C sorta combined with option B is what I was thinking. I think instead of defining colors as Hex values, we should use Oklch since it is more perception based. Then, let users pick a color from a pre-defined set of 16 colors (for now, may need more later not sure yet) which matches according to a range of Lightness, Chroma and Hue for that color. Please draft up a plan for accomplishing this feature and store it into .plans/CHOOSE_BY_COLOR.md.
-
----
-
-My one note is I don't think you need hex at all, since CSS you can just use `oklch(l c h)` syntax for colors. I don't want to have to worry about whether the stored hex and oklch values actually match in the data.
-
----
-
-I have answered the open questions at the bottom of the plan document. Go ahead and commence the plan.
+I took a look at the implementation, and a couple of notes. Technically, this should be a set of radio inputs instead of buttons. And secondly, instead of a div with role 'group', a fieldset probably works instead. Keep the UI design the same though.
 
 ---
 

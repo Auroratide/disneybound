@@ -20,7 +20,6 @@ export function HomeView({ characters }: Props) {
 
   function handleSwatchChange(id: string | null) {
     setSelectedSwatch(id);
-    if (id === null) setColorPickerOpen(false);
   }
 
   const filtered = characters.filter((c) => {
@@ -83,8 +82,25 @@ export function HomeView({ characters }: Props) {
               </button>
             </div>
             {colorPickerOpen && (
-              <div id="color-filter" className="mt-2 bg-card rounded-lg px-3 border border-border">
+              <div id="color-filter" className="absolute left-0 right-0 top-full z-20 mt-1 bg-card rounded-lg px-3 border border-border shadow-md">
                 <ColorSwatchPicker selectedId={selectedSwatch} onChange={handleSwatchChange} />
+                <div className="flex items-center gap-2 py-2 border-t border-border">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSwatch(null)}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Clear
+                  </button>
+                  <span className="text-border">·</span>
+                  <button
+                    type="button"
+                    onClick={() => setColorPickerOpen(false)}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             )}
             <output htmlFor="character-search" className="block mt-3 text-sm text-muted-foreground">
