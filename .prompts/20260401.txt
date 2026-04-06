@@ -7,3 +7,27 @@ That looks good. Different tweak on a different page, the character details page
 ---
 
 /commit
+
+---
+
+Ok good, but the UI needs to be fixed now. After uploading it still says the photo needs to be approved. It should show the image immediately.
+
+---
+
+I want to add a new way to filter characters. Instead of by name or film, I want people to be able to choose a color and to see all the characters that have as part of their palette that color. I've got an idea for how this could look, but I want to see what your thoughts are first on how to accomplish this feature. For example, right now one of the colors on Rapunzel is "Gold", and on Joy it is "Yellow". I imagine that if a user wants a "yellow" character because they happen to own a yellow dress that it should match both Rapunzel and Joy. In what ways would you accomplish this?
+
+---
+
+Great, Option C sorta combined with option B is what I was thinking. I think instead of defining colors as Hex values, we should use Oklch since it is more perception based. Then, let users pick a color from a pre-defined set of 16 colors (for now, may need more later not sure yet) which matches according to a range of Lightness, Chroma and Hue for that color. Please draft up a plan for accomplishing this feature and store it into .plans/CHOOSE_BY_COLOR.md.
+
+---
+
+My one note is I don't think you need hex at all, since CSS you can just use `oklch(l c h)` syntax for colors. I don't want to have to worry about whether the stored hex and oklch values actually match in the data.
+
+---
+
+I have answered the open questions at the bottom of the plan document. Go ahead and commence the plan.
+
+---
+
+/commit

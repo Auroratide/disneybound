@@ -12,7 +12,7 @@ export default async function AccountPage() {
 
   const avatarUrl = authUser.avatar ? pb.files.getURL(authUser, authUser.avatar) : null;
 
-  let outfits = [];
+  let outfits: Awaited<ReturnType<typeof getUserOutfits>> = [];
   try {
     outfits = await getUserOutfits(pb, authUser.id);
   } catch {

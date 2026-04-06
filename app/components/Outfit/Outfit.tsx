@@ -21,7 +21,7 @@ export function Outfit({ name, imageSrc, imageAlt, cardColor, colors }: {
               <li key={color.name} className="flex flex-col items-center gap-2 flex-1 min-w-0 sm:flex-none">
                 <span
                   className="block w-full aspect-square sm:w-28 sm:h-28 sm:aspect-auto rounded-xl border border-foreground/10 shadow-sm"
-                  style={{ backgroundColor: color.hex }}
+                  style={{ backgroundColor: `oklch(${color.oklch.l} ${color.oklch.c} ${color.oklch.h})` }}
                 />
                 <p className="font-medium text-center">{color.name}</p>
               </li>

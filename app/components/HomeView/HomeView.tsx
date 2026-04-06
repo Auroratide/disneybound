@@ -4,8 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Character } from "@/app/data/characters";
+import { colorMatchesSwatch } from "@/app/lib/color-matching";
 import { Input } from "@/components/ui/input";
 import { PageContainer } from "@/app/components/PageContainer/PageContainer";
+import { ColorSwatchPicker } from "@/app/components/ColorSwatchPicker/ColorSwatchPicker";
 
 type Props = {
   characters: Character[];
@@ -13,12 +15,23 @@ type Props = {
 
 export function HomeView({ characters }: Props) {
   const [query, setQuery] = useState("");
+  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+  const [selectedSwatch, setSelectedSwatch] = useState<string | null>(null);
 
-  const filtered = characters.filter((c) =>
-    [c.name, c.movie].some((s) =>
+  function handleSwatchChange(id: string | null) {
+    setSelectedSwatch(id);
+    if (id === null) setColorPickerOpen(false);
+  }
+
+  const filtered = characters.filter((c) => {
+    const matchesQuery = query === "" || [c.name, c.movie].some((s) =>
       s.toLowerCase().includes(query.toLowerCase())
-    )
-  );
+    );
+    const matchesColor = selectedSwatch === null || c.outfits.some((outfit) =>
+      outfit.colors.some((color) => colorMatchesSwatch(color.oklch, selectedSwatch))
+    );
+    return matchesQuery && matchesColor;
+  });
 
   const statusMessage =
     filtered.length === 0
@@ -41,14 +54,39 @@ export function HomeView({ characters }: Props) {
             >
               Search by name or movie
             </label>
-            <Input
-              id="character-search"
-              type="search"
-              placeholder="e.g. Ariel"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="bg-card text-foreground border-4 border-primary h-10 text-lg md:text-lg"
-            />
+            <div className="flex items-center gap-2">
+              <Input
+                id="character-search"
+                type="search"
+                placeholder="e.g. Ariel"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="bg-card text-foreground border-4 border-primary h-10 text-lg md:text-lg"
+              />
+              <button
+                type="button"
+                aria-pressed={colorPickerOpen}
+                aria-expanded={colorPickerOpen}
+                aria-controls="color-filter"
+                onClick={() => setColorPickerOpen((o) => !o)}
+                className="shrink-0 h-10 px-3 rounded-md border-4 border-primary bg-card text-foreground text-sm font-medium flex items-center gap-1.5 hover:bg-muted transition-colors"
+              >
+                {selectedSwatch ? (
+                  <span
+                    className="w-4 h-4 rounded-full border border-foreground/20 shrink-0"
+                    style={{ backgroundColor: getSwatchColor(selectedSwatch) }}
+                  />
+                ) : (
+                  <SwatchIcon />
+                )}
+                <span className="hidden sm:inline">Color</span>
+              </button>
+            </div>
+            {colorPickerOpen && (
+              <div id="color-filter" className="mt-2 bg-card rounded-lg px-3 border border-border">
+                <ColorSwatchPicker selectedId={selectedSwatch} onChange={handleSwatchChange} />
+              </div>
+            )}
             <output htmlFor="character-search" className="block mt-3 text-sm text-muted-foreground">
               {statusMessage}
             </output>
@@ -97,5 +135,23 @@ export function HomeView({ characters }: Props) {
         </PageContainer>
       </main>
     </>
+  );
+}
+
+import { COLOR_SWATCHES } from "@/app/lib/color-matching";
+
+function getSwatchColor(id: string): string {
+  const s = COLOR_SWATCHES.find((sw) => sw.id === id);
+  return s ? `oklch(${s.oklch.l} ${s.oklch.c} ${s.oklch.h})` : "transparent";
+}
+
+function SwatchIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="w-4 h-4 shrink-0" aria-hidden="true" fill="none">
+      <circle cx="4" cy="4" r="3" fill="oklch(0.65 0.20 27)" />
+      <circle cx="12" cy="4" r="3" fill="oklch(0.75 0.18 150)" />
+      <circle cx="4" cy="12" r="3" fill="oklch(0.65 0.20 265)" />
+      <circle cx="12" cy="12" r="3" fill="oklch(0.80 0.15 95)" />
+    </svg>
   );
 }
