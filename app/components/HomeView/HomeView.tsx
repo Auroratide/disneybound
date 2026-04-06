@@ -40,13 +40,19 @@ export function HomeView({ characters }: Props) {
   return (
     <>
       {/* Hero band */}
-      <div className="bg-primary text-primary-foreground overflow-visible">
+      <div className="bg-primary text-primary-foreground overflow-visible h-52">
         <PageContainer className="pt-6">
           <h1 className="text-5xl font-bold mb-2 text-primary-foreground">Disney Bounding</h1>
           <p className="text-primary-foreground/70 text-lg mb-0">
             Find color palettes to guide your Disney bounding outfits.
           </p>
-          <search className="block relative z-10 translate-y-1/2">
+        </PageContainer>
+      </div>
+
+      {/* Content area */}
+      <main className="pt-8 pb-12">
+        <PageContainer>
+          <search className="block relative z-10 -translate-y-20">
             <label
               htmlFor="character-search"
               className="block mb-2 text-sm font-medium text-primary-foreground/80"
@@ -82,7 +88,7 @@ export function HomeView({ characters }: Props) {
               </button>
             </div>
             {colorPickerOpen && (
-              <div id="color-filter" className="absolute left-0 right-0 top-full z-20 mt-1 bg-card rounded-lg px-3 border border-border shadow-md">
+              <div id="color-filter" className="mt-1 bg-card rounded-lg px-3 border border-border shadow-md">
                 <ColorSwatchPicker selectedId={selectedSwatch} onChange={handleSwatchChange} />
                 <div className="flex items-center gap-2 py-2 border-t border-border">
                   <button
@@ -107,12 +113,6 @@ export function HomeView({ characters }: Props) {
               {statusMessage}
             </output>
           </search>
-        </PageContainer>
-      </div>
-
-      {/* Content area */}
-      <main className="pt-30 pb-12">
-        <PageContainer>
         {filtered.length > 0 && (
           <ul className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-6 gap-y-16 overflow-visible pb-4">
             {filtered.map((character) => (

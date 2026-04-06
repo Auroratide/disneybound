@@ -1,11 +1,11 @@
 
 ---
 
-That was an excellent first pass on the UI for the colors button. I want to improve some of the strange behaviour though and make it look even better. 1) For some reason when you open the color menu, the header size changes; I don't want the header to change size, though I do like how the colors open beneath. 2) There should be two more options in the color picker: one for Clear/Reset, and one to close the picker (I know you can close it by clicking the color button again, but having an explicit close button will make it way more obvious for some people). 3) When you re-select a color you've selected, that deselects the color, which is great. However, it also closes the color picker, and I think the color picker should remain open.
+But now there's an awkward amount of space when the picker is not open between the search and the output. Please fix this, use agent-browser to snapshot and make sure the UI looks similar to what it was before when the picker is closed, but has the tray when the picker is open.
 
 ---
 
-I took a look at the implementation, and a couple of notes. Technically, this should be a set of radio inputs instead of buttons. And secondly, instead of a div with role 'group', a fieldset probably works instead. Keep the UI design the same though.
+It didn't look good. I reverted the change. Go ahead and just make it non-floating and let me see if I can tweak it myself into the right location.
 
 ---
 
