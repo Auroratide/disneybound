@@ -10,4 +10,4 @@ When asked to add a character:
 3. Give the user the Disney Fandom gallery page for them to pick an appropriate image manually. Example URL for Tinker Bell: `https://disney.fandom.com/wiki/Tinker_Bell/Gallery`
 4. Wait for the user to put an image into the folder.
 5. If the image is not already a webp file, convert it using `magick`.
-6. Identify that character's outfit colors, and add the character to the file.
+6. Identify that character's outfit colors. Use `node scripts/hex-to-oklch.js "#RRGGBB" ...` to convert sampled hex values to oklch, then add the character to the file.

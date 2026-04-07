@@ -19,6 +19,71 @@ export type Character = {
 
 const characters: Character[] = [
   {
+    slug: "jasmine",
+    name: "Jasmine",
+    movie: "Aladdin",
+    imageSrc: "/characters/jasmine/dress.webp",
+    imageAlt: "Jasmine in her teal outfit",
+    cardColor: "#A8E8E0",
+    colors: [
+      { name: "Teal", oklch: { l: 0.793, c: 0.098, h: 188.7 }, usage: "Outfit — a teal or turquoise crop top, wide-leg pants, or flowy skirt" },
+      { name: "Dark Teal", oklch: { l: 0.324, c: 0.064, h: 237.1 }, usage: "Hair — a dark teal or navy hair accessory, scrunchie, or headband" },
+      { name: "Gold", oklch: { l: 0.723, c: 0.136, h: 88.9 }, usage: "Jewelry — gold earrings, a statement necklace, cuffs, or belt" },
+    ],
+  },
+  {
+    slug: "belle",
+    name: "Belle",
+    movie: "Beauty and the Beast",
+    imageSrc: "/characters/belle/dress.webp",
+    imageAlt: "Belle in her golden ball gown",
+    cardColor: "#F5E080",
+    colors: [
+      { name: "Yellow", oklch: { l: 0.827, c: 0.163, h: 89.6 }, usage: "Dress — a golden yellow gown, skirt, or statement dress" },
+      { name: "Brown", oklch: { l: 0.512, c: 0.09, h: 62.7 }, usage: "Hair — warm brown accessories, a cognac bag, or chestnut boots" },
+      { name: "Red", oklch: { l: 0.535, c: 0.181, h: 25.8 }, usage: "Rose — a red floral accessory, brooch, or bold lip" },
+    ],
+  },
+  {
+    slug: "cinderella",
+    name: "Cinderella",
+    movie: "Cinderella",
+    imageSrc: "/characters/cinderella/blue-dress.webp",
+    imageAlt: "Cinderella in her blue ball gown",
+    cardColor: "#B8E4F5",
+    colors: [
+      { name: "Sky Blue", oklch: { l: 0.79, c: 0.096, h: 223.8 }, usage: "Dress — a powder or sky blue gown, dress, or skirt" },
+      { name: "Silver", oklch: { l: 0.935, c: 0.025, h: 218.8 }, usage: "Gloves & trim — white or silver gloves, sheer fabric, or sparkly accessories" },
+      { name: "Gold", oklch: { l: 0.821, c: 0.147, h: 91 }, usage: "Hair — golden blonde hair accessories, a yellow headband, or gold jewelry" },
+    ],
+  },
+  {
+    slug: "aurora",
+    name: "Aurora",
+    movie: "Sleeping Beauty",
+    imageSrc: "/characters/aurora/pink-dress.webp",
+    imageAlt: "Aurora in her pink dress",
+    cardColor: "#F5C0D0",
+    colors: [
+      { name: "Pink", oklch: { l: 0.71, c: 0.141, h: 2.4 }, usage: "Dress — a rose or blush pink dress, skirt, or gown" },
+      { name: "Gold", oklch: { l: 0.828, c: 0.157, h: 88.7 }, usage: "Hair — golden blonde accessories, a yellow headband, or warm gold accents" },
+      { name: "Red", oklch: { l: 0.538, c: 0.18, h: 20 }, usage: "Rose — a red floral accessory, brooch, or statement earrings" },
+    ],
+  },
+  {
+    slug: "snow-white",
+    name: "Snow White",
+    movie: "Snow White and the Seven Dwarfs",
+    imageSrc: "/characters/snow-white/snow-white.webp",
+    imageAlt: "Snow White in her iconic dress",
+    cardColor: "#A8C8E8",
+    colors: [
+      { name: "Blue", oklch: { l: 0.549, c: 0.139, h: 254.2 }, usage: "Bodice — a royal blue top, corset, or jacket" },
+      { name: "Yellow", oklch: { l: 0.854, c: 0.145, h: 92.7 }, usage: "Skirt — a golden yellow skirt, dress, or wide-leg trousers" },
+      { name: "Red", oklch: { l: 0.524, c: 0.203, h: 21.6 }, usage: "Accents — a red bow, headband, cape, or statement accessory" },
+    ],
+  },
+  {
     slug: "ariel",
     name: "Ariel",
     movie: "The Little Mermaid",
