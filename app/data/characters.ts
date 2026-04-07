@@ -19,6 +19,59 @@ export type Character = {
 
 const characters: Character[] = [
   {
+    slug: "sadness",
+    name: "Sadness",
+    movie: "Inside Out",
+    imageSrc: "/characters/sadness/render.webp",
+    imageAlt: "Sadness from Inside Out",
+    cardColor: "#A0C0E0",
+    colors: [
+      { name: "Blue", oklch: { l: 0.568, c: 0.113, h: 256.1 }, usage: "Skin & hair — a medium blue top, turtleneck, or statement piece" },
+      { name: "Ice Blue", oklch: { l: 0.876, c: 0.033, h: 254 }, usage: "Sweater — a pale blue or white chunky knit sweater or cardigan" },
+      { name: "Navy", oklch: { l: 0.355, c: 0.134, h: 273.1 }, usage: "Pants — dark navy trousers, leggings, or a skirt" },
+    ],
+  },
+  {
+    slug: "bo-peep",
+    name: "Bo Peep",
+    movie: "Toy Story 4",
+    outfitName: "Adventure Outfit",
+    imageSrc: "/characters/bo-peep/toy-story-4.webp",
+    imageAlt: "Bo Peep in her Toy Story 4 adventure outfit",
+    cardColor: "#C8E4EE",
+    colors: [
+      { name: "Light Blue", oklch: { l: 0.784, c: 0.048, h: 224.3 }, usage: "Jumpsuit — a powder or dusty blue jumpsuit, wide-leg trousers, or layered top" },
+      { name: "Mauve", oklch: { l: 0.653, c: 0.092, h: 5.5 }, usage: "Hat & belt — a dusty rose hat, belt, or pink accessories" },
+      { name: "Purple", oklch: { l: 0.376, c: 0.069, h: 301.6 }, usage: "Cape — a deep purple cape, cardigan, or dramatic outerwear" },
+    ],
+  },
+  {
+    slug: "ahsoka-tano",
+    name: "Ahsoka Tano",
+    movie: "Star Wars: The Clone Wars",
+    imageSrc: "/characters/ahsoka-tano/adult.webp",
+    imageAlt: "Ahsoka Tano in her adult outfit",
+    cardColor: "#8AAABB",
+    colors: [
+      { name: "Blue-Gray", oklch: { l: 0.51, c: 0.032, h: 248.5 }, usage: "Armor & bodysuit — a slate blue-gray top, jacket, or structured vest" },
+      { name: "Orange", oklch: { l: 0.596, c: 0.138, h: 45.1 }, usage: "Skin — a burnt orange top, wrap, or warm accent piece" },
+      { name: "Cream", oklch: { l: 0.86, c: 0.023, h: 84.6 }, usage: "Markings — cream or off-white accessories, face paint inspiration, or light layering piece" },
+    ],
+  },
+  {
+    slug: "darth-vader",
+    name: "Darth Vader",
+    movie: "Star Wars",
+    imageSrc: "/characters/darth-vader/darth-vader.webp",
+    imageAlt: "Darth Vader with his red lightsaber",
+    cardColor: "#404040",
+    colors: [
+      { name: "Black", oklch: { l: 0.209, c: 0.0, h: 89.9 }, usage: "Armor & cape — an all-black outfit, structured coat, or dramatic cape" },
+      { name: "Red", oklch: { l: 0.539, c: 0.21, h: 28.1 }, usage: "Lightsaber — a red accessory, belt, or bold accent piece" },
+      { name: "Gray", oklch: { l: 0.513, c: 0.016, h: 248.1 }, usage: "Chest panel — gray hardware details, a structured vest, or silver accessories" },
+    ],
+  },
+  {
     slug: "jasmine",
     name: "Jasmine",
     movie: "Aladdin",
@@ -166,7 +219,7 @@ const characters: Character[] = [
     slug: "joy",
     name: "Joy",
     movie: "Inside Out",
-    imageSrc: "/characters/joy/joys-outfit.webp",
+    imageSrc: "/characters/joy/render.webp",
     imageAlt: "Joy from Inside Out",
     cardColor: "#FFE566",
     colors: [
