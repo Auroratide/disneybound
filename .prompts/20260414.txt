@@ -23,3 +23,15 @@ It's fixed. Looking at the open questions in the Plan, you wrote "PocketBase doe
 ---
 
 /commit
+
+---
+
+Go ahead with Phase 2.
+
+---
+
+Please add tests for the characters route you made.
+
+---
+
+/commit

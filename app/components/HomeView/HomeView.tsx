@@ -108,9 +108,14 @@ export function HomeView({ characters }: Props) {
                 </div>
               </div>
             )}
-            <output htmlFor="character-search" className="block mt-3 text-sm text-muted-foreground">
-              {statusMessage}
-            </output>
+            <div className="flex items-center justify-between mt-3">
+              <output htmlFor="character-search" className="text-sm text-muted-foreground">
+                {statusMessage}
+              </output>
+              <Link href="/suggest" className="text-sm font-medium text-primary hover:underline shrink-0 ml-4">
+                + Suggest a character
+              </Link>
+            </div>
           </search>
         {filtered.length > 0 && (
           <ul className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-6 gap-y-16 overflow-visible pb-4">
