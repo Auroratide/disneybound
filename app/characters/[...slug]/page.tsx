@@ -9,28 +9,26 @@ import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-
 import { getServerAuth } from "@/lib/auth";
 import { ImgZoomRegistrar } from "@/app/components/ImgZoomRegistrar/ImgZoomRegistrar";
 
-type Params = { params: Promise<{ slug: string }> };
+type Params = { params: Promise<{ slug: string[] }> };
 
 export async function generateStaticParams() {
-  return getAllCharacters().map((c) => ({ slug: c.slug }));
+  return getAllCharacters().map((c) => ({ slug: c.slug.split("/") }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const character = getCharacterBySlug(slug);
-  if (!character) return {};
+  const characterData = getCharacterBySlug(slug.join("/"));
+  if (!characterData) return {};
 
   return {
-    title: character.outfitName
-      ? `${character.name} (${character.outfitName}) - Disney Bounding`
-      : `${character.name} - Disney Bounding`,
-    description: `Disney Bounding color guide for ${character.name} from ${character.movie}`,
+    title: `${characterData.name} (${characterData.outfitName}) - Disney Bounding`,
+    description: `Disney Bounding color guide for ${characterData.name} from ${characterData.movie}`,
   };
 }
 
-async function fetchCommunityOutfits(slug: string, outfitName: string): Promise<CommunityOutfit[]> {
+async function fetchCommunityOutfits(characterSlug: string, outfitName: string): Promise<CommunityOutfit[]> {
   try {
-    return await getCommunityOutfits(slug, outfitName);
+    return await getCommunityOutfits(characterSlug, outfitName);
   } catch {
     // Pocketbase may be unavailable (e.g. at build time) — show nothing rather than error.
     return [];
@@ -39,12 +37,14 @@ async function fetchCommunityOutfits(slug: string, outfitName: string): Promise<
 
 export default async function CharacterPage({ params }: Params) {
   const { slug } = await params;
-  const character = getCharacterBySlug(slug);
-  if (!character) notFound();
+  const characterData = getCharacterBySlug(slug.join("/"));
+  if (!characterData) notFound();
+
+  const characterSlug = slug[0];
 
   const [{ user }, communityOutfits] = await Promise.all([
     getServerAuth(),
-    fetchCommunityOutfits(slug, character.outfitName ?? character.name),
+    fetchCommunityOutfits(characterSlug, characterData.outfitName),
   ]);
 
   return (
@@ -57,26 +57,26 @@ export default async function CharacterPage({ params }: Params) {
       </PageContainer>
 
       <div className="text-center pb-20">
-        <h1 className="text-7xl font-bold">{character.name}</h1>
-        <p className="text-lg text-foreground/60 mt-2">{character.movie}</p>
-        {character.outfitName && <p className="text-base text-foreground/50 mt-1">{character.outfitName}</p>}
+        <h1 className="text-7xl font-bold">{characterData.name}</h1>
+        <p className="text-lg text-foreground/60 mt-2">{characterData.movie}</p>
+        <p className="text-base text-foreground/50 mt-1">{characterData.outfitName}</p>
       </div>
 
       <PageContainer className="pb-12">
         <Outfit
-          imageSrc={character.imageSrc}
-          imageAlt={character.imageAlt}
-          cardColor={character.cardColor}
-          colors={character.colors}
+          imageSrc={characterData.imageSrc}
+          imageAlt={characterData.imageAlt}
+          cardColor={characterData.cardColor}
+          colors={characterData.colors}
         />
         <CommunityOutfitsSection
           outfits={communityOutfits}
           currentUserId={user?.id ?? null}
-          characterSlug={slug}
-          outfitName={character.outfitName ?? character.name}
+          characterSlug={characterSlug}
+          outfitName={characterData.outfitName}
           instructions={communityOutfits.length > 0
-            ? `Want to provide inspiration? Share your outfit of ${character.name}!`
-            : `Be the first to share an outfit of ${character.name}!`
+            ? `Want to provide inspiration? Share your outfit of ${characterData.name}!`
+            : `Be the first to share an outfit of ${characterData.name}!`
           }
         />
       </PageContainer>

@@ -36,7 +36,7 @@ export function CharacterGrid({ characters }: Props) {
               </div>
               <div className="p-4 bg-card rounded-b-xl text-center">
                 <h3 className="text-lg font-semibold leading-tight">{character.name}</h3>
-                {character.outfitName && <p className="text-sm text-muted-foreground mt-0.5">{character.outfitName}</p>}
+                <p className="text-sm text-muted-foreground mt-0.5">{character.outfitName}</p>
               </div>
             </div>
           </Link>

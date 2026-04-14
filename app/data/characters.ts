@@ -10,7 +10,7 @@ export type Character = {
   slug: string;
   name: string;
   movie: string;
-  outfitName?: string;
+  outfitName: string;
   imageSrc: string;
   imageAlt: string;
   cardColor: string;
@@ -19,10 +19,11 @@ export type Character = {
 
 const characters: Character[] = [
   {
-    slug: "sadness",
+    slug: "sadness/sweater",
     name: "Sadness",
     movie: "Inside Out",
-    imageSrc: "/characters/sadness/render.webp",
+    outfitName: "Sweater",
+    imageSrc: "/characters/sadness/sweater.webp",
     imageAlt: "Sadness from Inside Out",
     cardColor: "#A0C0E0",
     colors: [
@@ -32,7 +33,7 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "bo-peep",
+    slug: "bo-peep/adventure-outfit",
     name: "Bo Peep",
     movie: "Toy Story 4",
     outfitName: "Adventure Outfit",
@@ -46,9 +47,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "ahsoka-tano",
+    slug: "ahsoka-tano/adult-outfit",
     name: "Ahsoka Tano",
     movie: "Star Wars: The Clone Wars",
+    outfitName: "Adult Outfit",
     imageSrc: "/characters/ahsoka-tano/adult.webp",
     imageAlt: "Ahsoka Tano in her adult outfit",
     cardColor: "#8AAABB",
@@ -59,9 +61,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "darth-vader",
+    slug: "darth-vader/classic-armor",
     name: "Darth Vader",
     movie: "Star Wars",
+    outfitName: "Classic Armor",
     imageSrc: "/characters/darth-vader/darth-vader.webp",
     imageAlt: "Darth Vader with his red lightsaber",
     cardColor: "#404040",
@@ -72,9 +75,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "jasmine",
+    slug: "jasmine/teal-outfit",
     name: "Jasmine",
     movie: "Aladdin",
+    outfitName: "Teal Outfit",
     imageSrc: "/characters/jasmine/dress.webp",
     imageAlt: "Jasmine in her teal outfit",
     cardColor: "#A8E8E0",
@@ -85,9 +89,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "belle",
+    slug: "belle/ball-gown",
     name: "Belle",
     movie: "Beauty and the Beast",
+    outfitName: "Ball Gown",
     imageSrc: "/characters/belle/dress.webp",
     imageAlt: "Belle in her golden ball gown",
     cardColor: "#F5E080",
@@ -98,9 +103,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "cinderella",
+    slug: "cinderella/ball-gown",
     name: "Cinderella",
     movie: "Cinderella",
+    outfitName: "Ball Gown",
     imageSrc: "/characters/cinderella/blue-dress.webp",
     imageAlt: "Cinderella in her blue ball gown",
     cardColor: "#B8E4F5",
@@ -111,9 +117,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "aurora",
+    slug: "aurora/pink-dress",
     name: "Aurora",
     movie: "Sleeping Beauty",
+    outfitName: "Pink Dress",
     imageSrc: "/characters/aurora/pink-dress.webp",
     imageAlt: "Aurora in her pink dress",
     cardColor: "#F5C0D0",
@@ -124,9 +131,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "snow-white",
+    slug: "snow-white/classic-dress",
     name: "Snow White",
     movie: "Snow White and the Seven Dwarfs",
+    outfitName: "Classic Dress",
     imageSrc: "/characters/snow-white/snow-white.webp",
     imageAlt: "Snow White in her iconic dress",
     cardColor: "#A8C8E8",
@@ -137,9 +145,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "ariel",
+    slug: "ariel/mermaid",
     name: "Ariel",
     movie: "The Little Mermaid",
+    outfitName: "Mermaid",
     imageSrc: "/characters/ariel/mermaid.webp",
     imageAlt: "Ariel as a Mermaid",
     cardColor: "#B8E8D8",
@@ -150,7 +159,7 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "ariel-princess-dress",
+    slug: "ariel/princess-dress",
     name: "Ariel",
     movie: "The Little Mermaid",
     outfitName: "Princess Dress",
@@ -164,9 +173,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "rapunzel",
+    slug: "rapunzel/tower-dress",
     name: "Rapunzel",
     movie: "Tangled",
+    outfitName: "Tower Dress",
     imageSrc: "/characters/rapunzel/tower-dress.webp",
     imageAlt: "Rapunzel in her Tower Dress",
     cardColor: "#DDD0F5",
@@ -177,9 +187,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "flynn-rider",
+    slug: "flynn-rider/kingdom-outfit",
     name: "Flynn Rider",
     movie: "Tangled",
+    outfitName: "Kingdom Outfit",
     imageSrc: "/characters/flynn-rider/kingdom-outfit.webp",
     imageAlt: "Flynn Rider in his Kingdom Outfit",
     cardColor: "#C4A882",
@@ -190,9 +201,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "judy-hopps",
+    slug: "judy-hopps/zpd-uniform",
     name: "Judy Hopps",
     movie: "Zootopia",
+    outfitName: "ZPD Uniform",
     imageSrc: "/characters/judy-hopps/judy-hopps.webp",
     imageAlt: "Judy Hopps in her ZPD police uniform",
     cardColor: "#A8C4E0",
@@ -203,9 +215,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "tinker-bell",
+    slug: "tinker-bell/leaf-dress",
     name: "Tinker Bell",
     movie: "Peter Pan",
+    outfitName: "Leaf Dress",
     imageSrc: "/characters/tinker-bell/tinker-bell.webp",
     imageAlt: "Tinker Bell",
     cardColor: "#C8E6A0",
@@ -216,9 +229,10 @@ const characters: Character[] = [
     ],
   },
   {
-    slug: "joy",
+    slug: "joy/yellow-dress",
     name: "Joy",
     movie: "Inside Out",
+    outfitName: "Yellow Dress",
     imageSrc: "/characters/joy/render.webp",
     imageAlt: "Joy from Inside Out",
     cardColor: "#FFE566",

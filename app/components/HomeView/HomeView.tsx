@@ -24,7 +24,7 @@ export function HomeView({ characters }: Props) {
 
   const filtered = characters.filter((c) => {
     const matchesQuery = query === "" || [c.name, c.movie, c.outfitName].some((s) =>
-      s?.toLowerCase().includes(query.toLowerCase())
+      s.toLowerCase().includes(query.toLowerCase())
     );
     const matchesColor = selectedSwatch === null ||
       c.colors.some((color) => colorMatchesSwatch(color.oklch, selectedSwatch));
@@ -140,7 +140,7 @@ export function HomeView({ characters }: Props) {
                     <div className="p-4 bg-card rounded-b-xl text-center flex-1 flex flex-col justify-center">
                       <h3 className="text-lg font-semibold leading-tight">{character.name}</h3>
                       <p className="text-sm text-muted-foreground mt-0.5">{character.movie}</p>
-                      {character.outfitName && <p className="text-xs text-muted-foreground/70 mt-0.5">{character.outfitName}</p>}
+                      <p className="text-xs text-muted-foreground/70 mt-0.5">{character.outfitName}</p>
                     </div>
                   </div>
                 </Link>

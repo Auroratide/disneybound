@@ -1,0 +1,25 @@
+I want to start hosting all of the character data in the database now. The reason is that it isn't going to be scalable to add all the characters myself. Instead, I want users to have the ability to add characters themselves to the site from the website if the character/outfit does not yet exist. This will allow users to add obscure characters and such. Draft a plan to 1) Move all the existing character data into the database, and 2) Allow users to add characters/outfits. Save the plan to .plans/CHARACTER_DB.md.
+
+---
+
+Good plan so far, make one change: I want the Outfit to now be required again. Before adding characters to the database (before Phase 1 in the plan), add outfit names to characters that do not have them. Additionally, I want their slugs to be of the form "/character-name/outfit-name". Then, we'll make it required in the database.
+
+---
+
+I am getting a 404 when visiting the character pages.
+
+---
+
+I restarted the server, and I no longer get a 404. However, the page now infinitely refreshes it when I visit it, leading to an "unexpected Turbopack error" on the server.
+
+---
+
+The page is still infinitely refreshing. Don't try and fix the error. Instead, look at the codebase and describe to me what the possible causes are.
+
+---
+
+It's fixed. Looking at the open questions in the Plan, you wrote "PocketBase doesn't auto-enforce unique text fields without a migration-level index. The API route should check for existing slugs before creating.". Can you describe this more to me, and tell me options?
+
+---
+
+/commit
