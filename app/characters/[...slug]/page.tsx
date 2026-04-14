@@ -9,15 +9,18 @@ import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-
 import { getServerAuth } from "@/lib/auth";
 import { ImgZoomRegistrar } from "@/app/components/ImgZoomRegistrar/ImgZoomRegistrar";
 
+export const revalidate = 3600;
+
 type Params = { params: Promise<{ slug: string[] }> };
 
 export async function generateStaticParams() {
-  return getAllCharacters().map((c) => ({ slug: c.slug.split("/") }));
+  const characters = await getAllCharacters();
+  return characters.map((c) => ({ slug: c.slug.split("/") }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const characterData = getCharacterBySlug(slug.join("/"));
+  const characterData = await getCharacterBySlug(slug.join("/"));
   if (!characterData) return {};
 
   return {
@@ -37,7 +40,7 @@ async function fetchCommunityOutfits(characterSlug: string, outfitName: string):
 
 export default async function CharacterPage({ params }: Params) {
   const { slug } = await params;
-  const characterData = getCharacterBySlug(slug.join("/"));
+  const characterData = await getCharacterBySlug(slug.join("/"));
   if (!characterData) notFound();
 
   const characterSlug = slug[0];

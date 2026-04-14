@@ -1,7 +1,9 @@
 import { getAllCharacters } from "@/app/data/characters";
 import { HomeView } from "@/app/components/HomeView/HomeView";
 
-export default function Home() {
-  const characters = getAllCharacters();
+export const revalidate = 3600;
+
+export default async function Home() {
+  const characters = await getAllCharacters();
   return <HomeView characters={characters} />;
 }
