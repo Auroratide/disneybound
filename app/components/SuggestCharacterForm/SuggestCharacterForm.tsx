@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { hexToOklch } from "@/app/lib/hex-to-oklch";
+import { Outfit } from "@/app/components/Outfit";
 
 type ColorEntry = {
   hex: string;
@@ -179,31 +180,33 @@ export function SuggestCharacterForm() {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div>
       {/* Step indicator */}
-      <ol className="flex items-center gap-2 mb-8" aria-label="Form steps">
+      <ol className="flex items-start mb-8 max-w-lg mx-auto" aria-label="Form steps">
         {STEPS.map((label, i) => (
-          <li key={label} className="flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-colors ${
-              i === step
-                ? "bg-primary text-primary-foreground border-primary"
-                : i < step
-                  ? "bg-primary/20 text-primary border-primary/40"
-                  : "bg-muted text-muted-foreground border-border"
-            }`}>
-              {i + 1}
-            </span>
-            <span className={`text-sm font-medium hidden sm:inline ${i === step ? "text-foreground" : "text-muted-foreground"}`}>
-              {label}
-            </span>
-            {i < STEPS.length - 1 && <span className="text-border mx-1">›</span>}
+          <li key={label} className="flex items-start flex-1">
+            <div className="flex flex-col items-center gap-1 flex-1">
+              <span className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-colors ${
+                i === step
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : i < step
+                    ? "bg-primary/20 text-primary border-primary/40"
+                    : "bg-muted text-muted-foreground border-border"
+              }`}>
+                {i + 1}
+              </span>
+              <span className={`text-xs font-medium text-center leading-tight ${i === step ? "text-foreground" : "text-muted-foreground"}`}>
+                {label}
+              </span>
+            </div>
+            {i < STEPS.length - 1 && <span className="text-border mt-3 shrink-0" aria-hidden="true">›</span>}
           </li>
         ))}
       </ol>
 
       {/* Step 1: Character info */}
       {step === 0 && (
-        <fieldset className="flex flex-col gap-4">
+        <fieldset className="flex flex-col gap-4 max-w-lg mx-auto">
           <legend className="text-lg font-semibold mb-2">Character info</legend>
           <div className="flex flex-col gap-1.5">
             <label htmlFor="suggest-name" className="text-sm font-medium">Character name</label>
@@ -213,6 +216,7 @@ export function SuggestCharacterForm() {
               onChange={(e) => setData((p) => ({ ...p, name: e.target.value }))}
               placeholder="e.g. Moana"
               autoFocus
+              className="bg-white"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -222,6 +226,7 @@ export function SuggestCharacterForm() {
               value={data.movie}
               onChange={(e) => setData((p) => ({ ...p, movie: e.target.value }))}
               placeholder="e.g. Moana"
+              className="bg-white"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -231,6 +236,7 @@ export function SuggestCharacterForm() {
               value={data.outfitName}
               onChange={(e) => setData((p) => ({ ...p, outfitName: e.target.value }))}
               placeholder="e.g. Ocean Dress"
+              className="bg-white"
             />
           </div>
         </fieldset>
@@ -238,7 +244,7 @@ export function SuggestCharacterForm() {
 
       {/* Step 2: Image */}
       {step === 1 && (
-        <fieldset className="flex flex-col gap-4">
+        <fieldset className="flex flex-col gap-4 max-w-lg mx-auto">
           <legend className="text-lg font-semibold mb-2">Character image</legend>
           <p className="text-sm text-muted-foreground -mt-2">Upload a clear render or artwork of the character in this outfit. JPEG, PNG, or WebP — max 5 MB.</p>
           <button
@@ -275,7 +281,7 @@ export function SuggestCharacterForm() {
 
       {/* Step 3: Colors */}
       {step === 2 && (
-        <fieldset className="flex flex-col gap-6">
+        <fieldset className="flex flex-col gap-6 max-w-lg mx-auto">
           <legend className="text-lg font-semibold mb-2">Color palette</legend>
           <p className="text-sm text-muted-foreground -mt-4">Pick 3 colors that define this outfit. Sample them from reference art for accuracy.</p>
           {data.colors.map((color, i) => (
@@ -309,6 +315,7 @@ export function SuggestCharacterForm() {
                   value={color.name}
                   onChange={(e) => updateColor(i, { name: e.target.value })}
                   placeholder="e.g. Teal"
+                  className="bg-white"
                 />
               </div>
             </div>
@@ -319,37 +326,25 @@ export function SuggestCharacterForm() {
       {/* Step 4: Review */}
       {step === 3 && (
         <div className="flex flex-col gap-5">
-          <h2 className="text-lg font-semibold">Review your submission</h2>
-          <dl className="flex flex-col gap-2 text-sm">
-            <div className="flex gap-2"><dt className="text-muted-foreground w-24 shrink-0">Character</dt><dd className="font-medium">{data.name}</dd></div>
-            <div className="flex gap-2"><dt className="text-muted-foreground w-24 shrink-0">Movie</dt><dd className="font-medium">{data.movie}</dd></div>
-            <div className="flex gap-2"><dt className="text-muted-foreground w-24 shrink-0">Outfit</dt><dd className="font-medium">{data.outfitName}</dd></div>
-          </dl>
-          <div className="flex gap-3">
-            {data.colors.map((c, i) => (
-              <div key={i} className="flex flex-col items-center gap-1.5 flex-1">
-                <span className="w-full aspect-square rounded-lg border border-foreground/10" style={{ backgroundColor: c.hex }} />
-                <span className="text-xs font-medium text-center leading-tight">{c.name || `Color ${i + 1}`}</span>
-              </div>
-            ))}
+          <h2 className="text-lg font-semibold max-w-lg mx-auto w-full">Review your submission</h2>
+
+          {/* Character page preview — full width to match the real character page */}
+          <ReviewStep data={data} />
+
+          <div className="max-w-lg mx-auto w-full flex flex-col gap-3">
+            <p className="text-sm text-muted-foreground">Your submission will appear after review. You won&apos;t be able to edit it after submitting.</p>
+            <ErrorMessage message={submitError} />
+            {existingSlug && (
+              <p className="text-sm">
+                <Link href={`/characters/${existingSlug}`} className="text-primary underline">View the existing page →</Link>
+              </p>
+            )}
           </div>
-          {data.previewUrl && (
-            <div className="relative w-32 h-32">
-              <Image src={data.previewUrl} alt="Character preview" fill className="object-contain rounded-lg" />
-            </div>
-          )}
-          <p className="text-xs text-muted-foreground">Your submission will appear after review. You won&apos;t be able to edit it after submitting.</p>
-          <ErrorMessage message={submitError} />
-          {existingSlug && (
-            <p className="text-sm">
-              <Link href={`/characters/${existingSlug}`} className="text-primary underline">View the existing page →</Link>
-            </p>
-          )}
         </div>
       )}
 
       {/* Navigation */}
-      <div className="flex items-center gap-3 mt-8">
+      <div className="flex items-center gap-3 mt-8 max-w-lg mx-auto">
         {step > 0 && (
           <Button type="button" variant="ghost" onClick={handleBack} disabled={isSubmitting}>
             Back
@@ -402,6 +397,31 @@ export function SuggestCharacterForm() {
         </dialog>
       )}
     </div>
+  );
+}
+
+function ReviewStep({ data }: { data: FormData }) {
+  const primaryOklch = hexToOklch(data.colors[0].hex);
+  const cardColor = `oklch(0.92 ${(primaryOklch.c * 0.35).toFixed(3)} ${primaryOklch.h})`;
+  const outfitColors = data.colors.map((c, i) => ({
+    name: c.name || COLOR_ROLES[i],
+    oklch: hexToOklch(c.hex),
+  }));
+
+  return (
+    <>
+      <div className="text-center">
+        <p className="text-2xl font-bold">{data.name}</p>
+        <p className="text-muted-foreground mt-1">{data.movie}</p>
+        <p className="text-sm text-muted-foreground/70 mt-0.5">{data.outfitName}</p>
+      </div>
+      <Outfit
+        imageSrc={data.previewUrl ?? ""}
+        imageAlt={`${data.name} — ${data.outfitName}`}
+        cardColor={cardColor}
+        colors={outfitColors}
+      />
+    </>
   );
 }
 

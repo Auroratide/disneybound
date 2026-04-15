@@ -39,3 +39,19 @@ A test is failing, can you see why and fix it or tell me if I need to do somethi
 ---
 
 /commit
+
+---
+
+More tweaks to the suggest a character page: 1) Center the title and subtitle. 2) The step numbers should be spaced so they take up the whole width of the container. 3) The step titles should also be visible on mobile, but to make it fit, maybe place them under the number rather than beside. 4) The inputs should have a white background. 5) On the Review Submission page, use the character card like on the character pages so that users get an accurate preview of what it will look like. 6) The "Your submission will appear after review. You won't be able to edit it after submitting." text needs to be bigger.
+
+---
+
+Close but you missinterpretted tweak 5. Use the character banner as seen on the individual character page, not the front page.
+
+---
+
+Great, that's the right component now. However, it looks squished because the suggestion form is thinner than the actual character pages. Can you fix that? I do like how you're using a thinner container for most of the form, as it fits nicely, but for the character preview we need more space. It looks fine on mobile since the component is responsive.
+
+---
+
+/commit

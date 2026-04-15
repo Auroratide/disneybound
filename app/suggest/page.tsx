@@ -26,7 +26,7 @@ export default async function SuggestPage() {
   return (
     <main>
       <PageContainer className="py-10">
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-block mb-4">
             ← All characters
           </Link>
