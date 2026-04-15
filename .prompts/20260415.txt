@@ -3,3 +3,11 @@ I want to tweak the suggest-a-character flow. Flip steps 2 and 3: Uploading the 
 ---
 
 /commit
+
+---
+
+For the colors, I actually don't care about the "how to wear it" part of the form. Remove it from the form, and from the data model. Instead, I want to name the colors "Primary", "Secondary", and "Accessory", so it's more clear what colors users should choose.
+
+---
+
+/commit

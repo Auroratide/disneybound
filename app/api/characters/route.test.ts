@@ -48,9 +48,9 @@ function makeImage(name = "char.jpg", type = "image/jpeg", sizeBytes = 16): File
 }
 
 const VALID_COLORS = JSON.stringify([
-  { name: "Blue", oklch: { l: 0.5, c: 0.1, h: 240 }, usage: "Dress — a blue top or skirt" },
-  { name: "Gold", oklch: { l: 0.8, c: 0.15, h: 90 }, usage: "Jewelry — gold accessories" },
-  { name: "Red", oklch: { l: 0.5, c: 0.2, h: 30 }, usage: "Accents — a red belt or bag" },
+  { name: "Blue", oklch: { l: 0.5, c: 0.1, h: 240 } },
+  { name: "Gold", oklch: { l: 0.8, c: 0.15, h: 90 } },
+  { name: "Red", oklch: { l: 0.5, c: 0.2, h: 30 } },
 ]);
 
 function makeRequest(
@@ -117,7 +117,7 @@ describe("POST /api/characters", () => {
 
   it("returns 400 when colors is not an array of 3", async () => {
     const res = await POST(makeRequest(
-      validFields({ colors: JSON.stringify([{ name: "Blue", oklch: { l: 0.5, c: 0.1, h: 240 }, usage: "Dress" }]) }),
+      validFields({ colors: JSON.stringify([{ name: "Blue", oklch: { l: 0.5, c: 0.1, h: 240 } }]) }),
       { cookie: userCookie }
     ));
     expect(res.status).toBe(400);

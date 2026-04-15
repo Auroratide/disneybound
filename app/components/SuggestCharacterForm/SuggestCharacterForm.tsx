@@ -11,7 +11,6 @@ import { hexToOklch } from "@/app/lib/hex-to-oklch";
 type ColorEntry = {
   hex: string;
   name: string;
-  usage: string;
 };
 
 type FormData = {
@@ -23,7 +22,9 @@ type FormData = {
   previewUrl: string | null;
 };
 
-const INITIAL_COLOR: ColorEntry = { hex: "#cccccc", name: "", usage: "" };
+const INITIAL_COLOR: ColorEntry = { hex: "#cccccc", name: "" };
+
+const COLOR_ROLES = ["Primary", "Secondary", "Accessory"] as const;
 
 const STEPS = ["Character", "Image", "Colors", "Review"];
 
@@ -72,8 +73,7 @@ export function SuggestCharacterForm() {
     }
     if (step === 2) {
       for (let i = 0; i < 3; i++) {
-        if (!data.colors[i].name.trim()) return `Color ${i + 1} needs a name.`;
-        if (!data.colors[i].usage.trim()) return `Color ${i + 1} needs a usage description.`;
+        if (!data.colors[i].name.trim()) return `${COLOR_ROLES[i]} color needs a name.`;
       }
     }
     return null;
@@ -99,7 +99,6 @@ export function SuggestCharacterForm() {
     const colors = data.colors.map((c) => ({
       name: c.name.trim(),
       oklch: hexToOklch(c.hex),
-      usage: c.usage.trim(),
     }));
 
     const formData = new FormData();
@@ -243,9 +242,9 @@ export function SuggestCharacterForm() {
               <div className="flex items-center gap-3">
                 <label
                   htmlFor={`suggest-color-${i}`}
-                  className="text-sm font-semibold shrink-0"
+                  className="text-sm font-semibold shrink-0 w-20"
                 >
-                  Color {i + 1}
+                  {COLOR_ROLES[i]}
                 </label>
                 <input
                   id={`suggest-color-${i}`}
@@ -267,15 +266,6 @@ export function SuggestCharacterForm() {
                   value={color.name}
                   onChange={(e) => updateColor(i, { name: e.target.value })}
                   placeholder="e.g. Teal"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor={`suggest-color-usage-${i}`} className="text-sm font-medium">How to wear it</label>
-                <Input
-                  id={`suggest-color-usage-${i}`}
-                  value={color.usage}
-                  onChange={(e) => updateColor(i, { usage: e.target.value })}
-                  placeholder="e.g. Dress — a teal wrap skirt or maxi dress"
                 />
               </div>
             </div>
