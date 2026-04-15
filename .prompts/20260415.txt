@@ -1,0 +1,5 @@
+I want to tweak the suggest-a-character flow. Flip steps 2 and 3: Uploading the image should be the second step, and choosing colors should be the third step.
+
+---
+
+/commit

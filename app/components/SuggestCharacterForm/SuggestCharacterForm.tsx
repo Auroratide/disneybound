@@ -25,7 +25,7 @@ type FormData = {
 
 const INITIAL_COLOR: ColorEntry = { hex: "#cccccc", name: "", usage: "" };
 
-const STEPS = ["Character", "Colors", "Image", "Review"];
+const STEPS = ["Character", "Image", "Colors", "Review"];
 
 export function SuggestCharacterForm() {
   const [step, setStep] = useState(0);
@@ -68,13 +68,13 @@ export function SuggestCharacterForm() {
       if (!data.outfitName.trim()) return "Outfit name is required.";
     }
     if (step === 1) {
+      if (!data.image) return "Please select an image.";
+    }
+    if (step === 2) {
       for (let i = 0; i < 3; i++) {
         if (!data.colors[i].name.trim()) return `Color ${i + 1} needs a name.`;
         if (!data.colors[i].usage.trim()) return `Color ${i + 1} needs a usage description.`;
       }
-    }
-    if (step === 2) {
-      if (!data.image) return "Please select an image.";
     }
     return null;
   }
@@ -196,8 +196,45 @@ export function SuggestCharacterForm() {
         </fieldset>
       )}
 
-      {/* Step 2: Colors */}
+      {/* Step 2: Image */}
       {step === 1 && (
+        <fieldset className="flex flex-col gap-4">
+          <legend className="text-lg font-semibold mb-2">Character image</legend>
+          <p className="text-sm text-muted-foreground -mt-2">Upload a clear render or artwork of the character in this outfit. JPEG, PNG, or WebP — max 5 MB.</p>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center gap-3 hover:border-primary hover:bg-muted/40 transition-colors cursor-pointer"
+          >
+            {data.previewUrl ? (
+              <div className="relative w-48 h-48">
+                <Image src={data.previewUrl} alt="Preview" fill className="object-contain rounded-lg" />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M13.5 12h.008v.008H13.5V12zm0 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                </svg>
+                <span className="text-sm">Click to select image</span>
+              </div>
+            )}
+            {data.image && (
+              <span className="text-xs text-muted-foreground">{data.image.name}</span>
+            )}
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="sr-only"
+            onChange={handleImageChange}
+            aria-label="Character image"
+          />
+        </fieldset>
+      )}
+
+      {/* Step 3: Colors */}
+      {step === 2 && (
         <fieldset className="flex flex-col gap-6">
           <legend className="text-lg font-semibold mb-2">Color palette</legend>
           <p className="text-sm text-muted-foreground -mt-4">Pick 3 colors that define this outfit. Sample them from reference art for accuracy.</p>
@@ -243,43 +280,6 @@ export function SuggestCharacterForm() {
               </div>
             </div>
           ))}
-        </fieldset>
-      )}
-
-      {/* Step 3: Image */}
-      {step === 2 && (
-        <fieldset className="flex flex-col gap-4">
-          <legend className="text-lg font-semibold mb-2">Character image</legend>
-          <p className="text-sm text-muted-foreground -mt-2">Upload a clear render or artwork of the character in this outfit. JPEG, PNG, or WebP — max 5 MB.</p>
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="w-full border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center gap-3 hover:border-primary hover:bg-muted/40 transition-colors cursor-pointer"
-          >
-            {data.previewUrl ? (
-              <div className="relative w-48 h-48">
-                <Image src={data.previewUrl} alt="Preview" fill className="object-contain rounded-lg" />
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-2 text-muted-foreground">
-                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M13.5 12h.008v.008H13.5V12zm0 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                </svg>
-                <span className="text-sm">Click to select image</span>
-              </div>
-            )}
-            {data.image && (
-              <span className="text-xs text-muted-foreground">{data.image.name}</span>
-            )}
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            className="sr-only"
-            onChange={handleImageChange}
-            aria-label="Character image"
-          />
         </fieldset>
       )}
 
