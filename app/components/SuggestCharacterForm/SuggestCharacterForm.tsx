@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,48 @@ export function SuggestCharacterForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [existingSlug, setExistingSlug] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [activePickSlot, setActivePickSlot] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pickerDialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (activePickSlot !== null) pickerDialogRef.current?.showModal();
+  }, [activePickSlot]);
+
+  useEffect(() => {
+    if (activePickSlot === null || !canvasRef.current || !data.previewUrl) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new window.Image();
+    img.onload = () => {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+    };
+    img.src = data.previewUrl;
+  }, [activePickSlot, data.previewUrl]);
+
+  function handleCanvasPick(e: React.MouseEvent<HTMLCanvasElement>) {
+    const canvas = canvasRef.current;
+    if (!canvas || activePickSlot === null) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = Math.floor((e.clientX - rect.left) * scaleX);
+    const y = Math.floor((e.clientY - rect.top) * scaleY);
+
+    const [r, g, b] = ctx.getImageData(x, y, 1, 1).data;
+    const hex = `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+
+    updateColor(activePickSlot, { hex });
+    setActivePickSlot(null);
+  }
 
   function updateColor(index: number, patch: Partial<ColorEntry>) {
     setData((prev) => {
@@ -239,25 +280,27 @@ export function SuggestCharacterForm() {
           <p className="text-sm text-muted-foreground -mt-4">Pick 3 colors that define this outfit. Sample them from reference art for accuracy.</p>
           {data.colors.map((color, i) => (
             <div key={i} className="flex flex-col gap-3 p-4 rounded-xl border border-border bg-card">
-              <div className="flex items-center gap-3">
-                <label
-                  htmlFor={`suggest-color-${i}`}
-                  className="text-sm font-semibold shrink-0 w-20"
-                >
-                  {COLOR_ROLES[i]}
-                </label>
+              <label htmlFor={`suggest-color-${i}`} className="text-sm font-semibold">
+                {COLOR_ROLES[i]}
+              </label>
+              <div className="flex gap-2">
                 <input
                   id={`suggest-color-${i}`}
                   type="color"
                   value={color.hex}
                   onChange={(e) => updateColor(i, { hex: e.target.value })}
-                  className="w-10 h-10 rounded cursor-pointer border border-border p-0.5 bg-card"
+                  className="flex-1 h-12 rounded-lg cursor-pointer border border-border p-0.5 bg-card"
                 />
-                <span
-                  className="flex-1 h-10 rounded-lg border border-foreground/10"
-                  style={{ backgroundColor: color.hex }}
-                  aria-hidden="true"
-                />
+                {data.previewUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setActivePickSlot(i)}
+                    className="shrink-0 h-12 px-3 rounded-lg border border-border bg-muted hover:bg-muted/70 transition-colors text-xs font-medium flex items-center gap-1.5"
+                  >
+                    <EyedropperIcon />
+                    Pick from Image
+                  </button>
+                )}
               </div>
               <div className="flex flex-col gap-1.5">
                 <label htmlFor={`suggest-color-name-${i}`} className="text-sm font-medium">Color name</label>
@@ -322,6 +365,51 @@ export function SuggestCharacterForm() {
           </Button>
         )}
       </div>
+
+      {/* Color picker sheet */}
+      {activePickSlot !== null && data.previewUrl && (
+        <dialog
+          ref={pickerDialogRef}
+          onCancel={(e) => { e.preventDefault(); setActivePickSlot(null); }}
+          onClick={(e) => { if (e.target === e.currentTarget) setActivePickSlot(null); }}
+          aria-labelledby="color-picker-title"
+          className="fixed inset-0 m-auto flex h-full w-full max-w-none items-end sm:items-center justify-center bg-transparent p-0 sm:p-4 backdrop:bg-black/60"
+        >
+          <div className="bg-card rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg flex flex-col gap-3 p-4 max-h-[85dvh]">
+            <div className="flex items-center justify-between">
+              <p id="color-picker-title" className="text-sm font-semibold">
+                Pick {COLOR_ROLES[activePickSlot]} color
+              </p>
+              <button
+                type="button"
+                onClick={() => setActivePickSlot(null)}
+                className="text-muted-foreground hover:text-foreground transition-colors p-1 -mr-1"
+                aria-label="Close"
+              >
+                <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" d="M3 3l10 10M13 3L3 13" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-xs text-muted-foreground -mt-1">Tap a color on the image to sample it.</p>
+            <canvas
+              ref={canvasRef}
+              onClick={handleCanvasPick}
+              className="w-full rounded-xl overflow-hidden cursor-crosshair"
+              style={{ maxHeight: "60dvh", objectFit: "contain" }}
+            />
+          </div>
+        </dialog>
+      )}
     </div>
+  );
+}
+
+function EyedropperIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11 2.5a2.121 2.121 0 013 3L5.5 14 2 14.5 2.5 11 11 2.5z" />
+      <path strokeLinecap="round" d="M9 4.5l2.5 2.5" />
+    </svg>
   );
 }

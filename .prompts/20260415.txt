@@ -11,3 +11,31 @@ For the colors, I actually don't care about the "how to wear it" part of the for
 ---
 
 /commit
+
+---
+
+Ok, for choosing colors, I want to help users a little bit. Instead of letting choose colors completely from scratch, I want to give them access to the image they just uploaded, and let them use a color picker to get at least the initial color they want. This is why I moved the image bit to Step 2. Before implementing, give me suggestions of how this could look from a user experience perspective.
+
+---
+
+How would Option A look on mobile?
+
+---
+
+Ok, let's go with Option A2.
+
+---
+
+Keep the type="color" input, it should be there for fine-tuning or as a fallback.
+
+---
+
+Very nice! Some tweaks: 1) I don't need a swatch div next to the color input box. Just make the color image box bigger and rectangular. 2) The "Pick" Option needs to be more specific; make it say "Pick from Image", even on mobile. 3) Dialogs like the one you made should use the `dialog` HTML element for accessibility reasons; this is what the LoginModal does.
+
+---
+
+A test is failing, can you see why and fix it or tell me if I need to do something?
+
+---
+
+/commit
