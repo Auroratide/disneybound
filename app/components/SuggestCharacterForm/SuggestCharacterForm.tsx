@@ -186,7 +186,7 @@ export function SuggestCharacterForm() {
         {STEPS.map((label, i) => (
           <li key={label} className="flex items-start flex-1">
             <div className="flex flex-col items-center gap-1 flex-1">
-              <span className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-colors ${
+              <span className={`w-9 h-9 rounded-full flex items-center justify-center text-base font-bold border-2 transition-colors ${
                 i === step
                   ? "bg-primary text-primary-foreground border-primary"
                   : i < step
@@ -195,11 +195,11 @@ export function SuggestCharacterForm() {
               }`}>
                 {i + 1}
               </span>
-              <span className={`text-xs font-medium text-center leading-tight ${i === step ? "text-foreground" : "text-muted-foreground"}`}>
+              <span className={`text-sm font-medium text-center leading-tight ${i === step ? "text-foreground" : "text-muted-foreground"}`}>
                 {label}
               </span>
             </div>
-            {i < STEPS.length - 1 && <span className="text-border mt-3 shrink-0" aria-hidden="true">›</span>}
+            {i < STEPS.length - 1 && <span className="text-border mt-4 shrink-0" aria-hidden="true">›</span>}
           </li>
         ))}
       </ol>
@@ -207,7 +207,7 @@ export function SuggestCharacterForm() {
       {/* Step 1: Character info */}
       {step === 0 && (
         <fieldset className="flex flex-col gap-4 max-w-lg mx-auto">
-          <legend className="text-lg font-semibold mb-2">Character info</legend>
+          <legend className="text-lg font-semibold mb-2 font-display text-primary">Character info</legend>
           <div className="flex flex-col gap-1.5">
             <label htmlFor="suggest-name" className="text-sm font-medium">Character name</label>
             <Input
@@ -245,7 +245,7 @@ export function SuggestCharacterForm() {
       {/* Step 2: Image */}
       {step === 1 && (
         <fieldset className="flex flex-col gap-4 max-w-lg mx-auto">
-          <legend className="text-lg font-semibold mb-2">Character image</legend>
+          <legend className="text-lg font-semibold mb-2 font-display text-primary">Character image</legend>
           <p className="text-sm text-muted-foreground -mt-2">Upload a clear render or artwork of the character in this outfit. JPEG, PNG, or WebP — max 5 MB.</p>
           <button
             type="button"
@@ -282,7 +282,7 @@ export function SuggestCharacterForm() {
       {/* Step 3: Colors */}
       {step === 2 && (
         <fieldset className="flex flex-col gap-6 max-w-lg mx-auto">
-          <legend className="text-lg font-semibold mb-2">Color palette</legend>
+          <legend className="text-lg font-semibold mb-2 font-display text-primary">Color palette</legend>
           <p className="text-sm text-muted-foreground -mt-4">Pick 3 colors that define this outfit. Sample them from reference art for accuracy.</p>
           {data.colors.map((color, i) => (
             <div key={i} className="flex flex-col gap-3 p-4 rounded-xl border border-border bg-card">

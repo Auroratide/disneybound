@@ -55,3 +55,11 @@ Great, that's the right component now. However, it looks squished because the su
 ---
 
 /commit
+
+---
+
+Some more tweaks to this page: 1) the All Characters back button should be left-aligned, and a bit closer to the top nav in terms of spacing. 2) Make the step numbers and titles slightly larger. 3) Make the fieldset legend have the same styling as the h2 (the maroon color and font).
+
+---
+
+/commit

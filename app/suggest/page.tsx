@@ -25,11 +25,11 @@ export default async function SuggestPage() {
 
   return (
     <main>
-      <PageContainer className="py-10">
+      <PageContainer className="pt-4 pb-10">
+        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-block mb-6">
+          ← All characters
+        </Link>
         <div className="mb-8 text-center">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-block mb-4">
-            ← All characters
-          </Link>
           <h1 className="text-4xl font-bold">Suggest a Character</h1>
           <p className="text-muted-foreground mt-2">Know a character we&apos;re missing? Submit them and they&apos;ll appear after review.</p>
         </div>
