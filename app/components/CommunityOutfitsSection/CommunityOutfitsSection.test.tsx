@@ -293,7 +293,7 @@ describe("CommunityOutfitsSection — upload form", () => {
     fireEvent.click(screen.getByRole("button", { name: /share outfit/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/thanks! your outfit will appear after review/i)).toBeDefined();
+      expect(screen.getByText(/thanks! your outfit has been shared/i)).toBeDefined();
     });
   });
 
