@@ -25,10 +25,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const pb = getPocketbase();
+
     // fireImmediately=true hydrates from localStorage on mount, then continues
     // to fire on subsequent auth changes (login, logout, token refresh).
     return pb.authStore.onChange(() => {
-      setUser(pb.authStore.record);
+      // This is the key fix: we check if the auth store is valid
+      // If it's not valid, we clear the user state
+      if (!pb.authStore.isValid) {
+        setUser(null);
+      } else {
+        setUser(pb.authStore.record);
+      }
     }, true);
   }, []);
 
