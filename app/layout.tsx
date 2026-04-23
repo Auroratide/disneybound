@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/app/components/AuthProvider/AuthProvider";
 import { SiteHeader } from "@/app/components/SiteHeader/SiteHeader";
 import { SiteFooter } from "@/app/components/SiteFooter/SiteFooter";
+import { GlobalLoginModal } from "@/app/components/GlobalLoginModal/GlobalLoginModal";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -38,6 +39,7 @@ export default function RootLayout({
           <SiteHeader />
           {children}
           <SiteFooter />
+          <GlobalLoginModal />
         </AuthProvider>
       </body>
     </html>

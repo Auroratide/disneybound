@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getServerAuth } from "@/lib/auth";
 import { PageContainer } from "@/app/components/PageContainer/PageContainer";
 import { SuggestCharacterForm } from "@/app/components/SuggestCharacterForm/SuggestCharacterForm";
+import { LoginButton } from "@/app/components/LoginButton/LoginButton";
 
 export const metadata: Metadata = {
   title: "Suggest a Character — Disney Bounding",
@@ -17,7 +18,10 @@ export default async function SuggestPage() {
         <PageContainer className="py-16 text-center flex flex-col items-center gap-4">
           <p className="text-xl font-semibold">Log in to suggest a character</p>
           <p className="text-muted-foreground text-sm">Use the Log in button in the header to get started.</p>
-          <Link href="/" className="text-sm text-primary hover:underline">← Back to all characters</Link>
+          <div className="mt-4">
+            <LoginButton />
+          </div>
+          <Link href="/" className="text-sm text-primary hover:underline mt-4">← Back to all characters</Link>
         </PageContainer>
       </main>
     );
