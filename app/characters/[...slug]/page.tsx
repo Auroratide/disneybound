@@ -59,7 +59,7 @@ export default async function CharacterPage({ params }: Params) {
         </Link>
       </PageContainer>
 
-      <div className="text-center pb-20">
+      <div className="text-center pb-8">
         <h1 className="text-7xl font-bold">{characterData.name}</h1>
         <p className="text-lg text-foreground/60 mt-2">{characterData.movie}</p>
         <p className="text-base text-foreground/50 mt-1">{characterData.outfitName}</p>
@@ -72,6 +72,7 @@ export default async function CharacterPage({ params }: Params) {
           cardColor={characterData.cardColor}
           colors={characterData.colors}
         />
+        <div className="mt-20">
         <CommunityOutfitsSection
           outfits={communityOutfits}
           currentUserId={user?.id ?? null}
@@ -82,6 +83,7 @@ export default async function CharacterPage({ params }: Params) {
             : `Be the first to share an outfit of ${characterData.name}!`
           }
         />
+        </div>
       </PageContainer>
     </main>
   );

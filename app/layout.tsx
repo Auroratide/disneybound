@@ -36,9 +36,11 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.variable} ${geistMono.variable} ${fredoka.variable}`}>
       <body className="antialiased">
         <AuthProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
+          <div className="min-h-screen flex flex-col">
+            <SiteHeader />
+            <div className="flex-1">{children}</div>
+            <SiteFooter />
+          </div>
           <GlobalLoginModal />
         </AuthProvider>
       </body>

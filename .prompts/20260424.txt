@@ -1,0 +1,11 @@
+user: What is this codebase about?
+
+user: Look at GlobalLoginModal.tsx. This was just implemented on the suggest/page.tsx page so that when people suggest a
+  new character without having had logged in, they can login. However, the SiteHeader.tsx file is currently using a
+  different pattern. Can you refactor SiteHeader.tsx to use the GlobalLoginModal?
+
+user: I'm now going around looking for simple tweaks to the website ui. First, I notice that on some pages where the body is not very long, the footer is not all the way at the bottom. Make it so the footer is flush to the bottom on pages where there is not much content.
+
+user: Let's refine the page for individual characters. 1) Reduce the space between the title and the character card. 2) Increase the space between the character card and the community outfits section. 3) Make "Community Outfits" larger in size.
+
+user: /commit

@@ -95,7 +95,7 @@ export function CommunityOutfitsSection({
     <section className="mb-10">
       {/* Section header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-bold text-xl">
+        <h2 className="font-bold text-2xl">
           Community Outfits
         </h2>
         {!isSuccess && (
