@@ -105,17 +105,17 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
       {/* Avatar circle with upload button */}
       <div className="shrink-0">
-        <div className="relative w-24 h-24">
-          <div className="relative w-24 h-24 rounded-full overflow-hidden bg-muted flex items-center justify-center">
+        <div className="relative w-32 h-32">
+          <div className="relative w-32 h-32 rounded-full overflow-hidden bg-muted flex items-center justify-center">
             {previewUrl ? (
-              <Image src={previewUrl} alt="Your avatar" fill sizes="96px" className="object-cover" />
+              <Image src={previewUrl} alt="Your avatar" fill sizes="128px" className="object-cover" />
             ) : (
-              <Icon.User className="w-12 h-12 text-muted-foreground" />
+              <Icon.User className="w-16 h-16 text-muted-foreground" />
             )}
           </div>
           <label
             htmlFor="profile-avatar"
-            className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
+            className="absolute bottom-0 right-0 w-9 h-9 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
             aria-label="Upload profile picture"
           >
             <Icon.Upload className="w-4 h-4 text-primary-foreground" />

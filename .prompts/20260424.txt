@@ -9,3 +9,11 @@ user: I'm now going around looking for simple tweaks to the website ui. First, I
 user: Let's refine the page for individual characters. 1) Reduce the space between the title and the character card. 2) Increase the space between the character card and the community outfits section. 3) Make "Community Outfits" larger in size.
 
 user: /commit
+
+user: Another tweak to make on the character page: Can we label each of the three colors on the character cards? "Primary", "Secondary", and "Accessory"? Perhaps it's a small label above the color swatches.
+
+user: Don't uppercase it
+
+user: Great, looking now at the Profile Page, can we make the avatar a little larger?
+
+user: /commit

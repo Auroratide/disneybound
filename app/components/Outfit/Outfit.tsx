@@ -3,6 +3,8 @@ import type { OutfitColor } from "@/app/data/characters";
 import { Card } from "@/components/ui/card";
 import * as Icon from "@/app/components/Icon/Icon";
 
+const COLOR_ROLES = ["Primary", "Secondary", "Accessory"] as const;
+
 export function Outfit({ imageSrc, imageAlt, cardColor, colors }: {
   imageSrc: string;
   imageAlt: string;
@@ -15,8 +17,9 @@ export function Outfit({ imageSrc, imageAlt, cardColor, colors }: {
       <Card className="w-full sm:flex-1 py-0 gap-0">
         <div className="p-8 pt-26 sm:pt-8">
           <ul className="flex flex-nowrap justify-center gap-4 sm:flex-wrap sm:justify-start sm:gap-6">
-            {colors.map((color) => (
+            {colors.map((color, i) => (
               <li key={color.name} className="flex flex-col items-center gap-2 flex-1 min-w-0 sm:flex-none">
+                <p className="text-xs text-muted-foreground font-medium">{COLOR_ROLES[i]}</p>
                 <span
                   className="block w-full aspect-square sm:w-28 sm:h-28 sm:aspect-auto rounded-xl border border-foreground/10 shadow-sm"
                   style={{ backgroundColor: `oklch(${color.oklch.l} ${color.oklch.c} ${color.oklch.h})` }}
