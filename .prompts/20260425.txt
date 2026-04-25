@@ -21,3 +21,9 @@ user: Ok, regarding the photo component itself, can you make it "contain" rather
 user: And for its background (in case there is transparency or the photo doesn't fit) can you make it white like the border?
 
 user: /commit
+
+user: Let's implement deletion confirmation for the community outfits. The remove button should now open a dialog with text "Are you sure you want to remove this outfit?", an image of the picture being removed, and a "Remove" and "Cancel" buttons. Upon removal, the dialog should stay until one of two things happens: 1) the request succeeds, in which case the modal closes and the user sees their image is gone, or 2) an error occurs, in which case an error message is shown with the option to try again. While removing, it should be obvious it is doing so with like a spinner or something.
+
+user: /do-frontend the dialog is auto-appearing on page load instead of only when the user wants to delete an image. Please use agent-browser to double check the correct behavior.
+
+user: /commit

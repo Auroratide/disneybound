@@ -1,4 +1,4 @@
-export { Camera, Pencil, Upload, User, X } from "lucide-react";
+export { Camera, Loader2, Pencil, Upload, User, X } from "lucide-react";
 
 export function MickeyMouse({
   color,

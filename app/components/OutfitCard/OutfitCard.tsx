@@ -43,7 +43,7 @@ export function OutfitCard({
         )}
       </div>
 
-      {showDelete && <DeleteOutfitButton id={outfit.id} />}
+      {showDelete && <DeleteOutfitButton id={outfit.id} imageUrl={outfit.imageUrl} />}
     </figure>
   );
 }
