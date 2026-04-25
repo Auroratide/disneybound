@@ -35,3 +35,7 @@ user: /commit
 user: Can you make it so all buttons have cursor: pointer on them?
 
 user: /commit
+
+user: I noticed that when I am previewing a character that is being suggested, the mickey background has some color. But, once the character is saved and I look at the character for real, it is grey. 1) How is that color being chosen in the preview, and 2) Can you save it with the character?
+
+user: /commit

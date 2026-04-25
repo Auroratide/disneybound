@@ -47,13 +47,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Image must be smaller than 5 MB" }, { status: 400 });
   }
 
-  let colors: unknown;
+  type ColorEntry = { name: string; oklch: { l: number; c: number; h: number } };
+  let colors: ColorEntry[];
   try {
-    colors = JSON.parse(colorsJson);
-    if (!Array.isArray(colors) || colors.length !== 3) throw new Error();
+    const parsed = JSON.parse(colorsJson);
+    if (!Array.isArray(parsed) || parsed.length !== 3) throw new Error();
+    colors = parsed as ColorEntry[];
   } catch {
     return NextResponse.json({ error: "colors must be an array of 3 entries" }, { status: 400 });
   }
+
+  const primary = colors[0].oklch;
+  const cardColor = `oklch(0.92 ${(primary.c * 0.35).toFixed(3)} ${primary.h})`;
 
   const slug = toSlug(name, outfitName);
   const adminPb = await getAdminPocketbase();
@@ -77,7 +82,7 @@ export async function POST(request: NextRequest) {
   pbFormData.append("colors", JSON.stringify(colors));
   pbFormData.append("image", image);
   pbFormData.append("image_alt", `${name.trim()} — ${outfitName.trim()}`);
-  pbFormData.append("card_color", "#cccccc");
+  pbFormData.append("card_color", cardColor);
   pbFormData.append("status", "pending");
   pbFormData.append("submitted_by", userId);
 
