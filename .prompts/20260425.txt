@@ -31,3 +31,7 @@ user: /commit
 user: Something is broken with the avatar uploading. I see this log on the server: "upstream image response failed for http://127.0.0.1:8090/api/files/_pb_users_auth_/360q8ehi7k7yqs2/http%3A%2F%2F127.0.0.1%3A8090%2Fapi%2Ffiles%2F_pb_users_auth_%2F360q8ehi7k7yqs2%2Fmiyabi_special_mgwx7445ez.png"
 
 user: /commit
+
+user: Can you make it so all buttons have cursor: pointer on them?
+
+user: /commit

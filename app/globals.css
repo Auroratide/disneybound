@@ -154,4 +154,7 @@
     font-family: var(--font-fredoka, var(--font-sans));
     color: var(--primary);
   }
+  button {
+    cursor: pointer;
+  }
 }
