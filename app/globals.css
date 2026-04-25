@@ -157,4 +157,8 @@
   button {
     cursor: pointer;
   }
+
+  p a {         
+    @apply text-primary underline hover:opacity-80 transition-opacity;
+  }
 }

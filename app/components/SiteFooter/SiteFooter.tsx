@@ -23,18 +23,18 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link href="/legal" className="hover:text-foreground transition-colors">
-                Legal
+              <Link href="/privacy-policy" className="hover:text-foreground transition-colors">
+                Privacy Policy
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="https://github.com/auroratide/disneybound"
                 className="hover:text-foreground transition-colors"
               >
                 Website Code
               </a>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </PageContainer>

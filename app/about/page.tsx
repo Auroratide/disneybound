@@ -9,25 +9,37 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main>
-      <PageContainer className="py-12 max-w-2xl">
-        <h1 className="text-5xl font-bold mb-6">About</h1>
+      <PageContainer className="py-12 max-w-xl">
+        <h1 className="text-4xl font-bold mb-6">What is Disney Bounding?</h1>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-3">What is Disney Bounding?</h2>
           <p className="text-foreground/80 leading-relaxed">
-            Disney Bounding is the art of assembling everyday outfits inspired by Disney characters.
+            <strong>Disney Bounding</strong> is the art of assembling everyday outfits inspired by Disney characters!
             Rather than wearing a costume, you use color palettes, silhouettes, and accessories to
-            subtly evoke a character through regular clothing — a way to bring a little Disney magic
+            subtly evoke a character through regular clothing. It's a way to bring a little Disney magic
             into your daily life or your next park visit.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-3">What is this site?</h2>
+          <h2 className="text-2xl font-semibold mb-3">Share your outfits!</h2>
+          <p className="mb-4 text-foreground/80 leading-relaxed">
+            The main purpose of this site is to inspire people! Find the colors that match your favorite character, or find characters that match colors you have on hand. See how others have dressed as characters to get ideas for what to find in stores.
+          </p>
+
           <p className="text-foreground/80 leading-relaxed">
-            This site is a catalog of color palette guides to help you build your Disney Bounding
-            outfits. Browse characters to find their signature colors, get inspired by outfits shared
-            by the community, and share your own creations.
+            Particularly proud of an outfit? Share a photo with others!
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-3">Who made this site?</h2>
+          <p className="mb-4 text-foreground/80 leading-relaxed">
+            Hi, I'm Auroratide! I love my mom, and she loves Disney (and she loves me too!). I also happen to be a web developer, so I made her a website ♥
+          </p>
+
+          <p className="text-foreground/80 leading-relaxed">
+            If you're curious about the various other things I do, you can visit my website, <strong><a href="https://auroratide.com">auroratide.com</a></strong>!
           </p>
         </section>
       </PageContainer>
