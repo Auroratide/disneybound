@@ -27,3 +27,7 @@ user: Let's implement deletion confirmation for the community outfits. The remov
 user: /do-frontend the dialog is auto-appearing on page load instead of only when the user wants to delete an image. Please use agent-browser to double check the correct behavior.
 
 user: /commit
+
+user: Something is broken with the avatar uploading. I see this log on the server: "upstream image response failed for http://127.0.0.1:8090/api/files/_pb_users_auth_/360q8ehi7k7yqs2/http%3A%2F%2F127.0.0.1%3A8090%2Fapi%2Ffiles%2F_pb_users_auth_%2F360q8ehi7k7yqs2%2Fmiyabi_special_mgwx7445ez.png"
+
+user: /commit

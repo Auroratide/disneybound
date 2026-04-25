@@ -48,7 +48,7 @@ export async function PATCH(request: NextRequest) {
     const avatarUrl = updated.avatar
       ? adminPb.files.getURL(updated, updated.avatar)
       : null;
-    return NextResponse.json({ name: updated.name, avatarUrl }, { status: 200 });
+    return NextResponse.json({ name: updated.name, avatarUrl, avatarFilename: updated.avatar ?? null }, { status: 200 });
   } catch (err) {
     console.error("Failed to update profile:", err);
     return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });

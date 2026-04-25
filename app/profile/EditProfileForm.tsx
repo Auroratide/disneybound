@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ui/error-message";
 
-async function patchProfile(formData: FormData): Promise<{ name: string; avatarUrl: string | null }> {
+async function patchProfile(formData: FormData): Promise<{ name: string; avatarUrl: string | null; avatarFilename: string | null }> {
   const res = await fetch("/api/users/me", { method: "PATCH", body: formData });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -64,9 +64,9 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
     formData.append("avatar", file);
 
     try {
-      const { avatarUrl } = await patchProfile(formData);
+      const { avatarUrl, avatarFilename } = await patchProfile(formData);
       const pb = getPocketbase();
-      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record, avatar: avatarUrl });
+      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record, avatar: avatarFilename ?? "" });
       if (avatarUrl) setPreviewUrl(avatarUrl);
     } catch {
       setAvatarError("Failed to upload photo.");
