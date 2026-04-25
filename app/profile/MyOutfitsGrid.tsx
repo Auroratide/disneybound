@@ -1,10 +1,10 @@
 import Link from "next/link";
-import type { CommunityOutfit } from "@/app/data/community-outfits";
-import { getCharacterBySlug } from "@/app/data/characters";
+import type { UserOutfit } from "@/app/data/user-outfits";
+import { slugify } from "@/app/lib/slugify";
 import { OutfitCard } from "@/app/components/OutfitCard/OutfitCard";
 
 interface MyOutfitsGridProps {
-  outfits: CommunityOutfit[];
+  outfits: UserOutfit[];
 }
 
 export function MyOutfitsGrid({ outfits }: MyOutfitsGridProps) {
@@ -18,7 +18,10 @@ export function MyOutfitsGrid({ outfits }: MyOutfitsGridProps) {
       ) : (
         <ul className="grid grid-cols-3 gap-3 sm:gap-4">
           {outfits.map((outfit) => {
-            const character = getCharacterBySlug(outfit.characterSlug);
+            const fullSlug = `${outfit.characterSlug}/${slugify(outfit.outfitName)}`;
+            const label = outfit.characterName
+              ? `${outfit.characterName} - ${outfit.outfitName}`
+              : outfit.outfitName;
             return (
               <li key={outfit.id}>
                 <OutfitCard
@@ -26,10 +29,10 @@ export function MyOutfitsGrid({ outfits }: MyOutfitsGridProps) {
                   alt={`Your ${outfit.outfitName} outfit`}
                   caption={
                     <Link
-                      href={`/characters/${outfit.characterSlug}`}
-                      className="text-base font-medium text-foreground hover:underline truncate block"
+                      href={`/characters/${fullSlug}`}
+                      className="text-base font-medium text-foreground hover:underline truncate block text-center"
                     >
-                      {character?.name ?? outfit.characterSlug}
+                      {label}
                     </Link>
                   }
                   showDelete

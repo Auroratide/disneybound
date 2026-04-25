@@ -1,9 +1,8 @@
 import Image from "next/image";
-import type { CommunityOutfit } from "@/app/data/community-outfits";
 import { DeleteOutfitButton } from "@/app/components/DeleteOutfitButton/DeleteOutfitButton";
 
 interface OutfitCardProps {
-  outfit: CommunityOutfit;
+  outfit: { id: string; imageUrl: string };
   alt: string;
   caption?: React.ReactNode;
   showDelete?: boolean;
@@ -22,14 +21,14 @@ export function OutfitCard({
       {/* Polaroid frame */}
       <div className={`bg-white shadow-md p-2 ${caption ? "pb-0" : ""}`}>
         {/* Photo */}
-        <div className="relative aspect-square overflow-hidden bg-muted">
+        <div className="relative aspect-square overflow-hidden bg-white">
           <img-zoom className="absolute inset-0">
             <Image
               src={outfit.imageUrl}
               alt={alt}
               width={400}
               height={400}
-              className="object-cover w-full h-full"
+              className="object-contain w-full h-full"
               sizes={sizes}
             />
           </img-zoom>

@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPocketbase, getAdminPocketbase } from "@/lib/pocketbase";
+import { slugify } from "@/app/lib/slugify";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 function toSlug(name: string, outfitName: string): string {
-  const slugify = (s: string) =>
-    s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return `${slugify(name)}/${slugify(outfitName)}`;
 }
 

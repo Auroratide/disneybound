@@ -11,3 +11,13 @@ user: Ok, go ahead and execute the plan. Stop when you need me to execute any mi
 user: We have some failing tests, can you diagnose and fix them?
 
 user: /commit
+
+user: Ok I did find a couple of generic bugs. First, on your profile page, the photos have a caption which is supposed to be a link to the character. Two problems: the link is broken (doesn't go to the outfit) and the link is a generic kebab-case text. Can you make the link 1) go to the correct place, and 2) use "Character - Outfit" as the caption name?
+
+user: Great, two tweaks: use a hyphen, not an em-dash, and center the caption
+
+user: Ok, regarding the photo component itself, can you make it "contain" rather than "cover"? I don't want people's photo getting cut off.
+
+user: And for its background (in case there is transparency or the photo doesn't fit) can you make it white like the border?
+
+user: /commit
