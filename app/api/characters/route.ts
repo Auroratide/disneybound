@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPocketbase } from "@/lib/pocketbase";
+import { getPocketbase, getAdminPocketbase } from "@/lib/pocketbase";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -11,11 +11,12 @@ function toSlug(name: string, outfitName: string): string {
 }
 
 export async function POST(request: NextRequest) {
-  const pb = getPocketbase();
-  pb.authStore.loadFromCookie(request.headers.get("cookie") ?? "");
-  if (!pb.authStore.isValid) {
+  const userPb = getPocketbase();
+  userPb.authStore.loadFromCookie(request.headers.get("cookie") ?? "");
+  if (!userPb.authStore.isValid) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const userId = userPb.authStore.record!.id;
 
   const formData = await request.formData();
 
@@ -56,10 +57,11 @@ export async function POST(request: NextRequest) {
   }
 
   const slug = toSlug(name, outfitName);
+  const adminPb = await getAdminPocketbase();
 
-  // Enforce uniqueness — reject if slug already exists (curated or previously submitted).
-  const existing = await pb.collection("characters").getFullList({
-    filter: pb.filter("slug = {:slug}", { slug }),
+  // Use admin to check all slugs including pending submissions, not just approved ones.
+  const existing = await adminPb.collection("characters").getFullList({
+    filter: adminPb.filter("slug = {:slug}", { slug }),
   });
   if (existing.length > 0) {
     return NextResponse.json(
@@ -78,10 +80,10 @@ export async function POST(request: NextRequest) {
   pbFormData.append("image_alt", `${name.trim()} — ${outfitName.trim()}`);
   pbFormData.append("card_color", "#cccccc");
   pbFormData.append("status", "pending");
-  pbFormData.append("submitted_by", pb.authStore.record!.id);
+  pbFormData.append("submitted_by", userId);
 
   try {
-    const record = await pb.collection("characters").create(pbFormData);
+    const record = await adminPb.collection("characters").create(pbFormData);
     return NextResponse.json({ id: record.id, slug }, { status: 201 });
   } catch (err) {
     console.error("Failed to create character:", err);

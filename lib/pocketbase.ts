@@ -22,3 +22,15 @@ export function getPocketbase(): PocketBase {
   }
   return clientInstance;
 }
+
+// Returns a fresh PocketBase instance authenticated as the superuser.
+// Use in API routes that need to write to collections whose rules are null.
+// Never call this on the client — PB_SUPERUSER_* are server-only env vars.
+export async function getAdminPocketbase(): Promise<PocketBase> {
+  const pb = new PocketBase(url);
+  await pb.collection("_superusers").authWithPassword(
+    process.env.PB_SUPERUSER_EMAIL!,
+    process.env.PB_SUPERUSER_PASSWORD!,
+  );
+  return pb;
+}

@@ -9,6 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ui/error-message";
 
+async function patchProfile(formData: FormData): Promise<{ name: string; avatarUrl: string | null }> {
+  const res = await fetch("/api/users/me", { method: "PATCH", body: formData });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error ?? "Failed to update profile");
+  }
+  return res.json();
+}
+
 interface EditProfileFormProps {
   user: RecordModel;
   avatarUrl?: string | null;
@@ -55,10 +64,10 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
     formData.append("avatar", file);
 
     try {
+      const { avatarUrl } = await patchProfile(formData);
       const pb = getPocketbase();
-      const updatedRecord = await pb.collection("users").update(serverUser.id, formData);
-      pb.authStore.save(pb.authStore.token, updatedRecord);
-      setPreviewUrl(pb.files.getURL(updatedRecord, updatedRecord.avatar));
+      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record, avatar: avatarUrl });
+      if (avatarUrl) setPreviewUrl(avatarUrl);
     } catch {
       setAvatarError("Failed to upload photo.");
       setPreviewUrl(serverAvatarUrl);
@@ -88,10 +97,10 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
     formData.append("name", editingName);
 
     try {
+      const { name: savedName } = await patchProfile(formData);
       const pb = getPocketbase();
-      const updatedRecord = await pb.collection("users").update(serverUser.id, formData);
-      pb.authStore.save(pb.authStore.token, updatedRecord);
-      setName(editingName);
+      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record, name: savedName });
+      setName(savedName);
       setIsEditingName(false);
       setNameSuccess(true);
     } catch {

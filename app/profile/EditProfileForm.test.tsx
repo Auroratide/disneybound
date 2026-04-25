@@ -20,22 +20,30 @@ const mockUser: RecordModel = {
   updated: "",
 };
 
-function makePbMock(overrides: Record<string, unknown> = {}) {
-  const mockUpdate = vi.fn().mockResolvedValue({ ...mockUser, name: "Updated Name" });
+function makePbMock(recordOverrides: Partial<RecordModel> = {}) {
   const mockSave = vi.fn();
   const mock = {
-    collection: () => ({ update: mockUpdate }),
-    authStore: { token: "test-token", save: mockSave, record: null },
-    files: { getURL: vi.fn().mockReturnValue("https://example.com/avatar.jpg") },
-    ...overrides,
+    authStore: { token: "test-token", save: mockSave, record: { ...mockUser, ...recordOverrides } },
   };
   vi.mocked(getPocketbase).mockReturnValue(mock as ReturnType<typeof getPocketbase>);
-  return { mockUpdate, mockSave, mock };
+  return { mockSave };
+}
+
+function mockFetchSuccess(body: Record<string, unknown>) {
+  return vi.spyOn(globalThis, "fetch").mockResolvedValue(
+    new Response(JSON.stringify(body), { status: 200, headers: { "Content-Type": "application/json" } })
+  );
+}
+
+function mockFetchFailure() {
+  return vi.spyOn(globalThis, "fetch").mockResolvedValue(
+    new Response(JSON.stringify({ error: "Server error" }), { status: 500, headers: { "Content-Type": "application/json" } })
+  );
 }
 
 describe("EditProfileForm — view mode", () => {
   beforeEach(() => makePbMock());
-  afterEach(() => vi.clearAllMocks());
+  afterEach(() => vi.restoreAllMocks());
 
   it("shows the display name as text", () => {
     render(<EditProfileForm user={mockUser} />);
@@ -53,6 +61,7 @@ describe("EditProfileForm — view mode", () => {
   });
 
   it("shows 'Not set' when display name is empty", () => {
+    makePbMock({ name: "" });
     render(<EditProfileForm user={{ ...mockUser, name: "" }} />);
     expect(screen.getByText(/not set/i)).toBeDefined();
   });
@@ -65,7 +74,7 @@ describe("EditProfileForm — view mode", () => {
 
 describe("EditProfileForm — editing name", () => {
   beforeEach(() => makePbMock());
-  afterEach(() => vi.clearAllMocks());
+  afterEach(() => vi.restoreAllMocks());
 
   it("shows input when the edit button is clicked", () => {
     render(<EditProfileForm user={mockUser} />);
@@ -93,7 +102,9 @@ describe("EditProfileForm — editing name", () => {
   });
 
   it("saves the name and returns to view mode on submit", async () => {
-    const { mockUpdate, mockSave } = makePbMock();
+    const { mockSave } = makePbMock();
+    const mockFetch = mockFetchSuccess({ name: "New Name", avatarUrl: null });
+
     render(<EditProfileForm user={mockUser} />);
     fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
     fireEvent.change(screen.getByRole("textbox", { name: /display name/i }), {
@@ -101,13 +112,17 @@ describe("EditProfileForm — editing name", () => {
     });
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
-    await waitFor(() => expect(mockUpdate).toHaveBeenCalledOnce());
-    expect(mockUpdate).toHaveBeenCalledWith("user1", expect.any(FormData));
+    await waitFor(() => expect(mockFetch).toHaveBeenCalledOnce());
+    expect(mockFetch).toHaveBeenCalledWith("/api/users/me", expect.objectContaining({ method: "PATCH" }));
     expect(mockSave).toHaveBeenCalledWith("test-token", expect.any(Object));
-    expect(screen.queryByRole("textbox", { name: /display name/i })).toBeNull();
+    await waitFor(() => {
+      expect(screen.queryByRole("textbox", { name: /display name/i })).toBeNull();
+    });
   });
 
   it("shows a success message after saving", async () => {
+    mockFetchSuccess({ name: "Disney Fan", avatarUrl: null });
+
     render(<EditProfileForm user={mockUser} />);
     fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
@@ -118,8 +133,8 @@ describe("EditProfileForm — editing name", () => {
   });
 
   it("shows an error and stays in edit mode when save fails", async () => {
-    const { mockUpdate } = makePbMock();
-    mockUpdate.mockRejectedValue(new Error("Server error"));
+    mockFetchFailure();
+
     render(<EditProfileForm user={mockUser} />);
     fireEvent.click(screen.getByRole("button", { name: /edit display name/i }));
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
@@ -131,10 +146,9 @@ describe("EditProfileForm — editing name", () => {
   });
 
   it("disables the save button while saving", async () => {
-    let resolveUpdate!: (val: RecordModel) => void;
-    const { mockUpdate } = makePbMock();
-    mockUpdate.mockImplementation(
-      () => new Promise<RecordModel>(res => { resolveUpdate = res; })
+    let resolveFetch!: (val: Response) => void;
+    vi.spyOn(globalThis, "fetch").mockImplementation(
+      () => new Promise<Response>(res => { resolveFetch = res; })
     );
 
     render(<EditProfileForm user={mockUser} />);
@@ -145,28 +159,30 @@ describe("EditProfileForm — editing name", () => {
       expect(screen.getByRole("button", { name: /saving/i }).hasAttribute("disabled")).toBe(true);
     });
 
-    resolveUpdate({ ...mockUser });
+    resolveFetch(new Response(JSON.stringify({ name: "Disney Fan", avatarUrl: null }), { status: 200 }));
   });
 });
 
 describe("EditProfileForm — avatar upload", () => {
-  afterEach(() => vi.clearAllMocks());
+  beforeEach(() => makePbMock());
+  afterEach(() => vi.restoreAllMocks());
 
   it("auto-saves the avatar immediately when a file is picked", async () => {
-    const { mockUpdate } = makePbMock();
+    const mockFetch = mockFetchSuccess({ name: "Disney Fan", avatarUrl: "https://example.com/avatar.jpg" });
+
     render(<EditProfileForm user={mockUser} />);
 
     const file = new File(["img"], "avatar.png", { type: "image/png" });
     const input = document.querySelector("input[type=file]") as HTMLInputElement;
     fireEvent.change(input, { target: { files: [file] } });
 
-    await waitFor(() => expect(mockUpdate).toHaveBeenCalledOnce());
-    expect(mockUpdate).toHaveBeenCalledWith("user1", expect.any(FormData));
+    await waitFor(() => expect(mockFetch).toHaveBeenCalledOnce());
+    expect(mockFetch).toHaveBeenCalledWith("/api/users/me", expect.objectContaining({ method: "PATCH" }));
   });
 
   it("shows an error if the avatar upload fails", async () => {
-    const { mockUpdate } = makePbMock();
-    mockUpdate.mockRejectedValue(new Error("Upload failed"));
+    mockFetchFailure();
+
     render(<EditProfileForm user={mockUser} />);
 
     const file = new File(["img"], "avatar.png", { type: "image/png" });

@@ -165,6 +165,19 @@ describe("POST /api/characters", () => {
     expect(record.submitted_by).toBe(testUserId);
   });
 
+  it("forces status to pending even if the request sends approved", async () => {
+    const res = await POST(makeRequest(
+      validFields({ status: "approved" } as Record<string, string | File>),
+      { cookie: userCookie }
+    ));
+    const body = await res.json();
+    expect(res.status).toBe(201);
+    createdIds.push(body.id);
+
+    const record = await adminPb.collection("characters").getOne(body.id);
+    expect(record.status).toBe("pending");
+  });
+
   it("returns 409 when a character with the same slug already exists", async () => {
     // Create an approved character with the same slug via admin.
     const image = makeImage();

@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPocketbase } from "@/lib/pocketbase";
+import { getPocketbase, getAdminPocketbase } from "@/lib/pocketbase";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 export async function POST(request: NextRequest) {
-  const pb = getPocketbase();
-  pb.authStore.loadFromCookie(request.headers.get("cookie") ?? "");
-  if (!pb.authStore.isValid) {
+  const userPb = getPocketbase();
+  userPb.authStore.loadFromCookie(request.headers.get("cookie") ?? "");
+  if (!userPb.authStore.isValid) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const userId = userPb.authStore.record!.id;
 
   const formData = await request.formData();
 
@@ -43,15 +44,17 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const adminPb = await getAdminPocketbase();
+
   const pbFormData = new FormData();
   pbFormData.append("character_slug", characterSlug.trim());
   pbFormData.append("outfit_name", outfitName.trim());
   pbFormData.append("image", image);
   pbFormData.append("status", "approved");
-  pbFormData.append("user", pb.authStore.record!.id);
+  pbFormData.append("user", userId);
 
   try {
-    const record = await pb.collection("community_outfits").create(pbFormData);
+    const record = await adminPb.collection("community_outfits").create(pbFormData);
     return NextResponse.json({ id: record.id }, { status: 201 });
   } catch (err) {
     console.error("Failed to create community outfit:", err);

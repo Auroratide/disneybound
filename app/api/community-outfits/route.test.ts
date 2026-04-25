@@ -131,6 +131,24 @@ describe("POST /api/community-outfits", () => {
     expect(res.status).toBe(400);
   });
 
+  it("ignores a user field in the request body and always uses the authenticated user", async () => {
+    const res = await POST(makeRequest(
+      {
+        character_slug: "ariel",
+        outfit_name: "Mermaid",
+        image: makeImage(),
+        user: "some-other-user-id",
+      },
+      { cookie: userCookie }
+    ));
+    const body = await res.json();
+    expect(res.status).toBe(201);
+    createdIds.push(body.id);
+
+    const record = await adminPb.collection("community_outfits").getOne(body.id);
+    expect(record.user).toBe(testUserId);
+  });
+
   it("creates a pending record owned by the user and returns 201 with id", async () => {
     const res = await POST(makeRequest(
       {

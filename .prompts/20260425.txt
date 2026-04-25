@@ -1,0 +1,13 @@
+user: Ok we've implemented basically all of the features I want! Now I want to do a bit of a security audit of the whole system. Since we have an API, I want everything to occur against it rather than through the pocketbase SDK. So two things. 1) Do a total code audit for where we are using the frontend pocketbase sdk to do database manipulations, list them and then draft a plan into .plans/REFACTOR_TO_API.md which will create the correct API methods and frontend refactors. I forgot the second thing, so just do the first.
+
+user: Quick question, is it possible to prevent the use of the sdk entirely? For example, by simply not exposing the client-side key anymore, or is that going to be necessary for our api?
+
+user: Ok, let's say we keep the SDK for now. How would I go about preventing arbitrary changes to the data? For instance, I don't want someone to use the SDK to change the name of a character that's been submitted, or delete someone else's outfit, or submit a character and approve them automatically.
+
+user: Add these to the REFACTOR_TO_API plan. Additionally, make sure the plan indicates that we need to validate ownership in the API and not just rely on the super user. Finally, I want two kinds of tests added to the plan: unit tests on each changed API route for scenarios such as verifying ownership, and tests added to security.test.ts which validate that the sdk cannot be used on its own with regular credentials to do anything. Do not execute the plan yet.
+
+user: Ok, go ahead and execute the plan. Stop when you need me to execute any migrations so that I can review and run them myself.
+
+user: We have some failing tests, can you diagnose and fix them?
+
+user: /commit
