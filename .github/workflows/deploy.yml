@@ -27,7 +27,7 @@ jobs:
 
       - name: Start PocketBase
         run: |
-          printf 'PB_SUPERUSER_EMAIL=admin@disneybounding.com\nPB_SUPERUSER_PASSWORD=password\n' > pocketbase/.env.local
+          printf 'PB_SUPERUSER_EMAIL=admin@disneybounding.com\nPB_SUPERUSER_PASSWORD=password\nPB_SMTP_HOST=mailpit\nPB_SMTP_PORT=1025\n' > pocketbase/.env.local
           docker compose up -d
 
       - name: Wait for PocketBase to be healthy
