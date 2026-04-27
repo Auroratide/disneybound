@@ -45,6 +45,7 @@ export function SuggestCharacterForm() {
   const [existingSlug, setExistingSlug] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [activePickSlot, setActivePickSlot] = useState<number | null>(null);
+  const [hoverColor, setHoverColor] = useState<{ hex: string; x: number; y: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pickerDialogRef = useRef<HTMLDialogElement>(null);
@@ -68,23 +69,36 @@ export function SuggestCharacterForm() {
     img.src = data.previewUrl;
   }, [activePickSlot, data.previewUrl]);
 
-  function handleCanvasPick(e: React.MouseEvent<HTMLCanvasElement>) {
+  function sampleColor(e: React.MouseEvent<HTMLCanvasElement>): string | null {
     const canvas = canvasRef.current;
-    if (!canvas || activePickSlot === null) return;
+    if (!canvas) return null;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
+    if (!ctx) return null;
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const x = Math.floor((e.clientX - rect.left) * scaleX);
-    const y = Math.floor((e.clientY - rect.top) * scaleY);
-
+    const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+    const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
     const [r, g, b] = ctx.getImageData(x, y, 1, 1).data;
-    const hex = `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+    return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+  }
 
+  function handleCanvasPick(e: React.MouseEvent<HTMLCanvasElement>) {
+    if (activePickSlot === null) return;
+    const hex = sampleColor(e);
+    if (!hex) return;
     updateColor(activePickSlot, { hex });
     setActivePickSlot(null);
+    setHoverColor(null);
+  }
+
+  function handleCanvasMove(e: React.MouseEvent<HTMLCanvasElement>) {
+    const hex = sampleColor(e);
+    if (!hex) return;
+    const rect = canvasRef.current!.getBoundingClientRect();
+    setHoverColor({ hex, x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }
+
+  function handleCanvasLeave() {
+    setHoverColor(null);
   }
 
   function updateColor(index: number, patch: Partial<ColorEntry>) {
@@ -387,12 +401,22 @@ export function SuggestCharacterForm() {
               </button>
             </div>
             <p className="text-xs text-muted-foreground -mt-1">Tap a color on the image to sample it.</p>
-            <canvas
-              ref={canvasRef}
-              onClick={handleCanvasPick}
-              className="rounded-xl cursor-crosshair block mx-auto"
-              style={{ maxWidth: "100%", maxHeight: "60dvh", width: "auto", height: "auto" }}
-            />
+            <div className="relative w-fit mx-auto">
+              <canvas
+                ref={canvasRef}
+                onClick={handleCanvasPick}
+                onMouseMove={handleCanvasMove}
+                onMouseLeave={handleCanvasLeave}
+                className="rounded-xl cursor-crosshair block"
+                style={{ maxWidth: "100%", maxHeight: "60dvh", width: "auto", height: "auto" }}
+              />
+              {hoverColor && (
+                <div
+                  className="pointer-events-none absolute w-8 h-8 rounded-full border-2 border-white shadow-md"
+                  style={{ backgroundColor: hoverColor.hex, left: hoverColor.x + 10, top: hoverColor.y + 10 }}
+                />
+              )}
+            </div>
           </div>
         </dialog>
       )}
