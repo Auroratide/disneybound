@@ -390,8 +390,8 @@ export function SuggestCharacterForm() {
             <canvas
               ref={canvasRef}
               onClick={handleCanvasPick}
-              className="w-full rounded-xl overflow-hidden cursor-crosshair"
-              style={{ maxHeight: "60dvh", objectFit: "contain" }}
+              className="rounded-xl cursor-crosshair block mx-auto"
+              style={{ maxWidth: "100%", maxHeight: "60dvh", width: "auto", height: "auto" }}
             />
           </div>
         </dialog>
