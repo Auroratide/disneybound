@@ -17,6 +17,10 @@ Host github.com
 
 The SMTP server is set up via the pocketbase admin portal. I am currently using Brevo.
 
+1. Access the Admin Portal.
+2. Go to Settings, and set up the application name.
+3. Set up the SMTP server using the info found in Brevo (Transactional -> Email)
+
 ## Admin Portal
 
 To access the admin portal, you need to open an SSH tunnel.

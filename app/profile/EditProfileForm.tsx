@@ -66,7 +66,7 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
     try {
       const { avatarUrl, avatarFilename } = await patchProfile(formData);
       const pb = getPocketbase();
-      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record, avatar: avatarFilename ?? "" });
+      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record!, avatar: avatarFilename ?? "" });
       if (avatarUrl) setPreviewUrl(avatarUrl);
     } catch {
       setAvatarError("Failed to upload photo.");
@@ -99,7 +99,7 @@ export function EditProfileForm({ user: serverUser, avatarUrl: serverAvatarUrl =
     try {
       const { name: savedName } = await patchProfile(formData);
       const pb = getPocketbase();
-      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record, name: savedName });
+      pb.authStore.save(pb.authStore.token, { ...pb.authStore.record!, name: savedName });
       setName(savedName);
       setIsEditingName(false);
       setNameSuccess(true);

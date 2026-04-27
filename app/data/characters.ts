@@ -5,7 +5,7 @@ import type { RecordModel } from "pocketbase";
 export type OutfitColor = {
   name: string;
   oklch: OklchColor;
-  usage: string;
+  usage?: string;
 };
 
 export type Character = {
