@@ -22,3 +22,11 @@ user: I am getting this error on CI, and when I try to install playwright it fai
 user: The confirm-otp returns a token and record on success, and flips verified to true for a new user test seems to be flakey. Why?
 
 user: /commit
+
+user: Ah ok, I think the diagnosis might be right but not the solution? My local pocketbase is configured with a .env.local file which defines PB_SMTP_HOST and PB_SMTP_PORT. That file is gitignored so it isn't on CI. Rather than making the test responsible for this, I think it should be done on the startup of the container on CI.
+
+user: I noticed that when I build the app, it generates the home page as prerendered static content. However, that page is supposed to dynamically get characters. Why is next doing this? How do I tell it that the page needs to get new content? Or is the problem that the fetch shouldn't be happening server side?
+
+user: Ok that makes sense. Two questions: 1) Can I force a revalidation? 2) Does this happen on the character pages for which users can upload outfits? Their outfits should appear immediately, not after an hour.
+
+user: /commit

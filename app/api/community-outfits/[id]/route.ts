@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getPocketbase, getAdminPocketbase } from "@/lib/pocketbase";
 
 export async function DELETE(
@@ -15,7 +16,7 @@ export async function DELETE(
 
   const adminPb = await getAdminPocketbase();
 
-  let outfit: { user: string };
+  let outfit: { user: string; character_slug: string };
   try {
     outfit = await adminPb.collection("community_outfits").getOne(id);
   } catch {
@@ -27,5 +28,6 @@ export async function DELETE(
   }
 
   await adminPb.collection("community_outfits").delete(id);
+  revalidatePath(`/characters/${outfit.character_slug}`);
   return new NextResponse(null, { status: 204 });
 }

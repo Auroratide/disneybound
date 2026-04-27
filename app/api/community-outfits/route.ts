@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getPocketbase, getAdminPocketbase } from "@/lib/pocketbase";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
@@ -55,6 +56,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const record = await adminPb.collection("community_outfits").create(pbFormData);
+    revalidatePath(`/characters/${characterSlug.trim()}`);
     return NextResponse.json({ id: record.id }, { status: 201 });
   } catch (err) {
     console.error("Failed to create community outfit:", err);
