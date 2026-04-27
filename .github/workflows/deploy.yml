@@ -23,9 +23,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install chromium --with-deps
-
       - name: Start PocketBase
         run: |
           printf 'PB_SUPERUSER_EMAIL=admin@disneybounding.com\nPB_SUPERUSER_PASSWORD=password\n' > pocketbase/.env.local
