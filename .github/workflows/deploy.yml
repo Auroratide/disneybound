@@ -23,6 +23,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - run: pnpm exec playwright install
+
       - name: Start PocketBase
         run: |
           printf 'PB_SUPERUSER_EMAIL=admin@disneybounding.com\nPB_SUPERUSER_PASSWORD=password\n' > pocketbase/.env.local
