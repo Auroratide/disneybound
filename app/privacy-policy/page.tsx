@@ -17,7 +17,7 @@ export default function LegalPage() {
             <strong>Effective Date:</strong> 25 April 2026
           </p>
           <p className="text-foreground/80 leading-relaxed">
-            Disney Bounding Catalog ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy outlines our practices regarding the collection, use, and disclosure of information when you visit our website.
+            Disney Bounding Catalog (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy outlines our practices regarding the collection, use, and disclosure of information when you visit our website.
           </p>
         </section>
 

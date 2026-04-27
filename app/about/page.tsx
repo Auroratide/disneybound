@@ -16,7 +16,7 @@ export default function AboutPage() {
           <p className="text-foreground/80 leading-relaxed">
             <strong>Disney Bounding</strong> is the art of assembling everyday outfits inspired by Disney characters!
             Rather than wearing a costume, you use color palettes, silhouettes, and accessories to
-            subtly evoke a character through regular clothing. It's a way to bring a little Disney magic
+            subtly evoke a character through regular clothing. It&apos;s a way to bring a little Disney magic
             into your daily life or your next park visit.
           </p>
         </section>
@@ -35,11 +35,11 @@ export default function AboutPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-3">Who made this site?</h2>
           <p className="mb-4 text-foreground/80 leading-relaxed">
-            Hi, I'm Auroratide! I love my mom, and she loves Disney (and she loves me too!). I also happen to be a web developer, so I made her a website ♥
+            Hi, I&apos;m Auroratide! I love my mom, and she loves Disney (and she loves me too!). I also happen to be a web developer, so I made her a website ♥
           </p>
 
           <p className="text-foreground/80 leading-relaxed">
-            If you're curious about the various other things I do, you can visit my website, <strong><a href="https://auroratide.com">auroratide.com</a></strong>!
+            If you&apos;re curious about the various other things I do, you can visit my website, <strong><a href="https://auroratide.com">auroratide.com</a></strong>!
           </p>
         </section>
       </PageContainer>

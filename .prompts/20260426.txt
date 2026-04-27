@@ -1,0 +1,59 @@
+user: I added a link to the about page in a paragraph, but it doesn't look like a link. What am I supposed to do in tailwind to make it look like a clickable link?
+
+user: Are you able to help me draft a privacy policy for the site?
+
+user: My site is extremely basic, I don't feel like I need to engage with a paid service just for this. Are you aware of a collection of templates out there I can use?
+
+user: Ok I added a draft of a privacy policy, but apparently all the tags are unstyled by default. Can you style them?
+
+user: Ok, I think I'm ready to launch the site and deploy it to production. I think my plan is to simply run the site on a VPS Ionos box; it'll have pocketbase and next running side by side. Please give me a breakdown of what I'm going to need to do. 1) How big of a box do I need to have? 2) What does building the site look like? Is it possible to make a github action to deploy it? 3) When I obtain a domain name, how do I set it up? 4) How will I handle database migrations? How will I log into pocketbase? 5) Anything else that's important.
+
+user: Store this into .plans/DEPLOYMENT_PLAN.md
+
+user: question about downtime. If the box dies and restarts, what happens to the data stored by pocketbase? And how do I configure it to start everything back up automatically?
+
+user: Take a look at scripts/vps/setup.sh. The goal of this script is to be a one-time setup script for a new VPS and should run commands I only need to run once (like apt-gets and such). Please fill it out based on what is in the Deployment Plan.
+
+user: I'm currently SSHed into the box. I need to clone into `/srv/disneybounding/` right? What I want to double check is, the root of my project should be in `disneybounding`, not in whatever folder clone creates? And if so, can I make clone work into the current directory rather than making a new one?
+
+user: I set up the deploy key but I'm currently getting permission denied when trying to clone for the first time
+
+user: "Could not open a connection to your authentication agent."
+
+user: Do I need to do this on server startup everytime (in case it gets rolled)?
+
+user: Ok I cloned the project. Before continuing, I want to understand what the docker compose strategy is here for running pocketbase. I have three questions: 1) How is the SMTP host going to work? What do I point to here? 2) Right now docker compose runs mailpit, but that was for testing. I do not want to run mailpit on the production server, right? 3) How would I access the admin dashboard from my browser?
+
+user: yes
+
+user: yes
+
+user: I am now editing the Caddyfile, and I already see an entry for :80. What do I need to change in this file? Here are the existing contents: :80 {
+        # Set this path to your site's directory.
+        root * /usr/share/caddy
+
+        # Enable the static file server.
+        file_server
+
+        # Another common task is to set up a reverse proxy:
+        # reverse_proxy localhost:8080
+
+        # Or serve a PHP site through php-fpm:
+        # php_fastcgi localhost:9000
+}
+
+user: File edited. Do I need to do anything like restart caddy or whatever?
+
+user: pnpm build is not working. Please fix the errors that come from it.
+
+user: How do I set up pm2? Process or Namespace nextjs not found is error I am getting.
+
+user: Regarding Brevo set up, my test email was rejected to this error. Now, this was before I set the A record in Namecheap. I've since done this. I there anything else I need to do to resovle this error? Sending has been rejected because the sender you used noreply@disneybounding.com is not valid. Validate your sender or authenticate your domain
+
+user: Ok, it looks like I got everything up and running! One last thing, please add the tests to the github action. This will probably require starting up the docker compose file since we have some integration tests too.
+
+user: Also, what is "VPS_SSH_KEY" in the workflow? Is that the same as the deploy key? Do I need to add it again to this variable or can I use the deploy key directly somehow?
+
+user: Hold on... I'm putting a private key into github? Is that the most secure way to do this?
+
+user: /commit

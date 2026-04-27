@@ -11,7 +11,14 @@ Host github.com
       IdentitiesOnly yes
 ```
 4. Clone the project into `/srv/disneybounding`.
-
+5. Create `.env.local` and `pocketbase/.env.local`, using the examples.
+6. `pnpm install`, `pnpm build`
+7. Start the service and save it.
+```
+pm2 start "pnpm start" --name nextjs
+pm2 startup   # follow the printed instruction to install the systemd service
+pm2 save
+```
 
 ## SMTP Server
 
