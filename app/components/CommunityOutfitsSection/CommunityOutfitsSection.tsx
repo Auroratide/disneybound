@@ -140,13 +140,13 @@ export function CommunityOutfitsSection({
                   className="w-full bg-white shadow-md p-2 pb-0 block text-left cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary group"
                   aria-label="Select outfit photo"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-muted flex items-center justify-center group-hover:brightness-95 transition-[filter]">
+                  <div className="relative aspect-square overflow-hidden bg-white flex items-center justify-center group-hover:brightness-95 transition-[filter]">
                     {previewUrl ? (
                       <Image
                         src={previewUrl}
                         alt="Your outfit preview"
                         fill
-                        className="object-cover"
+                        className="object-contain"
                         sizes="256px"
                       />
                     ) : (

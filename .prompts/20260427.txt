@@ -45,6 +45,12 @@ user: /commit
 
 user: The revalidate path fix is breaking the tests. Why?
 
+user: /commit
+
+user: Btw on CI I am seeing that when deploying via ssh, I get pnpm command not found. Is that because pnpm has to be on the CI machine? pnpm is definitely on the VPS.
+
+user: When someone uploads their outfit and it shows them a preview of it before confirmation, the preview should be cover and with a white background, same as the photo component.
+
 user: /commit against the image, I noticed that it seems to be off by quite a lot, meaning it is not choosing the color where I click but is choosing the color from somewhere else in the image.
 
 user: Ok that's better, but I did like how it use to fit without scrolling. Is it possible to accomplish that?
