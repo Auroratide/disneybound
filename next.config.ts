@@ -4,9 +4,9 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
   images: {
-    // Next.js 16+ blocks local IPs by default (SSRF protection). Only needed in dev
-    // where PocketBase runs on localhost. In production, PocketBase uses a real hostname.
-    dangerouslyAllowLocalIP: isDev,
+    // Next.js 16+ blocks local IPs by default (SSRF protection). Allowed here because
+    // PocketBase intentionally runs on the same machine in both dev and production.
+    dangerouslyAllowLocalIP: true,
     remotePatterns: [
       {
         // Local Pocketbase instance (development)
