@@ -62,22 +62,28 @@ async function requestOtp(email: string): Promise<string> {
  * Reads the most recent OTP code from Mailpit for the given email address.
  * Mailpit is the local SMTP dev server used in tests.
  */
-async function readOtpFromMailpit(email: string): Promise<string> {
+async function readOtpFromMailpit(email: string, { retries = 10, delayMs = 300 } = {}): Promise<string> {
   const mailpitUrl = process.env.MAILPIT_URL ?? "http://localhost:8025";
-  const res = await fetch(`${mailpitUrl}/api/v1/messages`);
-  const data = await res.json() as { messages: Array<{ ID: string; To: Array<{ Address: string }> }> };
 
-  const message = data.messages.find((m) =>
-    m.To.some((t) => t.Address === email)
-  );
-  if (!message) throw new Error(`No Mailpit message found for ${email}`);
+  for (let attempt = 0; attempt < retries; attempt++) {
+    const res = await fetch(`${mailpitUrl}/api/v1/messages`);
+    const data = await res.json() as { messages: Array<{ ID: string; To: Array<{ Address: string }> }> };
 
-  const msgRes = await fetch(`${mailpitUrl}/api/v1/message/${message.ID}`);
-  const msgData = await msgRes.json() as { Text: string };
+    const message = data.messages.find((m) =>
+      m.To.some((t) => t.Address === email)
+    );
 
-  const match = msgData.Text.match(/\b(\d{6})\b/);
-  if (!match) throw new Error("Could not find 6-digit OTP code in email body");
-  return match[1];
+    if (message) {
+      const msgRes = await fetch(`${mailpitUrl}/api/v1/message/${message.ID}`);
+      const msgData = await msgRes.json() as { Text: string };
+      const match = msgData.Text.match(/\b(\d{6})\b/);
+      if (match) return match[1];
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
+
+  throw new Error(`No Mailpit message found for ${email} after ${retries} attempts`);
 }
 
 describe("POST /api/auth/confirm-otp", () => {

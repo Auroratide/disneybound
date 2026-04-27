@@ -1,0 +1,24 @@
+user: On my server I see in the logs that it is failing with a 400 on "http://127.0.0.1:8090/api/collections/_superusers/auth-with-password". The username and password look correct (they're the same as what I use to log into the admin portal). What might be wrong?
+
+user: You're right that pm2 env does not show my environment variables. However, I also have .env.local defined with the values in them. Why isn't it picking it up?
+
+user: Ok I now see the environment variables in pm2 env, but it still returns the same 400 error. Is http://127.0.0.1 correct or am I maybe missing something else?
+
+user: When I first created Pocketbase I had accidentally used the wrong password in the env file. I've since changed it in the .env file and also changed it in the admin dashboard for good measure, and I've restarted the container (but did not recreate it from scratch). Is that a problem? Do I need to recreate it from scrtach?
+
+user: If I change the env in the ecosystem file what do I need to do for that to be reflected in pm2?
+
+user: That didnt work.
+
+user: Ok I got that all working, finally. Now I have a new error. I think I've uploaded my avatar correctly, but it doesn't show up on the site and the server has this error: upstream image http://127.0.0.1:8090/api/files/_pb_users_auth_/06c1vdov52p2btz/auroratide_avatar_bg_512_xqe3a2nojq.png resolved to private ip ["127.0.0.1"]
+
+user: I am getting this error on CI, and when I try to install playwright it fails because playwright isnt a dependency. Do I need to npm install playwright now? Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     pnpm exec playwright install                                        ║
+║                                                                         ║
+║ <3 Playwright Team
+
+user: The confirm-otp returns a token and record on success, and flips verified to true for a new user test seems to be flakey. Why?
+
+user: /commit

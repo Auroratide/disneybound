@@ -1,7 +1,5 @@
 import type { NextConfig } from "next";
 
-const isDev = process.env.NODE_ENV === "development";
-
 const nextConfig: NextConfig = {
   images: {
     // Next.js 16+ blocks local IPs by default (SSRF protection). Allowed here because
