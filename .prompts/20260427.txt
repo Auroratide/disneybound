@@ -41,6 +41,10 @@ user: When the user is choosing a color off the image, can you add like a little
 
 user: looks great, make it a little bigger please!
 
+user: /commit
+
+user: The revalidate path fix is breaking the tests. Why?
+
 user: /commit against the image, I noticed that it seems to be off by quite a lot, meaning it is not choosing the color where I click but is choosing the color from somewhere else in the image.
 
 user: Ok that's better, but I did like how it use to fit without scrolling. Is it possible to accomplish that?
