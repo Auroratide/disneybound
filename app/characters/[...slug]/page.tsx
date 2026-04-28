@@ -9,7 +9,7 @@ import { getCommunityOutfits, type CommunityOutfit } from "@/app/data/community-
 import { getServerAuth } from "@/lib/auth";
 import { ImgZoomRegistrar } from "@/app/components/ImgZoomRegistrar/ImgZoomRegistrar";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 type Params = { params: Promise<{ slug: string[] }> };
 
