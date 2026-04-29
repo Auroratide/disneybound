@@ -1,0 +1,11 @@
+user: So I get that it's overkill for now, but how can I bring that revalidation time from 1 hour to 1 minute? In the short term, many new characters will get added so I want it to update more frequently.
+
+user: I was getting 529 errors yesterday talking to you. Are you back?
+
+user: nope I already fixed that! I want to focus on something else. For the suggest a character feature, right now people are able to upload the image of the character. How can I allow people to paste an image as well? How would the UX work for that (since, if they click on the thing, it will open the file dialog)?
+
+user: I like option A the best. One question before doing it, the browser can be restrictive when it comes to clipboard content. Is there anything I need to be aware of there when pasting to the page like that?
+
+user: Yes please!
+
+user: /commit

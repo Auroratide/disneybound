@@ -108,14 +108,32 @@ export function SuggestCharacterForm() {
     });
   }
 
+  useEffect(() => {
+    if (step !== 1) return;
+
+    function handlePaste(e: ClipboardEvent) {
+      const item = Array.from(e.clipboardData?.items ?? []).find(
+        (i) => i.type.startsWith("image/")
+      );
+      if (!item) return;
+      const file = item.getAsFile();
+      if (!file) return;
+      setData((prev) => {
+        if (prev.previewUrl) URL.revokeObjectURL(prev.previewUrl);
+        return { ...prev, image: file, previewUrl: URL.createObjectURL(file) };
+      });
+    }
+
+    document.addEventListener("paste", handlePaste);
+    return () => document.removeEventListener("paste", handlePaste);
+  }, [step]);
+
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null;
-    if (data.previewUrl) URL.revokeObjectURL(data.previewUrl);
-    setData((prev) => ({
-      ...prev,
-      image: file,
-      previewUrl: file ? URL.createObjectURL(file) : null,
-    }));
+    setData((prev) => {
+      if (prev.previewUrl) URL.revokeObjectURL(prev.previewUrl);
+      return { ...prev, image: file, previewUrl: file ? URL.createObjectURL(file) : null };
+    });
   }
 
   function validateStep(): string | null {
@@ -290,6 +308,9 @@ export function SuggestCharacterForm() {
             onChange={handleImageChange}
             aria-label="Character image"
           />
+          <p className="text-xs text-muted-foreground text-center hidden sm:block">
+            You can also paste an image with Ctrl+V / ⌘V
+          </p>
         </fieldset>
       )}
 
