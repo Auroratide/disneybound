@@ -279,10 +279,36 @@ export function SuggestCharacterForm() {
         <fieldset className="flex flex-col gap-4 max-w-lg mx-auto">
           <legend className="text-lg font-semibold mb-2 font-display text-primary">Character image</legend>
           <p className="text-sm text-muted-foreground -mt-2">Upload a clear render or artwork of the character in this outfit. JPEG, PNG, or WebP — max 5 MB.</p>
-          <button
-            type="button"
+          {/* contentEditable enables right-click → Paste in the browser context menu */}
+          <div
+            contentEditable="true"
+            suppressContentEditableWarning={true}
+            role="button"
+            aria-label="Upload Character Image"
+            tabIndex={0}
             onClick={() => fileInputRef.current?.click()}
-            className="w-full border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center gap-3 hover:border-primary hover:bg-muted/40 transition-colors cursor-pointer"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
+            onBeforeInput={(e) => e.preventDefault()}
+            onPaste={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const item = Array.from(e.clipboardData?.items ?? []).find(
+                (i) => i.type.startsWith("image/")
+              );
+              if (!item) return;
+              const file = item.getAsFile();
+              if (!file) return;
+              setData((prev) => {
+                if (prev.previewUrl) URL.revokeObjectURL(prev.previewUrl);
+                return { ...prev, image: file, previewUrl: URL.createObjectURL(file) };
+              });
+            }}
+            className="w-full border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center gap-3 hover:border-primary hover:bg-muted/40 transition-colors cursor-pointer [caret-color:transparent] outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {data.previewUrl ? (
               <div className="relative w-48 h-48">
@@ -299,7 +325,7 @@ export function SuggestCharacterForm() {
             {data.image && (
               <span className="text-xs text-muted-foreground">{data.image.name}</span>
             )}
-          </button>
+          </div>
           <input
             ref={fileInputRef}
             type="file"
@@ -309,7 +335,7 @@ export function SuggestCharacterForm() {
             aria-label="Character image"
           />
           <p className="text-xs text-muted-foreground text-center hidden sm:block">
-            You can also paste an image with Ctrl+V / ⌘V
+            You can also paste an image with Ctrl+V / ⌘V, or right-click the box above
           </p>
         </fieldset>
       )}

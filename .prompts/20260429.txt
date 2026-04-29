@@ -15,3 +15,7 @@ user: Let's look at the front page now. The cards on there, is there a way to gu
 user: I want to play with the aspect ratio myself to find one that works best. Is aspect-[3/4] the only class I need to change to experiment?
 
 user: /commit
+
+user: Going back to the copy/paste thing for the suggest a character feature real quick, something I realized is many people, instead of using the keyboard shortcut, will want to right-click to paste instead. Like, they might right click the Select Image box to try and paste. Is it possible to support this use-case?
+
+user: /commit
