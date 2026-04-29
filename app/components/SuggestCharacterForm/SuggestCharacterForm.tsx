@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { hexToOklch } from "@/app/lib/hex-to-oklch";
+import { nearestColorName } from "@/app/lib/color-naming";
 import { Outfit } from "@/app/components/Outfit";
 
 type ColorEntry = {
@@ -85,7 +86,13 @@ export function SuggestCharacterForm() {
     if (activePickSlot === null) return;
     const hex = sampleColor(e);
     if (!hex) return;
-    updateColor(activePickSlot, { hex });
+    setData((prev) => {
+      const colors = prev.colors.map((c, i) => {
+        if (i !== activePickSlot) return c;
+        return { hex, name: nearestColorName(hex) };
+      }) as [ColorEntry, ColorEntry, ColorEntry];
+      return { ...prev, colors };
+    });
     setActivePickSlot(null);
     setHoverColor(null);
   }
@@ -355,7 +362,10 @@ export function SuggestCharacterForm() {
                   id={`suggest-color-${i}`}
                   type="color"
                   value={color.hex}
-                  onChange={(e) => updateColor(i, { hex: e.target.value })}
+                  onChange={(e) => {
+                    const hex = e.target.value;
+                    updateColor(i, { hex, name: nearestColorName(hex) });
+                  }}
                   className="flex-1 h-12 rounded-lg cursor-pointer border border-border p-0.5 bg-card"
                 />
                 {data.previewUrl && (

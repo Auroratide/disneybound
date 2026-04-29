@@ -19,3 +19,24 @@ user: /commit
 user: Going back to the copy/paste thing for the suggest a character feature real quick, something I realized is many people, instead of using the keyboard shortcut, will want to right-click to paste instead. Like, they might right click the Select Image box to try and paste. Is it possible to support this use-case?
 
 user: /commit
+
+user: Next on the suggest character feature, I'd like the color pickers to fill in a name for the color automatically if the color name field is blank. What are some ways we can accomplish this?
+
+user: Let's do option B.
+
+user: I don't see the name getting filled in automatically. Can you double check?
+
+user: After using it I change my mind, I do think it needs to update the text field even if there's already text in it.
+
+user: I just added a package called nearest-color. I've pasted sample usage below. Please use it instead of your own algorithm. var colors = {
+  red: '#f00',
+  yellow: '#ff0',
+  blue: '#00f'
+};
+
+var nearestColor = require('nearest-color').from(colors);
+
+nearestColor('#800'); // => { name: 'red', value: '#f00', rgb: { r: 255, g: 0, b: 0 }, distance: 119 }
+nearestColor('#ffe'); // => { name: 'yellow', value: '#ff0', rgb: { r: 255, g: 255, b: 0 }, distance: 238 }
+
+user: /commit
