@@ -9,3 +9,9 @@ user: I like option A the best. One question before doing it, the browser can be
 user: Yes please!
 
 user: /commit
+
+user: Let's look at the front page now. The cards on there, is there a way to guarantee that they are in general always taller than they are wide? Depending on the screen size, the breakpoint changes the number of items that fits per row, and this makes it so sometimes the cards are longer than they are tall. However, this causes the image on the inside to get cut off in awkward spots. Ideally, the cards are at least 3:4 (w:h) aspect ratio, but could be fluid.
+
+user: I want to play with the aspect ratio myself to find one that works best. Is aspect-[3/4] the only class I need to change to experiment?
+
+user: /commit
